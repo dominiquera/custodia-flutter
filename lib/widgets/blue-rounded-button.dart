@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../theme-provider.dart';
 
+
 class BlueRoundedButton extends StatelessWidget {
 
   BlueRoundedButton({this.text, this.onPressed, this.padding});
@@ -22,7 +23,7 @@ class BlueRoundedButton extends StatelessWidget {
       child: Text(text,
         style: TextStyle(
           fontSize: 27,
-          color: Colors.white
+          color: Colors.white,
         )
       ),
     );

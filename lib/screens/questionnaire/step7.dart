@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
-import '../../widgets/blue-rounded-button.dart';
+import 'package:custodia/widgets/blue-rounded-button.dart';
 
 class QuestionnaireStep7Screen extends StatefulWidget {
   @override
@@ -14,7 +14,7 @@ class _QuestionnaireStep7ScreenState extends State<QuestionnaireStep7Screen> {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
-          gradient: ThemeProvider.blueGradient,
+          gradient: ThemeProvider.blueGradientDiagonal,
         ),
         padding: EdgeInsets.symmetric(horizontal: 45),
         child: body(),

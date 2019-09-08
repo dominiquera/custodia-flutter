@@ -1,3 +1,4 @@
+import 'package:custodia/screens/dashboard/dashboard.dart';
 import 'package:custodia/screens/questionnaire/step1.dart';
 import 'package:custodia/theme-provider.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +10,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Custodia',
+      debugShowCheckedModeBanner: false,
       theme: ThemeProvider.theme,
-      home: QuestionnaireStep1Screen(),
+      home: DashboardScreen(),
     );
   }
 }
