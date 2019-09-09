@@ -16,6 +16,7 @@ class ThemeProvider {
   static const blue3 = Color(0xFF3a6ddf);
   static const blue7 = Color(0xFF485bdf);
   static const blue4 = Color(0xFF5503e1);
+  static const lightViolet = Color(0xFFbca2f5);
   static const blue5 = Color(0xFF365f90);
   static const lightGrey1 = Color(0xFFededed);
   static const lightGrey2 = Color(0xFFf0f0f0);

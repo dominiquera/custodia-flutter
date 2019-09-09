@@ -5,6 +5,8 @@ import '../../../theme-provider.dart';
 
 import 'package:flutter_slidable/flutter_slidable.dart';
 
+import 'block-footer.dart';
+import 'block-header.dart';
 import 'list-item.dart';
 
 class OutsideThisWeek extends StatefulWidget {
@@ -13,6 +15,9 @@ class OutsideThisWeek extends StatefulWidget {
 }
 
 class _OutsideThisWeekState extends State<OutsideThisWeek> {
+
+  Color accentColor = ThemeProvider.green3;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,8 +25,13 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
       color: ThemeProvider.lightBlue,
       child: Column(
         children: <Widget>[
-          title(),
+          BlockHeader(
+            title: "Outside This Week",
+            description: "Suggested for outsided the home. Slide the card to customize",
+            colorAccent: accentColor
+          ),
           headerCard(),
+          SizedBox(height: 20),
           ListItem(
             title: "Hedge trimming",
             description: "Trim the hedges to keep them looking nice",
@@ -31,9 +41,8 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
             title: "Hedge trimming",
             description: "Trim the hedges to keep them looking nice",
             points: 10,
-            color: ThemeProvider.blue2),
-          footer()
-
+            color: ThemeProvider.green3),
+          BlockFooter(text: "OUTSIDE", accentColor: accentColor)
         ],
       ),
     );
@@ -42,53 +51,7 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
   Widget headerCard() {
     return Slidable(
       actionPane: SlidableScrollActionPane(),
-      actions: <Widget>[
-        IconSlideAction(
-          caption: 'Done',
-          color: ThemeProvider.blue8,
-//          icon: Icons.block,
-          iconWidget: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: ThemeProvider.green3,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Icons.check, color: Colors.white, size: 30,)
-          ),
-          onTap: showOverlayDialog,
-        ),
-        IconSlideAction(
-          caption: 'Automate',
-          color: ThemeProvider.blue8,
-//          icon: Icons.block,
-          iconWidget: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: ThemeProvider.blue7,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Icons.cached, color: Colors.white, size: 30,)
-          ),
-          onTap: showOverlayDialog,
-        ),
-        IconSlideAction(
-          caption: 'Learn',
-          color: ThemeProvider.blue8,
-//          icon: Icons.block,
-          iconWidget: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: ThemeProvider.lightBrown,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Icons.school, color: Colors.white, size: 30,)
-          ),
-          onTap: showOverlayDialog,
-        )
-      ],
+      actions: headerCardSlideActions(),
       child: Container(
         margin: EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -103,7 +66,27 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
         ),
         child: Column(
           children: <Widget>[
-            Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth,),
+            Stack(children: <Widget>[
+              Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth),
+              Positioned(
+                bottom: 10,
+                left: 10,
+                child: Text("10 POINTS",
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    shadows: <Shadow>[
+                      Shadow(
+                        offset: Offset(1.0, 1.0),
+                        blurRadius: 1.0,
+                        color: ThemeProvider.darkGrey,
+                      ),
+                    ]
+                  )
+                ),
+              ),
+              ]
+            ),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Column(
@@ -145,56 +128,57 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
 
   showOverlayDialog() {
     Navigator.of(context).push(
-        PageRouteBuilder(
-          opaque: true,
-          pageBuilder: (BuildContext context, _, __) => OverlayDialog()
-        )
-    );
-//    Navigator.of(context).push(OverlayDialog());
-//    Navigator.push(
-//      context,
-//      MaterialPageRoute(builder: (context) => OverlayDialog()),
-//    );
-  }
-
-  Widget title() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text("Outside This Week",
-            style: TextStyle(
-              color: ThemeProvider.green3,
-              fontFamily: "RobotoBlack",
-              fontSize: 28
-            )
-          ),
-          Text(
-            "Suggested for outsided the home. Slide the card to customize",
-            style: TextStyle(color: ThemeProvider.grey2),
-          ),
-        ],
-      ),
+      PageRouteBuilder(
+        opaque: true,
+        pageBuilder: (BuildContext context, _, __) => OverlayDialog()
+      )
     );
   }
 
-  Widget footer() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: Align(
-        alignment: Alignment.centerRight,
-        child: RichText(
-          text: TextSpan(
-            style: TextStyle(fontSize: 16),
-            children: <TextSpan>[
-              TextSpan(text: 'MORE THIS MONTH FOR ', style: TextStyle(color: ThemeProvider.darkGrey)),
-
-              TextSpan(text: 'OUTSIDE >', style: TextStyle(color: ThemeProvider.green2)),
-            ],
+  List<Widget> headerCardSlideActions() {
+    return <Widget>[
+      IconSlideAction(
+        caption: 'Done',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: ThemeProvider.green3,
+            shape: BoxShape.circle,
           ),
+          child: Icon(Icons.check, color: Colors.white, size: 30,)
         ),
+        onTap: showOverlayDialog,
       ),
-    );
+      IconSlideAction(
+        caption: 'Automate',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: ThemeProvider.blue7,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.cached, color: Colors.white, size: 30,)
+        ),
+        onTap: showOverlayDialog,
+      ),
+      IconSlideAction(
+        caption: 'Learn',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: ThemeProvider.lightBrown,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.school, color: Colors.white, size: 30,)
+        ),
+        onTap: showOverlayDialog,
+      )
+    ];
   }
 }

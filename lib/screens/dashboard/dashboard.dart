@@ -1,4 +1,6 @@
+import 'package:custodia/screens/dashboard/widgets/clean-this-week.dart';
 import 'package:custodia/screens/dashboard/widgets/outside-this-week.dart';
+import 'package:custodia/screens/dashboard/widgets/prevent-this-week.dart';
 import 'package:custodia/screens/dashboard/widgets/score-bar.dart';
 import 'package:custodia/screens/dashboard/widgets/top-3-checkpoints.dart';
 import 'package:custodia/widgets/drawer.dart';
@@ -6,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
+import '../../constants.dart';
 import '../../theme-provider.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -14,8 +17,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
-  final double screenPadding = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         title: Text('July 3', style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
-        automaticallyImplyLeading: false
+        automaticallyImplyLeading: false,
+
+//          : IconButton(
+//            icon: Icon(Icons.apps)),
+//              onPressed: () => _scaffoldKey.currentState.openDrawer()),
       ),
       body: body(),
     );
@@ -39,8 +44,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
         header(),
         stepsCircles(),
         score(),
-        Top3Checkpoints(screenPadding: screenPadding),
-        OutsideThisWeek()
+        Top3Checkpoints(),
+        OutsideThisWeek(),
+        PreventThisWeek(),
+        CleanThisWeek()
       ]
     );
   }
@@ -51,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: <Widget>[
         Image.asset("assets/images/house.jpg", height: 500, fit: BoxFit.fitHeight,),
         Padding(
-          padding: const EdgeInsets.all(20.0),
+          padding: EdgeInsets.all(Constants.screenPadding),
           child: Column(
             children: <Widget>[
               Text(
@@ -98,7 +105,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget stepsCircles() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: EdgeInsets.symmetric(vertical: Constants.screenPadding),
       child: Column(
         children: <Widget>[
           Stack(
@@ -174,10 +181,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Text(description,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 22,
-                fontFamily: "RobotoMedium",
-                color: ThemeProvider.grey1,
-                height: 0.9
+              fontSize: 22,
+              fontFamily: "RobotoMedium",
+              color: ThemeProvider.grey1,
+              height: 0.9
             ),)
         ],
       ),
@@ -187,11 +194,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget score() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20),
+      padding: EdgeInsets.only(top: 0, bottom: Constants.screenPadding),
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenPadding),
+            padding: EdgeInsets.symmetric(horizontal: Constants.screenPadding),
             child: Text(
               "Good morning John, just a few things on for this week. Here is your dad's current Home Score.",
               style: TextStyle(
@@ -202,13 +209,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
           SizedBox(height: 30),
           Container(
-            height: 10,
+            height: 5,
             decoration: BoxDecoration(
               gradient: ThemeProvider.greyGradientVertical
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: screenPadding),
+            padding: EdgeInsets.symmetric(horizontal: Constants.screenPadding),
             child: Column(
               children: <Widget>[
                 Align(

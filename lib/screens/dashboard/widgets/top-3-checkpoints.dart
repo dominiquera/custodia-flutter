@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../theme-provider.dart';
 
 
 class Top3Checkpoints extends StatelessWidget {
 
-  Top3Checkpoints({this.screenPadding});
-
-  final double screenPadding;
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(screenPadding),
+      padding: EdgeInsets.all(Constants.screenPadding),
       decoration: BoxDecoration(
         boxShadow: [
           const BoxShadow(
