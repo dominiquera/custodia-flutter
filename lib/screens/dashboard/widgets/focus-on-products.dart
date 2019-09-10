@@ -5,11 +5,11 @@ import 'block-footer.dart';
 import 'block-header.dart';
 import 'list-item.dart';
 
-class FocusOnStories extends StatelessWidget {
+class FocusOnProducts extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Color accentColor = ThemeProvider.blue4;
+    Color accentColor = ThemeProvider.blue7;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 10),
@@ -17,8 +17,8 @@ class FocusOnStories extends StatelessWidget {
       child: Column(
         children: <Widget>[
           BlockHeader(
-            title: "Focus on stories",
-            description: "Suggested for outsided the home. Slide the card to customize",
+            title: "Focus on products",
+            description: "Suggested products that make the home more enjoyable",
             colorAccent: accentColor
           ),
 //          headerCard(),
@@ -33,7 +33,7 @@ class FocusOnStories extends StatelessWidget {
             description: "Trim the hedges to keep them looking nice",
             points: 10,
             color: accentColor),
-          BlockFooter(text: "CLEAN", accentColor: accentColor)
+          BlockFooter(text: "PRODUCTS", accentColor: accentColor)
         ],
       ),
     );

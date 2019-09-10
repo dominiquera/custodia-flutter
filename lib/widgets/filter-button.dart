@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../theme-provider.dart';
+import '../theme-provider.dart';
 
 class FilterButton extends StatefulWidget {
 
@@ -22,11 +22,12 @@ class _FilterButtonState extends State<FilterButton> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         decoration: BoxDecoration(
-          color: selected ? ThemeProvider.blue4 : ThemeProvider.lightGrey1,
+          color: selected ? ThemeProvider.green3 : ThemeProvider.lightGrey1,
           borderRadius: BorderRadius.circular(5.0)
         ),
         child: Text(
           widget.text,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 16,
             color: selected ? Colors.white : Colors.grey

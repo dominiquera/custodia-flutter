@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../theme-provider.dart';
 import 'blue-rounded-button.dart';
+import 'filter-button.dart';
 
-class OverlayDialog extends StatelessWidget {
+class OverlayDialog extends StatefulWidget {
+  @override
+  _OverlayDialogState createState() => _OverlayDialogState();
+}
+
+class _OverlayDialogState extends State<OverlayDialog> {
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -40,127 +47,191 @@ class OverlayDialog extends StatelessWidget {
       right: 0
     );
   }
-//
-//  Widget body(BuildContext context) {
-//    return SizedBox.expand(
-//      child: Column(
-//        mainAxisAlignment: MainAxisAlignment.center,
-//        children: <Widget>[
-//          BlueRoundedButton(text: "Ignore for now", onPressed: (){},padding: 30),
-//          SizedBox(height: 50),
-//          BlueRoundedButton(text: "Ignore forever", onPressed: (){},padding: 30),
-//          SizedBox(height: 50),
-//          FlatButton(
-//            onPressed: () => closeOverlay(context),
-//            child: Text(
-//              "cancel",
-//              style: TextStyle(
-//                color: Colors.white,
-//                fontSize: 22
-//              )
-//            ),
-//          )
-//        ]
-//      ),
-//    );
-//  }
 
   Widget body(BuildContext context) {
     return SizedBox.expand(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            "Well done John! You have increased the home score by 10 points",
-            style: TextStyle(fontSize: 28, color: Colors.white),
-          ),
-Row(
-  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  children: <Widget>[
-  BlueRoundedButton(text: "Undo", onPressed: (){},padding: 30),
-  BlueRoundedButton(text: "Close", onPressed: (){},padding: 30),
+      child: Padding(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Text(
+                    "Nice! Jamie and team will be there Tuesday morning next week.",
+                    style: TextStyle(
+                        fontSize: 38,
+                        color: Colors.white,
+                        fontFamily: "RobotoLight",
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(2.0, 2.0),
+                            blurRadius: 5.0,
+                            color: ThemeProvider.darkGrey,
+                          ),
+                        ]
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    "We choose the best day to provide your service. We hope it works for you.",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.white,
+                        fontFamily: "RobotoLight"
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                ],
+              ),
 
-],)
-//          BlueRoundedButton(text: "Ignore for now", onPressed: (){},padding: 30),
-//          SizedBox(height: 50),
-//          BlueRoundedButton(text: "Ignore forever", onPressed: (){},padding: 30),
-//          SizedBox(height: 50),
-//          FlatButton(
-//            onPressed: () => closeOverlay(context),
-//            child: Text(
-//              "cancel",
-//              style: TextStyle(
-//                color: Colors.white,
-//                fontSize: 22
-//              )
-//            ),
-//          )
-        ]
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    BlueRoundedButton(text: "Re-schedule", onPressed: (){},padding: 25),
+                    BlueRoundedButton(text: "Home", onPressed: (){},padding: 25),
+                  ]
+              )
+            ]
+        ),
       ),
     );
   }
+//
+//  Widget body(BuildContext context) {
+//    return SizedBox.expand(
+//      child: Padding(
+//        padding: const EdgeInsets.all(15.0),
+//        child: Column(
+//            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//            crossAxisAlignment: CrossAxisAlignment.stretch,
+//            children: <Widget>[
+//              Column(
+//                children: <Widget>[
+//                  Text(
+//                    "Please enter your credit card information below",
+//                    style: TextStyle(
+//                        fontSize: 38,
+//                        color: Colors.white,
+//                        fontFamily: "RobotoLight",
+//                        shadows: <Shadow>[
+//                          Shadow(
+//                            offset: Offset(2.0, 2.0),
+//                            blurRadius: 5.0,
+//                            color: ThemeProvider.darkGrey,
+//                          ),
+//                        ]
+//                    ),
+//                  ),
+//                  SizedBox(height: 20),
+//                  Text(
+//                    "Our security system will bill your card after your service is complete",
+//                    style: TextStyle(
+//                      fontSize: 18,
+//                      color: Colors.white,
+//                      fontFamily: "RobotoLight"
+//                    ),
+//                  ),
+//                  SizedBox(height: 20),
+//                  form()
+//                ],
+//              ),
+//
+//              Row(
+//                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                  children: <Widget>[
+//                    BlueRoundedButton(text: "Cancel", onPressed: (){},padding: 25),
+//                    BlueRoundedButton(text: "Purchase", onPressed: (){},padding: 25),
+//                  ]
+//              )
+//            ]
+//        ),
+//      ),
+//    );
+//  }
+
+  form() {
+    return                   Form(
+      key: _formKey,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          textField("CC"),
+          SizedBox(height: 20),
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Expanded(
+                child: textField("Exp/Date"),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: textField("CVV"),
+              ),
+              SizedBox(width: 10),
+              Expanded(
+                child: textField("Zip/Postal"),
+              ),
+            ],
+          ),
+          Row(
+            children: <Widget>[
+              Checkbox(
+                value: true,
+                activeColor: Colors.white,
+                checkColor: ThemeProvider.blue7,
+                onChanged: (value){},),
+              GestureDetector(
+                child: Text(
+                  "Save this card for future purposes",
+                  style: TextStyle(color: Colors.white, fontSize: 16)
+                )
+              )
+            ],
+          )
+        ],
+      )
+    );
+  }
+
+  textField(String hint) {
+    return TextFormField(
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.all(10),
+//                            border: OutlineInputBorder(
+//                              borderRadius: const BorderRadius.all(
+//                                const Radius.circular(5.0),
+//                              ),
+//                            ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.white
+          ),
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(5.0),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.white
+          ),
+          borderRadius: const BorderRadius.all(
+            const Radius.circular(5.0),
+          ),
+        ),
+        hintText: hint,
+        fillColor: Colors.white,
+        focusColor: Colors.white,
+        enabled: true,
+        filled: true
+      ),
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'Please enter some text';
+        }
+        return null;
+      },
+    );
+  }
 }
-//
-//class OverlayDialog extends ModalRoute<void> {
-//  @override
-//  Duration get transitionDuration => Duration(milliseconds: 500);
-//
-//  @override
-//  bool get opaque => false;
-//
-//  @override
-//  bool get barrierDismissible => false;
-//
-//  @override
-//  Color get barrierColor => Colors.black.withOpacity(0.5);
-//
-//  @override
-//  String get barrierLabel => null;
-//
-//  @override
-//  bool get maintainState => true;
-//
-//  @override
-//  Widget buildPage(
-//      BuildContext context,
-//      Animation<double> animation,
-//      Animation<double> secondaryAnimation,
-//      ) {
-//    // This makes sure that text and other content follows the material style
-//    return Material(
-//      type: MaterialType.transparency,
-//      // make sure that the overlay content is not cut off
-//      child: SafeArea(
-//        child: _buildOverlayContent(context),
-//      ),
-//    );
-//  }
-//
-//  Widget _buildOverlayContent(BuildContext context) {
-//    return Center(
-//      child: Column(
-//        mainAxisSize: MainAxisSize.min,
-//        children: <Widget>[
-////          Text(
-////            'This is a nice overlay',
-////            style: TextStyle(color: Colors.white, fontSize: 30.0),
-////          ),
-//          BlueRoundedButton(text: "Hello", onPressed: (){},padding: 70)
-//        ],
-//      ),
-//    );
-//  }
-//
-//  @override
-//  Widget buildTransitions(
-//      BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-//    // You can add your own animations for the overlay content
-//    return FadeTransition(
-//      opacity: animation,
-//      child: ScaleTransition(
-//        scale: animation,
-//        child: child,
-//      ),
-//    );
-//  }
-//}

@@ -1,4 +1,6 @@
 import 'package:custodia/screens/dashboard/widgets/clean-this-week.dart';
+import 'package:custodia/screens/dashboard/widgets/focus-on-products.dart';
+import 'package:custodia/screens/dashboard/widgets/focus-on-stories.dart';
 import 'package:custodia/screens/dashboard/widgets/outside-this-week.dart';
 import 'package:custodia/screens/dashboard/widgets/prevent-this-week.dart';
 import 'package:custodia/screens/dashboard/widgets/score-bar.dart';
@@ -47,7 +49,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Top3Checkpoints(),
         OutsideThisWeek(),
         PreventThisWeek(),
-        CleanThisWeek()
+        CleanThisWeek(),
+        FocusOnStories(),
+        FocusOnProducts()
       ]
     );
   }

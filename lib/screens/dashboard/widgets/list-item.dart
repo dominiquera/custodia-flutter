@@ -17,29 +17,8 @@ class ListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Slidable(
       actionPane: SlidableDrawerActionPane(),
-      actions: <Widget>[
-        IconSlideAction(
-          caption: 'Ignore',
-          color: ThemeProvider.blue8,
-//          icon: Icons.block,
-          iconWidget: Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.red,
-
-//                border: Border.all(
-//                    color: ThemeProvider.orange,
-//                    width: 1.5
-//                ),
-                shape: BoxShape.circle,
-              ),
-              child: Icon(Icons.block, color: Colors.white, size: 30,)
-          ),
-          onTap: () => showOverlayDialog(context),
-        )
-      ],
-//      direction: DismissDirection.startToEnd,
+      actions: mainActions(context),
+      secondaryActions: secondaryActions(context),
 //      background: Container(color: Colors.green,),
       child: Padding(
         padding: const EdgeInsets.all(10),
@@ -64,11 +43,6 @@ class ListItem extends StatelessWidget {
                       blurRadius: 1.0,
                       color: ThemeProvider.grey1,
                     ),
-//                    Shadow(
-//                      offset: Offset(10.0, 10.0),
-//                      blurRadius: 8.0,
-//                      color: Color.fromARGB(125, 0, 0, 255),
-//                    ),
                   ],
                 )
               ),
@@ -101,16 +75,77 @@ class ListItem extends StatelessWidget {
   }
 
   showOverlayDialog(BuildContext context) {
-//    Navigator.of(context).push(
-//        PageRouteBuilder(
-//          opaque: false,
-//          pageBuilder: (BuildContext context, _, __) => OverlayDialog()
-//        )
-//    );
-//    Navigator.of(context).push(OverlayDialog());
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => OverlayDialog()),
+    Navigator.of(context).push(
+        PageRouteBuilder(
+          opaque: false,
+          pageBuilder: (BuildContext context, _, __) => OverlayDialog()
+        )
     );
+  }
+
+  List<Widget> mainActions(BuildContext context) {
+    return <Widget>[
+      IconSlideAction(
+        caption: 'Ignore',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.block, color: Colors.white, size: 30,)
+        ),
+        onTap: () => showOverlayDialog(context),
+      )
+    ];
+  }
+
+  List<Widget> secondaryActions(BuildContext context) {
+    return <Widget>[
+      IconSlideAction(
+        caption: 'Details',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: ThemeProvider.green3,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.list, color: Colors.white, size: 30,)
+        ),
+        onTap: () => showOverlayDialog(context),
+      ),
+      IconSlideAction(
+        caption: 'Pause',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: ThemeProvider.blue7,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.pause, color: Colors.white, size: 30,)
+        ),
+        onTap: () => showOverlayDialog(context),
+      ),
+      IconSlideAction(
+        caption: 'Support',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: ThemeProvider.lightBrown,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.chat, color: Colors.white, size: 25,)
+        ),
+        onTap: () => showOverlayDialog(context),
+      )
+    ];
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
-import 'package:custodia/screens/questionnaire/widgets/filter-button.dart';
+import 'package:custodia/widgets/filter-button.dart';
 import '../../screens/questionnaire/step4.dart';
 
 class QuestionnaireStep3Screen extends StatefulWidget {

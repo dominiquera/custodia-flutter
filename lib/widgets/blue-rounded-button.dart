@@ -22,7 +22,7 @@ class BlueRoundedButton extends StatelessWidget {
       ),
       child: Text(text,
         style: TextStyle(
-          fontSize: 27,
+          fontSize: 24,
           color: Colors.white,
         )
       ),

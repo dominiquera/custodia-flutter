@@ -4,6 +4,7 @@ class ThemeProvider {
   static const red = Color(0xFFba342f);
   static const orange = Color(0xFFfa803a);
   static const yellow1 = Color(0xFFfabd1d);
+  static const lightBrown = Color(0xFFb0964f);
   static const yellow2 = Color(0xFFd3c531);
   static const lime = Color(0xFFceff00);
   static const green1 = Color(0xFF8fbc5c);
@@ -12,22 +13,18 @@ class ThemeProvider {
   static const blue1 = Color(0xFF21ccde);
   static const blue8 = Color(0xFF8dc7fc);
   static const blue2 = Color(0xFF3191de);
+  static const blue5 = Color(0xFF365f90);
   static const blue6 = Color(0xFF007aff);
   static const blue3 = Color(0xFF3a6ddf);
   static const blue7 = Color(0xFF485bdf);
   static const blue4 = Color(0xFF5503e1);
   static const lightViolet = Color(0xFFbca2f5);
-  static const blue5 = Color(0xFF365f90);
   static const lightGrey1 = Color(0xFFededed);
   static const lightGrey2 = Color(0xFFf0f0f0);
   static const lightBlue = Color(0xFFf1f6ff);
   static const grey1 = Color(0xFFa6a6a6);
   static const grey2 = Color(0xFF838383);
   static const darkGrey = Color(0xFF3d3d3d);
-  static const lightBrown = Color(0xFFb0964f);
-
-
-
 
   static final blueTransparentGradientDiagonal = LinearGradient(
     begin: Alignment.topLeft,
@@ -98,7 +95,6 @@ class ThemeProvider {
     ],
     stops: [0.0, 0.5, 1.0],
   );
-
 
   static final theme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
