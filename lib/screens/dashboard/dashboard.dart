@@ -4,6 +4,7 @@ import 'package:custodia/screens/dashboard/widgets/focus-on-stories.dart';
 import 'package:custodia/screens/dashboard/widgets/outside-this-week.dart';
 import 'package:custodia/screens/dashboard/widgets/prevent-this-week.dart';
 import 'package:custodia/screens/dashboard/widgets/score-bar.dart';
+import 'package:custodia/screens/dashboard/widgets/steps.dart';
 import 'package:custodia/screens/dashboard/widgets/top-3-checkpoints.dart';
 import 'package:custodia/widgets/drawer.dart';
 import 'package:flutter/material.dart';
@@ -31,10 +32,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
         automaticallyImplyLeading: false,
-
-//          : IconButton(
-//            icon: Icon(Icons.apps)),
-//              onPressed: () => _scaffoldKey.currentState.openDrawer()),
       ),
       body: body(),
     );
@@ -44,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return ListView(
       children: <Widget>[
         header(),
-        stepsCircles(),
+        Steps(),
         score(),
         Top3Checkpoints(),
         OutsideThisWeek(),
@@ -107,98 +104,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget stepsCircles() {
-    return Padding(
-      padding: EdgeInsets.symmetric(vertical: Constants.screenPadding),
-      child: Column(
-        children: <Widget>[
-          Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 45.0),
-                child: Divider(height: 2, color: ThemeProvider.grey1),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  stepCircle("1", ThemeProvider.blue1),
-                  stepCircle("2", ThemeProvider.green1),
-                  stepCircle("3", ThemeProvider.blue5)
-                ]
-              ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              stepDescription("Review the check points"),
-              stepDescription("Do it automate it or ignore it"),
-              stepDescription("Watch your score")
-            ]
-          ),
-          SizedBox(height: 20),
-          Divider(height: 2, color: ThemeProvider.darkGrey)
-        ],
-
-      ),
-
-    );
-  }
-
-  Widget stepCircle(String number, Color color) {
-    return Container(
-      width: 110,
-      child: Column(
-        children: <Widget>[
-          Container(
-            width: 45,
-            height: 45,
-            decoration: BoxDecoration(
-              color: color,
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                number,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28
-                )
-              )
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-
-  Widget stepDescription(String description) {
-    return Container(
-      width: 110,
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 10),
-          Text(description,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 22,
-              fontFamily: "RobotoMedium",
-              color: ThemeProvider.grey1,
-              height: 0.9
-            ),)
-        ],
-      ),
-    );
-  }
-
-
   Widget score() {
     return Padding(
-      padding: EdgeInsets.only(top: 0, bottom: Constants.screenPadding),
+      padding: EdgeInsets.only(top: Constants.screenPadding, bottom: Constants.screenPadding),
       child: Column(
         children: <Widget>[
           Padding(
@@ -227,7 +135,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   child: IconButton(
                     padding: EdgeInsets.all(0),
                     onPressed: (){
-                      print("zz");
                     },
                     icon: Icon(Icons.info, color: ThemeProvider.blue1)
                   ),

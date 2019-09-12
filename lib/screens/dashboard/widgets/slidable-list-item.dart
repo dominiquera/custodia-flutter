@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../theme-provider.dart';
+import '../../learn-more-about.dart';
 
-class ListItem extends StatelessWidget {
+class SlidableListItem extends StatefulWidget {
 
-  ListItem({this.title, this.description, this.points, this.color});
+  SlidableListItem({this.title, this.description, this.points, this.color});
 
   final String title;
   final String description;
@@ -14,12 +15,16 @@ class ListItem extends StatelessWidget {
   final Color color;
 
   @override
+  _SlidableListItemState createState() => _SlidableListItemState();
+}
+
+class _SlidableListItemState extends State<SlidableListItem> {
+  @override
   Widget build(BuildContext context) {
     return Slidable(
-      actionPane: SlidableDrawerActionPane(),
+      actionPane: SlidableScrollActionPane(),
       actions: mainActions(context),
       secondaryActions: secondaryActions(context),
-//      background: Container(color: Colors.green,),
       child: Padding(
         padding: const EdgeInsets.all(10),
         child: Row(
@@ -28,13 +33,13 @@ class ListItem extends StatelessWidget {
             Container(
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: color,
+                color: widget.color,
                 borderRadius: BorderRadius.circular(3)
               ),
               width: 90,
               height: 90,
               child: Text(
-                "$points points",
+                "${widget.points} points",
                 style: TextStyle(
                   color: Colors.white,
                   shadows: <Shadow>[
@@ -53,14 +58,14 @@ class ListItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    title.toUpperCase(),
+                    widget.title.toUpperCase(),
                     style: TextStyle(
                       fontSize: 24,
                       fontFamily: "RobotoMedium"
                     )
                   ),
                   Text(
-                    description,
+                    widget.description,
                     style: TextStyle(
                       fontSize: 20,
                     )
@@ -74,12 +79,12 @@ class ListItem extends StatelessWidget {
     );
   }
 
-  showOverlayDialog(BuildContext context) {
+  showOverlayDialog() {
     Navigator.of(context).push(
-        PageRouteBuilder(
-          opaque: false,
-          pageBuilder: (BuildContext context, _, __) => OverlayDialog()
-        )
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => OverlayDialog()
+      )
     );
   }
 
@@ -89,15 +94,15 @@ class ListItem extends StatelessWidget {
         caption: 'Ignore',
         color: ThemeProvider.blue8,
         iconWidget: Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.red,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(Icons.block, color: Colors.white, size: 30,)
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.red,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.block, color: Colors.white, size: 30,)
         ),
-        onTap: () => showOverlayDialog(context),
+        onTap: showOverlayDialog,
       )
     ];
   }
@@ -105,7 +110,7 @@ class ListItem extends StatelessWidget {
   List<Widget> secondaryActions(BuildContext context) {
     return <Widget>[
       IconSlideAction(
-        caption: 'Details',
+        caption: 'Done',
         color: ThemeProvider.blue8,
         iconWidget: Container(
             width: 40,
@@ -114,12 +119,12 @@ class ListItem extends StatelessWidget {
               color: ThemeProvider.green3,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.list, color: Colors.white, size: 30,)
+            child: Icon(Icons.check, color: Colors.white, size: 30,)
         ),
-        onTap: () => showOverlayDialog(context),
+        onTap: showOverlayDialog,
       ),
       IconSlideAction(
-        caption: 'Pause',
+        caption: 'Automate',
         color: ThemeProvider.blue8,
         iconWidget: Container(
             width: 40,
@@ -128,12 +133,12 @@ class ListItem extends StatelessWidget {
               color: ThemeProvider.blue7,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.pause, color: Colors.white, size: 30,)
+            child: Icon(Icons.cached, color: Colors.white, size: 30,)
         ),
-        onTap: () => showOverlayDialog(context),
+        onTap: showOverlayDialog,
       ),
       IconSlideAction(
-        caption: 'Support',
+        caption: 'Learn',
         color: ThemeProvider.blue8,
         iconWidget: Container(
             width: 40,
@@ -142,10 +147,17 @@ class ListItem extends StatelessWidget {
               color: ThemeProvider.lightBrown,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.chat, color: Colors.white, size: 25,)
+            child: Icon(Icons.school, color: Colors.white, size: 30,)
         ),
-        onTap: () => showOverlayDialog(context),
+        onTap: openLearnMoreScreen,
       )
     ];
+  }
+
+  openLearnMoreScreen() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LearnMoreAbout()),
+    );
   }
 }

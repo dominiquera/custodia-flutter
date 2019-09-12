@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../theme-provider.dart';
 import 'block-footer.dart';
 import 'block-header.dart';
-import 'list-item.dart';
+import 'slidable-list-item.dart';
 
 class FocusOnProducts extends StatelessWidget {
   @override
@@ -12,7 +12,7 @@ class FocusOnProducts extends StatelessWidget {
     Color accentColor = ThemeProvider.blue7;
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.only(top: 10),
       color: ThemeProvider.lightBlue,
       child: Column(
         children: <Widget>[
@@ -21,14 +21,14 @@ class FocusOnProducts extends StatelessWidget {
             description: "Suggested products that make the home more enjoyable",
             colorAccent: accentColor
           ),
-//          headerCard(),
+//          SlidableCard(),
           SizedBox(height: 20),
-          ListItem(
+          SlidableListItem(
             title: "Hedge trimming",
             description: "Trim the hedges to keep them looking nice",
             points: 10,
             color: accentColor),
-          ListItem(
+          SlidableListItem(
             title: "Hedge trimming",
             description: "Trim the hedges to keep them looking nice",
             points: 10,
