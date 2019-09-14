@@ -46,7 +46,7 @@ class _LearnMoreAboutState extends State<LearnMoreAbout>  {
             description: "Suggested for outsided the home. Slide the card to customize",
             colorAccent: accentColor2
           ),
-//          video(),
+          video(),
           SizedBox(height: 20),
           ListItem(
             description: "Trim the hedges to keep them looking nice",
@@ -130,7 +130,7 @@ class _LearnMoreAboutState extends State<LearnMoreAbout>  {
           detailsItem("Frequency", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.blue1),
           detailsItem("Tools", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.green1),
           detailsItem("Materials", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.blue5),
-          FooterItem(mainText: "BAXK TO YOUR ", accentText: "HMP", accentColor: accentColor)
+          FooterItem(mainText: "BACK TO YOUR ", accentText: "HMP", accentColor: accentColor2)
         ],
       ),
     );

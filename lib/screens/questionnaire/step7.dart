@@ -1,3 +1,4 @@
+import 'package:custodia/screens/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
@@ -56,16 +57,16 @@ class _QuestionnaireStep7ScreenState extends State<QuestionnaireStep7Screen> {
             ),
           ),
           SizedBox(height: 70),
-          BlueRoundedButton(text: "Start", onPressed: loadNextStep, padding: 80),
+          BlueRoundedButton(text: "Start", onPressed: loadDashboard, padding: 80),
         ],
       ),
     );
   }
 
-  loadNextStep() {
+  loadDashboard() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStep7Screen()),
+      MaterialPageRoute(builder: (context) => DashboardScreen()),
     );
   }
 }

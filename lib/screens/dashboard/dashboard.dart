@@ -134,8 +134,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   alignment: Alignment.centerRight,
                   child: IconButton(
                     padding: EdgeInsets.all(0),
-                    onPressed: (){
-                    },
+                    onPressed: (){},
                     icon: Icon(Icons.info, color: ThemeProvider.blue1)
                   ),
                 ),

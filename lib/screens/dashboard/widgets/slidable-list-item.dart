@@ -1,4 +1,5 @@
 import 'package:custodia/widgets/overlay-dialog.dart';
+import 'package:custodia/screens/dashboard/widgets/overlay-ignore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -88,6 +89,15 @@ class _SlidableListItemState extends State<SlidableListItem> {
     );
   }
 
+  showIgnoreOverlayDialog() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => OverlayIgnore()
+      )
+    );
+  }
+
   List<Widget> mainActions(BuildContext context) {
     return <Widget>[
       IconSlideAction(
@@ -102,7 +112,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
           ),
           child: Icon(Icons.block, color: Colors.white, size: 30,)
         ),
-        onTap: showOverlayDialog,
+        onTap: showIgnoreOverlayDialog,
       )
     ];
   }
