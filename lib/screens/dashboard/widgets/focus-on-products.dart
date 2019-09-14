@@ -16,7 +16,7 @@ class FocusOnProducts extends StatelessWidget {
       color: ThemeProvider.lightBlue,
       child: Column(
         children: <Widget>[
-          BlockHeader(
+          HeaderItem(
             title: "Focus on products",
             description: "Suggested products that make the home more enjoyable",
             colorAccent: accentColor
@@ -33,7 +33,7 @@ class FocusOnProducts extends StatelessWidget {
             description: "Trim the hedges to keep them looking nice",
             points: 10,
             color: accentColor),
-          BlockFooter(text: "PRODUCTS", accentColor: accentColor)
+          FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: "PRODUCTS", accentColor: accentColor)
         ],
       ),
     );

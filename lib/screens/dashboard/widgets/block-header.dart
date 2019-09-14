@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import '../../../theme-provider.dart';
 
-class BlockHeader extends StatelessWidget {
+class HeaderItem extends StatelessWidget {
 
-  BlockHeader({this.title, this.description, this.colorAccent});
+  HeaderItem({this.title, this.description, this.colorAccent});
 
   final String title;
   final String description;
@@ -13,7 +14,7 @@ class BlockHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: EdgeInsets.only(top: 10, left: Constants.screenPadding, right: Constants.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

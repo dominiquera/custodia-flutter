@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
 
-class BlockFooter extends StatelessWidget {
+class FooterItem extends StatelessWidget {
 
-  BlockFooter({this.text, this.accentColor});
+  FooterItem({this.mainText, this.accentText, this.accentColor});
 
-  final String text;
+  final String mainText;
+  final String accentText;
   final Color accentColor;
 
   @override
@@ -28,14 +29,14 @@ class BlockFooter extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                   children: <TextSpan>[
                     TextSpan(
-                      text: 'MORE THIS MONTH FOR ',
+                      text: mainText,
                       style: TextStyle(
                         color: ThemeProvider.darkGrey,
                         fontSize: 14
                       )
                     ),
                     TextSpan(
-                      text: '$text >',
+                      text: '$accentText >',
                       style: TextStyle(
                         color: accentColor,
                         fontSize: 14

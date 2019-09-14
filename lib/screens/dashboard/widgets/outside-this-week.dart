@@ -24,7 +24,7 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
       color: ThemeProvider.lightBlue,
       child: Column(
         children: <Widget>[
-          BlockHeader(
+          HeaderItem(
             title: "Outside This Week",
             description: "Suggested for outsided the home. Slide the card to customize",
             colorAccent: accentColor
@@ -41,7 +41,7 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
             description: "Trim the hedges to keep them looking nice",
             points: 10,
             color: ThemeProvider.green3),
-          BlockFooter(text: "OUTSIDE", accentColor: accentColor)
+          FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: "OUTSIDE", accentColor: accentColor)
         ],
       ),
     );

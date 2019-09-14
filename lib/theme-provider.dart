@@ -10,6 +10,7 @@ class ThemeProvider {
   static const green1 = Color(0xFF8fbc5c);
   static const green2 = Color(0xFF63bd6d);
   static const green3 = Color(0xFF8dc63f);
+  static const green4 = Color(0xFFafd4a8);
   static const blue1 = Color(0xFF21ccde);
   static const blue8 = Color(0xFF8dc7fc);
   static const blue2 = Color(0xFF3191de);
@@ -89,11 +90,20 @@ class ThemeProvider {
     begin: FractionalOffset.topCenter,
     end: FractionalOffset.bottomCenter,
     colors: [
-      Colors.white,
       lightGrey1.withOpacity(0.1),
-      lightGrey1,
+      grey2.withOpacity(0.7),
     ],
-    stops: [0.0, 0.5, 1.0],
+    stops: [0.0, 1.0],
+  );
+
+  static final greyGradientVertical2 = LinearGradient(
+    begin: FractionalOffset.topCenter,
+    end: FractionalOffset.bottomCenter,
+    colors: [
+      grey2.withOpacity(0.7),
+      lightGrey1.withOpacity(0.1)
+    ],
+    stops: [0.0, 1.0],
   );
 
   static final theme = ThemeData(

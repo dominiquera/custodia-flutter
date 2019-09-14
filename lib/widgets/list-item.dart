@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../constants.dart';
+
 class ListItem extends StatefulWidget {
 
-  ListItem({this.title, this.description, this.color});
+  ListItem({this.description, this.color});
 
-  final String title;
   final String description;
   final Color color;
 
@@ -16,7 +17,7 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10),
+      padding: EdgeInsets.only(bottom: Constants.screenPadding, left: Constants.screenPadding, right: Constants.screenPadding),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -31,23 +32,11 @@ class _ListItemState extends State<ListItem> {
           ),
           SizedBox(width: 25),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  widget.title.toUpperCase(),
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: "RobotoMedium"
-                  )
-                ),
-                Text(
-                  widget.description,
-                  style: TextStyle(
-                    fontSize: 20,
-                  )
-                )
-              ],
+            child: Text(
+              widget.description,
+              style: TextStyle(
+                fontSize: 20,
+              )
             ),
           )
         ],

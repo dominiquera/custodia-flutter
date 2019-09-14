@@ -3,26 +3,27 @@ import 'package:custodia/widgets/list-item.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
+import '../constants.dart';
 import '../theme-provider.dart';
+import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
+import 'package:flutube/flutube.dart';
 
-
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
-class LearnMoreAbout extends StatefulWidget {
+class LearnMoreAbout extends StatefulWidget  {
   @override
   _LearnMoreAboutState createState() => _LearnMoreAboutState();
 }
 
-class _LearnMoreAboutState extends State<LearnMoreAbout> {
+class _LearnMoreAboutState extends State<LearnMoreAbout>  {
 
-  Color accentColor = ThemeProvider.green1;
+  Color accentColor = ThemeProvider.green4;
+  Color accentColor2 = ThemeProvider.green3;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: Drawer(
-        child: DrawerContent()// Populate the Drawer in the next step.
+        child: DrawerContent()
       ),
       appBar: GradientAppBar(
         title: Text('July 3', style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
@@ -36,52 +37,103 @@ class _LearnMoreAboutState extends State<LearnMoreAbout> {
 
   body() {
     return Container(
-      padding: const EdgeInsets.only(top: 10),
-      color: ThemeProvider.lightGrey1,
+      padding: EdgeInsets.only(top: 10),
+      color: Colors.white,
       child: ListView(
         children: <Widget>[
-          BlockHeader(
+          HeaderItem(
             title: "Learn More About Cutting The Grass",
             description: "Suggested for outsided the home. Slide the card to customize",
-            colorAccent: accentColor
+            colorAccent: accentColor2
           ),
 //          video(),
           SizedBox(height: 20),
           ListItem(
-            title: "Hedge trimming",
             description: "Trim the hedges to keep them looking nice",
             color: accentColor),
           ListItem(
-            title: "Hedge trimming",
             description: "Trim the hedges to keep them looking nice",
             color: accentColor),
+          details()
+
         ],
       ),
     );
   }
 
-  video() {
-    Container(
-      width: 200,
-      height: 100,
-      child: YoutubePlayer(
-        context: context,
-        videoId: "iLnmTe5Q2Qw",
-        flags: YoutubePlayerFlags(
-          autoPlay: true,
-          showVideoProgressIndicator: true,
-        ),
-        videoProgressIndicatorColor: Colors.amber,
-        progressColors: ProgressColors(
-          playedColor: Colors.amber,
-          handleColor: Colors.amberAccent,
-        ),
-//      onPlayerInitialized: (controller) {
-//        _controller = controller;
-//        _controller.addListener(listener);
-//      },
+  video(){
+    return FluTube(
+      'https://www.youtube.com/watch?v=fq4N0hgOWzU',
+      aspectRatio: 16 / 9,
+      autoPlay: true,
+      looping: true,
+      onVideoStart: () {},
+      onVideoEnd: () {},
+    );
+  }
+
+  detailsItem(String title, String description, Color circleColor) {
+    return Padding(
+      padding: EdgeInsets.only(left: Constants.screenPadding, right: Constants.screenPadding, bottom: 20),
+      child: Column(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: circleColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              SizedBox(width: 10),
+              Text(
+                title,
+                style: TextStyle(
+                  fontSize: 26,
+                  fontFamily: "RobotoMedium",
+                  color: ThemeProvider.darkGrey
+                )
+              ),
+            ],
+          ),
+          SizedBox(height: 10),
+          Text(
+            description,
+            style: TextStyle(
+              fontSize: 20
+            )
+          )
+        ],
       ),
     );
-
   }
+
+  Widget details() {
+    return Container(
+      color: ThemeProvider.lightGrey1,
+      child: Column(
+        children: <Widget>[
+          Container(
+            height: 10,
+            decoration: BoxDecoration(
+                gradient: ThemeProvider.greyGradientVertical2
+            ),
+          ),
+          HeaderItem(
+              title: "The Details",
+              description: "Here are few key details you can use to do it on your own",
+              colorAccent: accentColor2
+          ),
+          SizedBox(height: 20),
+          detailsItem("Frequency", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.blue1),
+          detailsItem("Tools", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.green1),
+          detailsItem("Materials", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.blue5),
+          FooterItem(mainText: "BAXK TO YOUR ", accentText: "HMP", accentColor: accentColor)
+        ],
+      ),
+    );
+  }
+
 }

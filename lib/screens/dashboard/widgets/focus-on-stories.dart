@@ -16,7 +16,7 @@ class FocusOnStories extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: <Widget>[
-          BlockHeader(
+          HeaderItem(
             title: "Focus on stories",
             description: "Suggested for outsided the home. Slide the card to customize",
             colorAccent: accentColor
@@ -33,7 +33,7 @@ class FocusOnStories extends StatelessWidget {
             description: "Trim the hedges to keep them looking nice",
             points: 10,
             color: accentColor),
-          BlockFooter(text: "CLEAN", accentColor: accentColor)
+          FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: "CLEAN", accentColor: accentColor)
         ],
       ),
     );

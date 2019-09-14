@@ -25,7 +25,7 @@ class _PreventThisWeekState extends State<PreventThisWeek> {
       color: Colors.white,
       child: Column(
         children: <Widget>[
-          BlockHeader(
+          HeaderItem(
             title: "Prevent This Week",
             description: "Suggested for inside the home. Slide the card to customize",
             colorAccent: accentColor
@@ -42,7 +42,7 @@ class _PreventThisWeekState extends State<PreventThisWeek> {
             description: "Trim the hedges to keep them looking nice",
             points: 10,
             color: ThemeProvider.lightViolet),
-          BlockFooter(text: "PREVENT", accentColor: accentColor)
+          FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: "PREVENT", accentColor: accentColor)
         ],
       ),
     );
