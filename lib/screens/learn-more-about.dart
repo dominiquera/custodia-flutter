@@ -3,7 +3,6 @@ import 'package:custodia/widgets/list-item.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
-import '../constants.dart';
 import '../theme-provider.dart';
 import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
@@ -74,7 +73,7 @@ class _LearnMoreAboutState extends State<LearnMoreAbout>  {
 
   detailsItem(String title, String description, Color circleColor) {
     return Padding(
-      padding: EdgeInsets.only(left: Constants.screenPadding, right: Constants.screenPadding, bottom: 20),
+      padding: EdgeInsets.only(left: ThemeProvider.screenPadding, right: ThemeProvider.screenPadding, bottom: 20),
       child: Column(
         children: <Widget>[
           Row(

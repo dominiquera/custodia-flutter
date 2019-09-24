@@ -27,6 +27,8 @@ class ThemeProvider {
   static const grey2 = Color(0xFF838383);
   static const darkGrey = Color(0xFF3d3d3d);
 
+  static double screenPadding = 20.0;
+
   static final blueTransparentGradientDiagonal = LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../theme-provider.dart';
 
 
@@ -9,7 +8,7 @@ class Top3Checkpoints extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(Constants.screenPadding),
+      padding: EdgeInsets.all(ThemeProvider.screenPadding),
       decoration: BoxDecoration(
         boxShadow: [
           const BoxShadow(

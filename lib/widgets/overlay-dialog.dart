@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
 import '../theme-provider.dart';
 import 'blue-rounded-button.dart';
 import 'filter-button.dart';
@@ -18,7 +17,7 @@ class _OverlayDialogState extends State<OverlayDialog> {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0),
       body: Container(
-        padding: EdgeInsets.all(Constants.screenPadding),
+        padding: EdgeInsets.all(ThemeProvider.screenPadding),
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueTransparentGradientDiagonal
         ),

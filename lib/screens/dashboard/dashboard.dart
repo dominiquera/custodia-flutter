@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
-import '../../constants.dart';
 import '../../theme-provider.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -59,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: <Widget>[
         Image.asset("assets/images/house.jpg", height: 500, fit: BoxFit.fitHeight,),
         Padding(
-          padding: EdgeInsets.all(Constants.screenPadding),
+          padding: EdgeInsets.all(ThemeProvider.screenPadding),
           child: Column(
             children: <Widget>[
               Text(
@@ -106,11 +105,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget score() {
     return Padding(
-      padding: EdgeInsets.only(top: Constants.screenPadding, bottom: Constants.screenPadding),
+      padding: EdgeInsets.only(top: ThemeProvider.screenPadding, bottom: ThemeProvider.screenPadding),
       child: Column(
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: Constants.screenPadding),
+            padding: EdgeInsets.symmetric(horizontal: ThemeProvider.screenPadding),
             child: Text(
               "Good morning John, just a few things on for this week. Here is your dad's current Home Score.",
               style: TextStyle(
@@ -127,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: Constants.screenPadding),
+            padding: EdgeInsets.symmetric(horizontal: ThemeProvider.screenPadding),
             child: Column(
               children: <Widget>[
                 Align(

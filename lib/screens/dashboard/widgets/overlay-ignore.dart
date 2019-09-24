@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../theme-provider.dart';
 import '../../../widgets/blue-rounded-button.dart';
 
@@ -16,7 +15,7 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
     return Scaffold(
       backgroundColor: Colors.white.withOpacity(0),
       body: Container(
-        padding: EdgeInsets.all(Constants.screenPadding),
+        padding: EdgeInsets.all(ThemeProvider.screenPadding),
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueTransparentGradientDiagonal
         ),

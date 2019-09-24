@@ -31,11 +31,11 @@ class _QuestionnaireStep3ScreenState extends State<QuestionnaireStep3Screen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text("Who needs a home managment plan?",
-              style: TextStyle(
-                  fontSize: 35,
-                  fontFamily: "RobotoLight",
-                  color: Colors.white
-              )
+            style: TextStyle(
+              fontSize: 35,
+              fontFamily: "RobotoLight",
+              color: Colors.white
+            )
           ),
           SizedBox(height: 10),
           Text("Select all that apply",

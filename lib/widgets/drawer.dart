@@ -1,3 +1,5 @@
+import 'package:custodia/screens/login/select.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../theme-provider.dart';
@@ -20,7 +22,8 @@ class _DrawerContentState extends State<DrawerContent> {
         menuItem("Make a request", (){}),
         menuItem("Profile", (){}),
         menuItemSecondary(Icons.headset, "Contact Support", (){}),
-        menuItemSecondary(Icons.settings, "Account Settings", (){})
+        menuItemSecondary(Icons.settings, "Account Settings", (){}),
+        menuItem("Log out", logOut),
       ],
     );
   }
@@ -68,5 +71,14 @@ class _DrawerContentState extends State<DrawerContent> {
         ),
       )
     );
+  }
+
+  logOut() async {
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+    await _auth.signOut().then((value){
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => LoginSelectScreen()), (Route<dynamic> route) => false
+      );
+    });
   }
 }

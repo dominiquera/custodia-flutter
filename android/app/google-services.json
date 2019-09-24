@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "760123565598",
+    "firebase_url": "https://custodia-app-248318.firebaseio.com",
+    "project_id": "custodia-app-248318",
+    "storage_bucket": "custodia-app-248318.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760123565598:android:d083a93baa12086ef3f00f",
+        "android_client_info": {
+          "package_name": "com.custodia.custodia"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "760123565598-6oesir6obajeaj9a999980rel582fvti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjBA-XRoy1nE-UIKIxfkm7VeDWI7Pw7ZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "760123565598-6oesir6obajeaj9a999980rel582fvti.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "760123565598-560kp13qrqgpnadc971tn7ernmss34dl.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.custodia.custodia"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

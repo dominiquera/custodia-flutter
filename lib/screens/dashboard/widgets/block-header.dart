@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../constants.dart';
 import '../../../theme-provider.dart';
 
 class HeaderItem extends StatelessWidget {
@@ -14,7 +13,7 @@ class HeaderItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: 10, left: Constants.screenPadding, right: Constants.screenPadding),
+      padding: EdgeInsets.only(top: 10, left: ThemeProvider.screenPadding, right: ThemeProvider.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
