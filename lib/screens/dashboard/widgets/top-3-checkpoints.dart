@@ -1,9 +1,24 @@
+import 'package:custodia/models/maintenance_item.dart';
+import 'package:custodia/services/api-service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
 
+class Top3Checkpoints extends StatefulWidget {
 
-class Top3Checkpoints extends StatelessWidget {
+  @override
+  _Top3CheckpointsState createState() => _Top3CheckpointsState();
+}
+
+class _Top3CheckpointsState extends State<Top3Checkpoints> {
+
+  List<MaintenanceItem> maintenanceItems = [];
+
+  @override
+  void initState() {
+    getMaintenanceItems();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +65,33 @@ class Top3Checkpoints extends StatelessWidget {
             )
           ),
           SizedBox(height: 30),
-          top3Item("Bathroom deep clean", "This is one of the busiest rooms in the house need to be clean", 1, 10),
-          top3Item("Bathroom deep clean", "This is one of the busiest rooms in the house need to be clean", 2, 10),
-          top3Item("Bathroom deep clean", "This is one of the busiest rooms in the house need to be clean", 3, 10)
+          top3Items()
         ],
       ),
     );
   }
 
-  Widget top3Item(String title, String description, int count, int points) {
+  top3Items(){
+    if (maintenanceItems.isEmpty) {
+      return Center(
+        child: Container(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(ThemeProvider.orange)
+          )
+        ),
+      );
+    } else {
+      List<Widget> children = [];
+      maintenanceItems.asMap().forEach((index, item) { children.add(top3Item(index + 1, item));  });
+      return Column(
+        children: children
+      );
+    }
+  }
+
+  Widget top3Item(int index, MaintenanceItem maintenanceItem) {
     return Container(
       margin: EdgeInsets.only(bottom: 30),
       child: Row(
@@ -78,7 +111,7 @@ class Top3Checkpoints extends StatelessWidget {
                 ),
                 child: Center(
                   child: Text(
-                    count.toString(),
+                    index.toString(),
                     style: TextStyle(
                       fontFamily: "RobotoMedium",
                       color: ThemeProvider.orange,
@@ -89,7 +122,7 @@ class Top3Checkpoints extends StatelessWidget {
               ),
               SizedBox(height: 5),
               Text(
-                "$points POINTS",
+                "${maintenanceItem.points} POINTS",
                 style: TextStyle(
                   color: ThemeProvider.orange,
                   fontFamily: "RobotoMedium",
@@ -103,7 +136,7 @@ class Top3Checkpoints extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(title.toUpperCase(),
+                Text(maintenanceItem.title.toUpperCase(),
                   style: TextStyle(
                     fontSize: 22,
                     color: ThemeProvider.darkGrey,
@@ -111,7 +144,7 @@ class Top3Checkpoints extends StatelessWidget {
                   )
                 ),
                 SizedBox(height: 5),
-                Text(description,
+                Text(maintenanceItem.summary,
                   style: TextStyle(
                     fontSize: 20,
                     color: ThemeProvider.darkGrey,
@@ -123,5 +156,17 @@ class Top3Checkpoints extends StatelessWidget {
         ]
       ),
     );
+  }
+
+  void getMaintenanceItems() async {
+    maintenanceItems = await APIService.fetchTop3Items();
+    print(">>>>>>");
+    print(maintenanceItems.length);
+    if (this.mounted){
+      setState(() {
+        maintenanceItems;
+      });
+    }
+
   }
 }
