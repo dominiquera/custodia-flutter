@@ -4,9 +4,11 @@ import '../theme-provider.dart';
 
 class FilterButton extends StatefulWidget {
 
-  FilterButton({this.text});
+  FilterButton({this.text, this.id, this.onPressed});
 
   final String text;
+  final int id;
+  final Function onPressed;
 
   @override
   _FilterButtonState createState() => _FilterButtonState();
@@ -18,7 +20,7 @@ class _FilterButtonState extends State<FilterButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: changeColor,
+      onTap: changeState,
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
         decoration: BoxDecoration(
@@ -29,7 +31,7 @@ class _FilterButtonState extends State<FilterButton> {
           widget.text,
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 16,
+            fontSize: 14,
             color: selected ? Colors.white : Colors.grey
           )
         )
@@ -37,9 +39,12 @@ class _FilterButtonState extends State<FilterButton> {
     );
   }
 
-  void changeColor() {
+  void changeState() {
     setState(() {
       selected = !selected;
     });
+    if (selected) {
+      widget.onPressed(widget.id);
+    }
   }
 }

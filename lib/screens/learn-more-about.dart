@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 import '../theme-provider.dart';
+import 'package:flutube/flutube.dart';
+
 import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
-import 'package:flutube/flutube.dart';
 
 class LearnMoreAbout extends StatefulWidget  {
   @override

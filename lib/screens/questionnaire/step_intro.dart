@@ -1,16 +1,39 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
-import '../../screens/questionnaire/step2.dart';
+import '../../screens/questionnaire/step_name.dart';
 
-class QuestionnaireStep1Screen extends StatefulWidget {
+class QuestionnaireStepIntroScreen extends StatefulWidget {
+
+  QuestionnaireStepIntroScreen({this.authResult});
+  final AuthResult authResult;
 
   @override
-  _QuestionnaireStep1ScreenState createState() => _QuestionnaireStep1ScreenState();
+  _QuestionnaireStepIntroScreenState createState() => _QuestionnaireStepIntroScreenState();
 }
 
-class _QuestionnaireStep1ScreenState extends State<QuestionnaireStep1Screen> {
+class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScreen> {
+
+  Map<String, dynamic> requestData = {
+    "token": null,
+    "email": null,
+    "name": null,
+    "who_needs": null,
+    "home_type": null,
+    "home_features": null,
+    "driveways": null,
+    "outdoor_spaces": null,
+    "mobility_issues": null
+  };
+
+  @override
+  void initState() {
+    getToken();
+    requestData["email"] = widget.authResult.user.email;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +70,12 @@ class _QuestionnaireStep1ScreenState extends State<QuestionnaireStep1Screen> {
   loadNextStep() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStep2Screen()),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepNameScreen(requestData: requestData)),
     );
+  }
+
+  void getToken() async {
+    IdTokenResult token = await widget.authResult.user.getIdToken();
+    requestData["token"] = token.token;
   }
 }

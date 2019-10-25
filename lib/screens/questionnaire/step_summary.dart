@@ -1,15 +1,33 @@
+import 'package:custodia/models/home_owner.dart';
 import 'package:custodia/screens/dashboard/dashboard.dart';
+import 'package:custodia/services/api.dart';
+import 'package:custodia/services/globals.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 
-class QuestionnaireStep7Screen extends StatefulWidget {
+class QuestionnaireStepSummaryScreen extends StatefulWidget {
+
+  QuestionnaireStepSummaryScreen({this.requestData});
+
+  final Map<String, dynamic> requestData;
+
   @override
-  _QuestionnaireStep7ScreenState createState() => _QuestionnaireStep7ScreenState();
+  _QuestionnaireStepSummaryScreenState createState() => _QuestionnaireStepSummaryScreenState();
 }
 
-class _QuestionnaireStep7ScreenState extends State<QuestionnaireStep7Screen> {
+class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummaryScreen> {
+
+  HomeOwner owner;
+
+  @override
+  void initState() {
+    print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>summary");
+    print(widget.requestData);
+    owner = homeOwners.firstWhere((item) { return item.id == widget.requestData["who_needs"]; });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,13 +60,13 @@ class _QuestionnaireStep7ScreenState extends State<QuestionnaireStep7Screen> {
                   )
                 ),
                 TextSpan(
-                  text: "John, \n",
+                  text: "${widget.requestData["name"]}, \n",
                   style: TextStyle(
                     fontFamily: "RobotoMedium"
                   )
                 ),
                 TextSpan(
-                  text: "let's review your dads home managment plan",
+                  text: "let's review your ${owner.name} home managment plan",
                   style: TextStyle(
                     fontFamily: "RobotoLight"
                   )
@@ -64,9 +82,27 @@ class _QuestionnaireStep7ScreenState extends State<QuestionnaireStep7Screen> {
   }
 
   loadDashboard() {
+    APIService.createUser(
+        widget.requestData["token"],
+        widget.requestData["name"],
+        widget.requestData["email"],
+        widget.requestData["home_type"],
+        widget.requestData["outdoor_spaces"],
+        widget.requestData["home_features"],
+        widget.requestData["driveways"],
+        widget.requestData["mobility_issues"], onRegistrationSuccess, onRegistrationFailure);
+  }
+
+  void onRegistrationSuccess(){
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => DashboardScreen()),
     );
+  }
+
+  void onRegistrationFailure(){
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: const Text('Something went wrong'),
+    ));
   }
 }

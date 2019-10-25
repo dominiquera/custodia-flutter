@@ -1,8 +1,27 @@
+import 'package:custodia/models/score.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
 
-class ScoreBar extends StatelessWidget {
+class ScoreBar extends StatefulWidget {
+
+  ScoreBar({this.score});
+
+  final Score score;
+
+  @override
+  _ScoreBarState createState() => _ScoreBarState();
+}
+
+class _ScoreBarState extends State<ScoreBar> {
+  GlobalKey _keyScoreBar = GlobalKey();
+  var position;
+
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback(_afterLayout);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
@@ -16,6 +35,7 @@ class ScoreBar extends StatelessWidget {
 
   Widget scoreBar() {
     return Stack(
+      key: _keyScoreBar,
       alignment: Alignment.center,
       children: <Widget>[
         Container(
@@ -40,7 +60,7 @@ class ScoreBar extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 250,
+          left: position != null ? position : 0,
           child: Image.asset("assets/images/pointer.png", width: 10),
         ),
       ]
@@ -69,5 +89,20 @@ class ScoreBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: widgets
     );
+  }
+
+  _afterLayout(_) {
+    final RenderBox renderBox = _keyScoreBar.currentContext.findRenderObject();
+    final width = renderBox.size.width;
+    var point = width / 1150;
+    print("SIZE: $width");
+    print(point);
+    print(widget.score.value);
+    setState(() {
+      print("set State>>>");
+      position = point * 500;
+      print(position);
+
+    });
   }
 }

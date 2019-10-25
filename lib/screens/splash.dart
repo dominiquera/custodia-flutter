@@ -19,6 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     getUser();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

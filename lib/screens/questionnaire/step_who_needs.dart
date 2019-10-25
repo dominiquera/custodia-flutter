@@ -1,16 +1,35 @@
+import 'package:custodia/services/globals.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:custodia/widgets/filter-button.dart';
-import '../../screens/questionnaire/step5.dart';
+import '../../screens/questionnaire/step_home_types.dart';
 
-class QuestionnaireStep4Screen extends StatefulWidget {
+class QuestionnaireStepWhoNeedsScreen extends StatefulWidget {
+
+  QuestionnaireStepWhoNeedsScreen({this.requestData});
+
+  final Map<String, dynamic> requestData;
+
   @override
-  _QuestionnaireStep4ScreenState createState() => _QuestionnaireStep4ScreenState();
+  _QuestionnaireStepWhoNeedsScreenState createState() => _QuestionnaireStepWhoNeedsScreenState();
 }
 
-class _QuestionnaireStep4ScreenState extends State<QuestionnaireStep4Screen> {
+class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNeedsScreen> {
+
+  Map<String, dynamic> requestData;
+  String selectedPerson;
+  int selectedId;
+
+  @override
+  void initState() {
+    requestData = widget.requestData;
+    print(">>>>>>>>>>>>>>>>>>");
+    print(requestData);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,18 +45,18 @@ class _QuestionnaireStep4ScreenState extends State<QuestionnaireStep4Screen> {
 
   Widget body() {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
-          Text("What type of home is it?",
+          Text("Who needs a home managment plan?",
             style: TextStyle(
               fontSize: 35,
               fontFamily: "RobotoLight",
               color: Colors.white
             )
           ),
-          Text("Select one",
+          SizedBox(height: 10),
+          Text("Select all that apply",
             style: TextStyle(
               fontSize: 18,
               fontFamily: "RobotoLight",
@@ -48,7 +67,7 @@ class _QuestionnaireStep4ScreenState extends State<QuestionnaireStep4Screen> {
           Wrap(
             runSpacing: 10,
             spacing: 10,
-            children: buildFilter()
+            children: buildFilter(),
           ),
           SizedBox(height: 70),
           Row(
@@ -64,12 +83,11 @@ class _QuestionnaireStep4ScreenState extends State<QuestionnaireStep4Screen> {
   }
 
   List<Widget> buildFilter() {
-    List<Widget> filters = [];
-    List<String> list = ["Small Bungalow", "Small Condo", "Large Bungalow", "Large Condo", "Small 2-Story", "Larger Home"];
-    list.forEach((i){
-      filters.add(FilterButton(text: i));
-    });
-    return filters;
+    return homeOwners.map((item) { return FilterButton(text: item.name, id: item.id, onPressed: onValueSelected); }).toList();
+  }
+
+  void onValueSelected(int id){
+    selectedId = id;
   }
 
   loadPreviousStep(){
@@ -77,9 +95,11 @@ class _QuestionnaireStep4ScreenState extends State<QuestionnaireStep4Screen> {
   }
 
   loadNextStep() {
+    requestData["who_needs"] = selectedId;
+
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStep5Screen()),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepHomeTypesScreen(requestData: requestData)),
     );
   }
 }

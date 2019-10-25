@@ -1,5 +1,5 @@
 import 'package:custodia/models/maintenance_item.dart';
-import 'package:custodia/services/api-service.dart';
+import 'package:custodia/services/api.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';

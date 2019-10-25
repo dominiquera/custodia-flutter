@@ -1,7 +1,7 @@
+import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
-import '../../../widgets/blue-rounded-button.dart';
 
 class OverlayIgnore extends StatefulWidget {
   @override

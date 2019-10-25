@@ -1,17 +1,22 @@
 import 'package:custodia/screens/dashboard/dashboard.dart';
 import 'package:custodia/screens/login/phone-number.dart';
+import 'package:custodia/screens/questionnaire/step_intro.dart';
+import 'package:custodia/services/api.dart';
+import 'package:custodia/services/firebase-auth.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../theme-provider.dart';
 
 class LoginSelectScreen extends StatelessWidget {
 
+  BuildContext ctx;
+
   @override
   Widget build(BuildContext context) {
+    ctx = context;
     return Scaffold(
       body: Container(
         padding: EdgeInsets.all(30),
@@ -30,7 +35,7 @@ class LoginSelectScreen extends StatelessWidget {
             SizedBox(height: 30),
             SizedBox(
               width: double.infinity,
-              child: BlueRoundedButton(text: "Login with Google", onPressed: () => loginWithGoogle(context))
+              child: BlueRoundedButton(text: "Login with Google", onPressed: () => FirebaseAuthService.signInWithGoogle(onGoogleSignInSuccess))
             ),
           ],
         ),
@@ -38,30 +43,30 @@ class LoginSelectScreen extends StatelessWidget {
     );
   }
 
-  loginWithGoogle(BuildContext context) async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
+  void onGoogleSignInSuccess(AuthResult authResult){
 
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
-      accessToken: googleAuth.accessToken,
-      idToken: googleAuth.idToken,
-    );
-    final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-      if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
-      }
+    APIService.signInWithGoogleId(authResult, onAPiSignInSuccess, onSignInFailed);
   }
 
 
-  openPhoneNumberLogin(BuildContext context) {
+  void openPhoneNumberLogin(BuildContext context) {
     Navigator.push(
-      context,
+      ctx,
       MaterialPageRoute(builder: (context) => LoginPhoneNumberScreen()),
+    );
+  }
+
+  void onAPiSignInSuccess(){
+    Navigator.pushReplacement(
+      ctx,
+      MaterialPageRoute(builder: (context) => DashboardScreen()),
+    );
+  }
+
+  void onSignInFailed(AuthResult authResult){
+    Navigator.push(
+      ctx,
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: authResult)),
     );
   }
 }

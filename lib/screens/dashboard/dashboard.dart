@@ -1,4 +1,7 @@
+import 'package:custodia/models/maintenance_item.dart';
+import 'package:custodia/models/score.dart';
 import 'package:custodia/screens/dashboard/widgets/clean-this-week.dart';
+import 'package:custodia/screens/dashboard/widgets/dashboard-section.dart';
 import 'package:custodia/screens/dashboard/widgets/focus-on-products.dart';
 import 'package:custodia/screens/dashboard/widgets/focus-on-stories.dart';
 import 'package:custodia/screens/dashboard/widgets/outside-this-week.dart';
@@ -6,6 +9,8 @@ import 'package:custodia/screens/dashboard/widgets/prevent-this-week.dart';
 import 'package:custodia/screens/dashboard/widgets/score-bar.dart';
 import 'package:custodia/screens/dashboard/widgets/steps.dart';
 import 'package:custodia/screens/dashboard/widgets/top-3-checkpoints.dart';
+import 'package:custodia/screens/widgets/progress-indicator.dart';
+import 'package:custodia/services/api.dart';
 import 'package:custodia/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +24,35 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+
+  Score score;
+  List<MaintenanceItem> outsideItems = [];
+  List<MaintenanceItem> insideItems = [];
+  List<MaintenanceItem> storiesItems = [];
+  List<MaintenanceItem> cleanItems = [];
+  List<MaintenanceItem> careItems = [];
+  List<MaintenanceItem> productsItems = [];
+  List<MaintenanceItem> relatedServicesItems = [];
+  List<MaintenanceItem> preventItems = [];
+
+  List<Map<String, dynamic>> sectionData;
+
+  @override
+  void initState() {
+    sectionData = [
+      {"id": 1, "title": "Outside This Month", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items": outsideItems, "fetched": false},
+      {"id": 2, "title": "Inside This Month", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items": insideItems, "fetched": false},
+      {"id": 3, "title": "Clean This Month", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items":  cleanItems, "fetched": false},
+      {"id": 4, "title": "Focus on Stories", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items": storiesItems, "fetched": false},
+      {"id": 5, "title": "A Focus on Care", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items": careItems, "fetched": false},
+      {"id": 6, "title": "Meaningful Producs", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items": productsItems, "fetched": false},
+      {"id": 7, "title": "Related Services", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items": relatedServicesItems, "fetched": false},
+      {"id": 8, "title": "Prevent This Month", "subtitle": "Suggested for outsided the home. Slide the card to customize", "accentColor": Colors.red, "items": preventItems, "fetched": false},
+    ];
+
+    fetchSections();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,15 +75,43 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: <Widget>[
         header(),
         Steps(),
-        score(),
-        Top3Checkpoints(),
-        OutsideThisWeek(),
-        PreventThisWeek(),
-        CleanThisWeek(),
-        FocusOnStories(),
-        FocusOnProducts()
+//        score != null
+//          ? scoreBlock()
+//          : Padding(
+//              padding: const EdgeInsets.all(10.0),
+//              child: Center(child: CircularProgressIndicator()),
+//        ),
+        Column(children: buildSections())
+//        outsideItems.isEmpty ? Container() : DashboardSection(title: "Outside This Month", subtitle: "Suggested for outsided the home. Slide the card to customize", accentColor: Colors.red, items: outsideItems),
+//        storiesItems.isEmpty ? Container() : DashboardSection(title: "Outside This Month", subtitle: "Suggested for outsided the home. Slide the card to customize", accentColor: Colors.red, items: storiesItems),
+//        preventItems.isEmpty ? Container() : DashboardSection(title: "Prevent This Month", subtitle: "Suggested for outsided the home. Slide the card to customize", accentColor: Colors.red, items: preventItems),
+
+//        Top3Checkpoints(),
+//        OutsideThisWeek(),
+//        PreventThisWeek(),
+//        CleanThisWeek(),
+//        FocusOnStories(),
+//        FocusOnProducts()
       ]
     );
+  }
+
+  List<Widget> buildSections(){
+    return sectionData.map((section) {
+
+      if (section["items"].isNotEmpty) {
+        return DashboardSection(
+          title: section["title"],
+          subtitle: section["subtitle"],
+          accentColor: section["accentColor"],
+          items: section["items"]
+        );
+      } else if (section["items"].isEmpty && section["fetched"] == false) {
+        return ProgressIndicatorWithPadding();
+      } else {
+        return Container();
+      }
+    }).toList();
   }
 
   Widget header() {
@@ -103,7 +165,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     );
   }
 
-  Widget score() {
+  Widget scoreBlock() {
     return Padding(
       padding: EdgeInsets.only(top: ThemeProvider.screenPadding, bottom: ThemeProvider.screenPadding),
       child: Column(
@@ -137,13 +199,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     icon: Icon(Icons.info, color: ThemeProvider.blue1)
                   ),
                 ),
-                ScoreBar()
+                ScoreBar(score: score)
               ]
             ),
           ),
         ],
       ),
     );
+  }
+
+  void fetchScore() async {
+    APIService.fetchScore().then((value) {
+      score = value;
+      setState(() {});
+    });
+  }
+
+  void fetchSections() async {
+    sectionData.forEach((section) async {
+      section["items"] = await APIService.fetchTop3ItemsForSection(section["id"]);
+      APIService.fetchTop3ItemsForSection(section["id"]).then((result) {
+        section["fetched"] = true;
+        setState(() {});
+      });
+    });
   }
 
 }

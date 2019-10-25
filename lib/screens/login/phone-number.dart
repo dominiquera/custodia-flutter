@@ -1,8 +1,11 @@
 import 'package:custodia/screens/dashboard/dashboard.dart';
 import 'package:custodia/screens/login/sms-code.dart';
+import 'package:custodia/screens/questionnaire/step_intro.dart';
+import 'package:custodia/services/firebase-auth.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:custodia/widgets/text-field.dart';
 import 'package:flutter/material.dart';
+import 'package:custodia/services/api.dart';
 
 import '../../theme-provider.dart';
 
@@ -38,15 +41,20 @@ class _LoginPhoneNumberScreenState extends State<LoginPhoneNumberScreen> {
       body: Container(
         padding: EdgeInsets.all(30),
         decoration: BoxDecoration(
-            gradient: ThemeProvider.blueTransparentGradientDiagonal
+          gradient: ThemeProvider.blueTransparentGradientDiagonal
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset("assets/images/logo.png", width: 230),
-            SizedBox(height: 70),
-            phoneForm(),
-          ],
+        child: Center(
+          child: ListView(
+          shrinkWrap: true,
+            children: <Widget>[
+              Container(
+                height: 100,
+                child: Image.asset("assets/images/logo.png")
+              ),
+              SizedBox(height: 70),
+              phoneForm(),
+            ],
+          ),
         ),
       ),
     );
@@ -105,42 +113,46 @@ class _LoginPhoneNumberScreenState extends State<LoginPhoneNumberScreen> {
 
   validatePhoneNumber() {
     if (_formKey.currentState.validate()) {
-      setState(() {
-        isButtonDisabled = true;
-      });
-      _verifyPhoneNumber();
+//      setState(() {
+//        isButtonDisabled = true;
+//      });
+      FirebaseAuthService.verifyPhoneNumber(
+        _phoneNumberController.text,
+        onCodeSend,
+        onVerificationCompleted,
+        onVerificationFailed
+      );
     }
   }
 
-  void _verifyPhoneNumber() async {
-    final PhoneVerificationCompleted verificationCompleted = (AuthCredential phoneAuthCredential) {
-      print(">>>>>>>Received phone auth credential: $phoneAuthCredential");
+  onCodeSend(String verificationId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => LoginSmsCodeScreen(verificationId: verificationId)),
+    );
+  }
 
-      _auth.signInWithCredential(phoneAuthCredential);
-      openDashboardScreen();
-    };
+  onVerificationCompleted(AuthCredential phoneAuthCredential) {
+//    print(phoneAuthCredential);
+//    APIService.signInWithPhoneNumber(phoneAuthCredential, onAPiSignInSuccess, onApiSignInFailed);
 
-    final PhoneVerificationFailed verificationFailed = (AuthException authException) {
-      print(">>>>>>Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}");
-      showSnackBar("Phone number verification failed. ${authException.message}");
-    };
+  }
 
-    final PhoneCodeSent codeSent = (String verificationId, [int forceResendingToken]) async {
-      print('>>>>>>Please check your phone for the verification code.');
-      openSmsScreen(verificationId);
-    };
+  void onAPiSignInSuccess(){
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => DashboardScreen()), (Route<dynamic> route) => false
+    );
+  }
 
-    final PhoneCodeAutoRetrievalTimeout codeAutoRetrievalTimeout = (String verificationId) {
-      print(">>>>>codeAutoRetrievalTimeout");
-    };
+  void onApiSignInFailed(){
+//    Navigator.push(
+//      context,
+//      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: authResult)),
+//    );
+  }
 
-    await _auth.verifyPhoneNumber(
-      phoneNumber: "+${_phoneNumberController.text}",
-      timeout: const Duration(seconds: 5),
-      verificationCompleted: verificationCompleted,
-      verificationFailed: verificationFailed,
-      codeSent: codeSent,
-      codeAutoRetrievalTimeout: codeAutoRetrievalTimeout);
+  onVerificationFailed(String message){
+    showSnackBar("Phone number verification failed. $message");
   }
 
   void openDashboardScreen(){

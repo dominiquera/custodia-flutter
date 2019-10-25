@@ -1,4 +1,7 @@
 import 'package:custodia/screens/dashboard/dashboard.dart';
+import 'package:custodia/screens/questionnaire/step_intro.dart';
+import 'package:custodia/services/api.dart';
+import 'package:custodia/services/firebase-auth.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:custodia/widgets/text-field.dart';
 import 'package:flutter/material.dart';
@@ -37,24 +40,29 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueTransparentGradientDiagonal
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Image.asset("assets/images/logo.png", width: 230),
-            SizedBox(height: 70),
-            smsForm(),
-            SizedBox(height: 40),
-            FlatButton(
-              child: Text(
-                "Back",
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white
-                )
+        child: Center(
+          child: ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              Container(
+                height: 100,
+                child: Image.asset("assets/images/logo.png")
               ),
-              onPressed: () => loadPreviousScreen(context)
-            )
-          ],
+              SizedBox(height: 70),
+              smsForm(),
+              SizedBox(height: 40),
+              FlatButton(
+                child: Text(
+                  "Back",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white
+                  )
+                ),
+                onPressed: () => loadPreviousScreen(context)
+              )
+            ],
+          ),
         ),
       ),
     );
@@ -103,25 +111,39 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
       verificationId: widget.verificationId,
       smsCode: _smsController.text,
     );
-    try {
-      final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
-      if (user != null) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => DashboardScreen()),
-        );
-      } else {
-        print('Sign in failed');
-      }
-    } on PlatformException catch (e) {
-      if (e.code == "ERROR_INVALID_VERIFICATION_CODE") {
-        showSnackBar("Verification code is incorrect");
-        setState(() {
-          isButtonDisabled = false;
-        });
-      }
-      print(e.code);
-    }
+    FirebaseAuthService.signInWIthPhoneNumber(credential, onSignInSuccess, onSignInError);
+  }
+
+  void onSignInSuccess(bool isNewUser, AuthResult authResult) {
+    print(">>>>onSignInSuccess");
+    APIService.signInWithPhoneNumber(authResult, onAPiSignInSuccess, onApiSignInFailed);
+
+//    if (isNewUser) {
+//      openQuestionnaireScreen();
+//    } else {
+//      openDashboardScreen();
+//    }
+  }
+
+  void onAPiSignInSuccess(){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => DashboardScreen()),
+    );
+  }
+
+  void onApiSignInFailed(AuthResult result){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: result)),
+    );
+  }
+
+  void onSignInError() {
+    showSnackBar("Verification code is incorrect");
+    setState(() {
+      isButtonDisabled = false;
+    });
   }
 
   codeValidator(String value) {
@@ -129,7 +151,7 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
       return 'Please enter SMS code';
     }
     if (value.length != 6) {
-      return 'SMS code should be 6 integers';
+      return 'SMS code should be 6 digits';
     }
     if (!isNumeric(value)) {
       return 'SMS code should contain only numbers';

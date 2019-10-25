@@ -1,8 +1,5 @@
-
 import 'package:custodia/screens/dashboard/widgets/slidable-card.dart';
-import 'package:custodia/widgets/overlay-dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../theme-provider.dart';
 import 'block-footer.dart';

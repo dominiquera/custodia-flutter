@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../theme-provider.dart';
 import 'block-footer.dart';
 import 'block-header.dart';
