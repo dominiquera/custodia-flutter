@@ -20,6 +20,7 @@ class QuestionnaireStepSummaryScreen extends StatefulWidget {
 class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummaryScreen> {
 
   HomeOwner owner;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -31,6 +32,7 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueGradientDiagonal,
@@ -101,8 +103,7 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
   }
 
   void onRegistrationFailure(){
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: const Text('Something went wrong'),
-    ));
+    final snackBar = SnackBar(content: Text('Something went wrong'));
+    _scaffoldKey.currentState.showSnackBar(snackBar);
   }
 }

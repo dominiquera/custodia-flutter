@@ -256,7 +256,7 @@ class APIService {
       String token,
       String name,
       String email,
-      List<int> homeType,
+      String homeType,
       List<int> outdoorSpaces,
       List<int> features,
       List<int> driveways,
@@ -264,6 +264,8 @@ class APIService {
       Function onSuccess,
       Function onFail
       ) async {
+
+    print(">>>>>createUser");
 
     String body = json.encode({
       "firebase_registration_token": token,

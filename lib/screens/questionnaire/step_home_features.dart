@@ -24,7 +24,8 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
 
   List<HomeFeature> homeFeatures = [];
   List<int> homeFeaturesSelectedIds = [];
-  
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     requestData = widget.requestData;
@@ -37,6 +38,7 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueGradientDiagonal,
@@ -99,11 +101,16 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
   }
 
   loadNextStep() {
-    requestData["home_features"] = homeFeaturesSelectedIds;
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepOutdoorSpaceScreen(requestData: requestData)),
-    );
+    if( homeFeaturesSelectedIds.isNotEmpty) {
+      requestData["home_features"] = homeFeaturesSelectedIds;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionnaireStepOutdoorSpaceScreen(requestData: requestData)),
+      );
+    } else {
+      final snackBar = SnackBar(content: Text('Please select one'));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
   }
 
   void fetchHomeTypes() {

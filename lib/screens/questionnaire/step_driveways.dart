@@ -1,5 +1,6 @@
 import 'package:custodia/models/driveway_type.dart';
 import 'package:custodia/screens/questionnaire/step_mobility_issues.dart';
+import 'package:custodia/screens/widgets/centered_progress_indicator.dart';
 import 'package:custodia/screens/widgets/progress-indicator.dart';
 import 'package:custodia/services/api.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   Map<String, dynamic> requestData;
   List<DrivewayType> driveways = [];
   List<int> selectedDrivewaysIds = [];
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueGradientDiagonal,
@@ -66,7 +69,7 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
             )
           ),
           SizedBox(height: 80),
-          driveways.isEmpty ? ProgressIndicatorWithPadding() : Wrap(
+          driveways.isEmpty ? CenteredProgressIndicator() : Wrap(
             runSpacing: 10,
             spacing: 5,
             children: buildFilter()
@@ -97,11 +100,17 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   }
 
   loadNextStep() {
-    requestData["driveways"] = selectedDrivewaysIds;
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepMobilityIssuesScreen(requestData: requestData,)),
-    );
+    if (selectedDrivewaysIds.isNotEmpty) {
+      requestData["driveways"] = selectedDrivewaysIds;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionnaireStepMobilityIssuesScreen(requestData: requestData,)),
+      );
+    } else {
+      Scaffold.of(context).showSnackBar(SnackBar(
+        content: const Text('Please select one'),
+      ));
+    }
   }
 
   void fetchDriveways() {

@@ -21,6 +21,7 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   Map<String, dynamic> requestData;
   String selectedPerson;
   int selectedId;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -33,6 +34,7 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueGradientDiagonal,
@@ -95,11 +97,17 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   }
 
   loadNextStep() {
-    requestData["who_needs"] = selectedId;
+    if (selectedId != null) {
+      requestData["who_needs"] = selectedId;
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepHomeTypesScreen(requestData: requestData)),
-    );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionnaireStepHomeTypesScreen(requestData: requestData)),
+      );
+    } else {
+      final snackBar = SnackBar(content: Text('Please select one'));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
+
   }
 }

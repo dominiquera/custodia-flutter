@@ -25,6 +25,7 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
   Map<String, dynamic> requestData;
   List<OutdoorSpace> outdoorSpaces = [];
   List<int> outdoorSpacesSelectedIds = [];
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -38,6 +39,7 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueGradientDiagonal,
@@ -100,12 +102,17 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
   }
 
   loadNextStep() {
-    requestData["outdoor_spaces"] = outdoorSpacesSelectedIds;
+    if (outdoorSpacesSelectedIds.isNotEmpty) {
+      requestData["outdoor_spaces"] = outdoorSpacesSelectedIds;
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepDrivewaysScreen(requestData: requestData)),
-    );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionnaireStepDrivewaysScreen(requestData: requestData)),
+      );
+    } else {
+      final snackBar = SnackBar(content: Text('Please select one'));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
   }
 
   void fetchOutdoorSpaces() {

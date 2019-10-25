@@ -20,9 +20,11 @@ class QuestionnaireStepHomeTypesScreen extends StatefulWidget {
 
 class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHomeTypesScreen> {
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   Map<String, dynamic> requestData;
   List<HomeType> homeTypes = [];
-  List<int> selectedHomeType = [];
+  int selectedHomeType;
 
   @override
   void initState() {
@@ -36,6 +38,7 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueGradientDiagonal,
@@ -89,7 +92,7 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   void updateSelected(int id){
-    selectedHomeType.add(id);
+    selectedHomeType = id;
   }
 
   loadPreviousStep(){
@@ -97,11 +100,16 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   loadNextStep() {
-    requestData["home_type"] = selectedHomeType;
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepHomeFeaturesScreen(requestData: requestData)),
-    );
+    if (selectedHomeType != null){
+      requestData["home_type"] = selectedHomeType.toString();
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionnaireStepHomeFeaturesScreen(requestData: requestData)),
+      );
+    } else {
+      final snackBar = SnackBar(content: Text('Please select one'));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
   }
 
   void fetchHomeTypes() {

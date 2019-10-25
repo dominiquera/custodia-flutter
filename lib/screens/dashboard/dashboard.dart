@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 import '../../theme-provider.dart';
+import 'package:intl/intl.dart';
 
 class DashboardScreen extends StatefulWidget {
   @override
@@ -36,6 +37,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<MaintenanceItem> preventItems = [];
 
   List<Map<String, dynamic>> sectionData;
+
+  DateTime now = DateTime.now();
+  var formatter = DateFormat('dd MMMM');
 
   @override
   void initState() {
@@ -58,10 +62,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: Drawer(
-        child: DrawerContent()// Populate the Drawer in the next step.
+        child: DrawerContent()
       ),
       appBar: GradientAppBar(
-        title: Text('July 3', style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
+        title: Text(formatter.format(now), style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
         automaticallyImplyLeading: false,
@@ -124,7 +128,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             children: <Widget>[
               Text(
-                "Dads Home Management Plan",
+                "Home Management Plan",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 34,

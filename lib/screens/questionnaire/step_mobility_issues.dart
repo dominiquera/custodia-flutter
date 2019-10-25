@@ -23,6 +23,7 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   Map<String, dynamic> requestData;
   List<MobilityIssue> mobilityIssues = [];
   List<int> selectedMobilityIssues = [];
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -36,6 +37,7 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         decoration: BoxDecoration(
           gradient: ThemeProvider.blueGradientDiagonal,
@@ -97,11 +99,16 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   }
 
   loadNextStep() {
-    requestData["mobility_issues"] = selectedMobilityIssues;
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
-    );
+    if (selectedMobilityIssues.isNotEmpty) {
+      requestData["mobility_issues"] = selectedMobilityIssues;
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
+      );
+    } else {
+      final snackBar = SnackBar(content: Text('Please select one'));
+      _scaffoldKey.currentState.showSnackBar(snackBar);
+    }
   }
 
   void fetchMobilityIssues() {
