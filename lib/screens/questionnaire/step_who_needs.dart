@@ -1,3 +1,4 @@
+import 'package:custodia/screens/widgets/snack-bar.dart';
 import 'package:custodia/services/globals.dart';
 import 'package:flutter/material.dart';
 
@@ -20,7 +21,7 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
 
   Map<String, dynamic> requestData;
   String selectedPerson;
-  int selectedId;
+  List<int> selectedIds = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -85,11 +86,15 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   }
 
   List<Widget> buildFilter() {
-    return homeOwners.map((item) { return FilterButton(text: item.name, id: item.id, onPressed: onValueSelected); }).toList();
+    return homeOwners.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected, ); }).toList();
   }
 
   void onValueSelected(int id){
-    selectedId = id;
+    selectedIds.add(id);
+  }
+
+  void onValueDeselected(int id){
+    selectedIds.remove(id);
   }
 
   loadPreviousStep(){
@@ -97,16 +102,20 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   }
 
   loadNextStep() {
-    if (selectedId != null) {
-      requestData["who_needs"] = selectedId;
+    if (selectedIds.isNotEmpty) {
+      requestData["who_needs"] = selectedIds;
 
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionnaireStepHomeTypesScreen(requestData: requestData)),
       );
     } else {
-      final snackBar = SnackBar(content: Text('Please select one'));
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      _scaffoldKey.currentState.showSnackBar(
+        SnackBar(
+          backgroundColor: Colors.white,
+          content: Text('Please select one', style: TextStyle(color: Colors.black54),)
+        )
+      );
     }
 
   }

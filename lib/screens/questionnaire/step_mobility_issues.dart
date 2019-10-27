@@ -87,11 +87,15 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   }
 
   List<Widget> buildFilter() {
-    return mobilityIssues.map((item) { return FilterButton(text: item.name, id: item.id, onPressed: onValueChanged,); }).toList();
+    return mobilityIssues.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueChanged, onDeselected: onValueDeselected); }).toList();
   }
 
   void onValueChanged(int id) {
     selectedMobilityIssues.add(id);
+  }
+
+  void onValueDeselected(int id){
+    selectedMobilityIssues.remove(id);
   }
 
   loadPreviousStep(){
@@ -106,8 +110,12 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
         MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
       );
     } else {
-      final snackBar = SnackBar(content: Text('Please select one'));
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              backgroundColor: Colors.white,
+              content: Text('Please select one', style: TextStyle(color: Colors.black54),)
+          )
+      );
     }
   }
 

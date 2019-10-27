@@ -126,6 +126,8 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
   }
 
   void onAPiSignInSuccess(){
+    print(">>>>API onSignInSuccess");
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => DashboardScreen()),
@@ -133,6 +135,8 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
   }
 
   void onApiSignInFailed(AuthResult result){
+    print(">>>>API onApiSignInFailed");
+
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: result)),

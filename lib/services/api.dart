@@ -136,6 +136,8 @@ class APIService {
 
   //  Returns the current score for a given user id
   static Future<Score> fetchScore() async {
+    print(">>>>> fetchScore");
+
     Response response = await get(
       '$domainURL/users/$userId/score',
     );
@@ -143,6 +145,8 @@ class APIService {
     if (response.statusCode == 200) {
       return Score.fromJson(json.decode(response.body));
     } else {
+      print(">>>>> score failed");
+
       throw Exception('Failed to load score');
     }
   }
@@ -219,21 +223,27 @@ class APIService {
   }
 
   static Future<void> signInWithGoogleId(AuthResult authResult, Function onSuccess, Function onFail) async {
+    print(">>>> API signInWithGoogleId");
+    print(authResult.user.uid);
     Response response = await post(
         '$domainURL/auth',
         body: {"gauth": authResult.user.uid }
     );
 
     if (response.statusCode == 200) {
+      print("200");
       onSuccess();
     }
     if (response.statusCode == 404) {
+      print("404");
+
       onFail(authResult);
     }
   }
 
   static Future<void> signInWithPhoneNumber(AuthResult result, Function onSuccess, Function onFail) async {
     print(">>signInWithPhoneNumber");
+    print(result.user.phoneNumber);
     Response response = await post(
         '$domainURL/auth',
         body: {"phone": result.user.phoneNumber }
@@ -307,9 +317,29 @@ class APIService {
     );
   }
 
-  static Future<Response> ignoreMaintenanceItem(int itemId) {
-    return post(
+  static Future<void> ignoreMaintenanceItem(int itemId, Function onSuccess, Function onFail) async {
+    Response response = await post(
         '$domainURL/users/$userId/maintenance_item/$itemId/ignored'
     );
+
+    if (response.statusCode == 200) {
+      print("200");
+      onSuccess();
+    } else {
+      onFail();
+    }
+  }
+
+  static Future<void> markDoneMaintenanceItem(int itemId, Function onSuccess, Function onFail) async {
+    Response response = await post(
+        '$domainURL/users/$userId/maintenance_item/$itemId//done'
+    );
+
+    if (response.statusCode == 200) {
+      print("200");
+      onSuccess();
+    } else {
+      onFail();
+    }
   }
 }

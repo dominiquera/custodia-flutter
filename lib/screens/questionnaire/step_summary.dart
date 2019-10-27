@@ -26,7 +26,7 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
   void initState() {
     print(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>summary");
     print(widget.requestData);
-    owner = homeOwners.firstWhere((item) { return item.id == widget.requestData["who_needs"]; });
+    owner = homeOwners.firstWhere((item) { return item.id == widget.requestData["who_needs"][0]; });
     super.initState();
   }
   @override

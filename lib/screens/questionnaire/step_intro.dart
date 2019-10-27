@@ -17,7 +17,6 @@ class QuestionnaireStepIntroScreen extends StatefulWidget {
 class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScreen> {
 
   Map<String, dynamic> requestData = {
-    "token": null,
     "email": null,
     "name": null,
     "who_needs": null,
@@ -25,7 +24,8 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
     "home_features": null,
     "driveways": null,
     "outdoor_spaces": null,
-    "mobility_issues": null
+    "mobility_issues": null,
+    "token": null
   };
 
   @override

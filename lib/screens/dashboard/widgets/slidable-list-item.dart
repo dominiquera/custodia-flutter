@@ -1,18 +1,18 @@
+import 'package:custodia/models/maintenance_item.dart';
+import 'package:custodia/services/api.dart';
 import 'package:custodia/widgets/overlay-dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../theme-provider.dart';
 import '../../learn-more-about.dart';
-import 'overlay-ignore.dart';
+import '../sections/overlay-ignore.dart';
 
 class SlidableListItem extends StatefulWidget {
 
-  SlidableListItem({this.title, this.description, this.points, this.color});
+  SlidableListItem({this.item, this.color});
 
-  final String title;
-  final String description;
-  final int points;
+  final MaintenanceItem item;
   final Color color;
 
   @override
@@ -40,7 +40,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
               width: 90,
               height: 90,
               child: Text(
-                "${widget.points} points",
+                "${widget.item.points} points",
                 style: TextStyle(
                   color: Colors.white,
                   shadows: <Shadow>[
@@ -59,14 +59,14 @@ class _SlidableListItemState extends State<SlidableListItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.title.toUpperCase(),
+                    widget.item.title.toUpperCase(),
                     style: TextStyle(
                       fontSize: 24,
                       fontFamily: "RobotoMedium"
                     )
                   ),
                   Text(
-                    widget.description,
+                    widget.item.summary,
                     style: TextStyle(
                       fontSize: 20,
                     )
@@ -78,6 +78,18 @@ class _SlidableListItemState extends State<SlidableListItem> {
         ),
       ),
     );
+  }
+
+  markAsDone(){
+    APIService.markDoneMaintenanceItem(widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
+  }
+
+  void onMarkDoneSuccess(){
+    showOverlayDialog();
+  }
+
+  void onMarkDoneFailure() {
+
   }
 
   showOverlayDialog() {
@@ -93,7 +105,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayIgnore()
+        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(item: widget.item)
       )
     );
   }
@@ -131,7 +143,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
             ),
             child: Icon(Icons.check, color: Colors.white, size: 30,)
         ),
-        onTap: showOverlayDialog,
+        onTap: markAsDone,
       ),
       IconSlideAction(
         caption: 'Automate',

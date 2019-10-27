@@ -88,11 +88,15 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   List<Widget> buildFilter() {
-    return homeTypes.map((item) { return FilterButton(text: item.name, id: item.id, onPressed: updateSelected); }).toList();
+    return homeTypes.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected,); }).toList();
   }
 
-  void updateSelected(int id){
+  void onValueSelected(int id){
     selectedHomeType = id;
+  }
+
+  void onValueDeselected(int id){
+    selectedHomeType = null;
   }
 
   loadPreviousStep(){
@@ -107,8 +111,12 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
         MaterialPageRoute(builder: (context) => QuestionnaireStepHomeFeaturesScreen(requestData: requestData)),
       );
     } else {
-      final snackBar = SnackBar(content: Text('Please select one'));
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              backgroundColor: Colors.white,
+              content: Text('Please select one', style: TextStyle(color: Colors.black54),)
+          )
+      );
     }
   }
 

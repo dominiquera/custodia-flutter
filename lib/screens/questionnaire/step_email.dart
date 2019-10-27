@@ -44,8 +44,8 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
 
   Widget body() {
     return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      child: ListView(
+        shrinkWrap: true,
         children: <Widget>[
           Text("What's your email",
             style: TextStyle(
@@ -74,7 +74,7 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
       key: _formKey,
       child: TextFormField(
         validator: (value) {
-          if (value.isEmpty) {
+          if (value.trim().isEmpty) {
             return 'Please enter your email';
           }
           return null;

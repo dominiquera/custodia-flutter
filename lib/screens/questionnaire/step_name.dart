@@ -56,9 +56,8 @@ class _QuestionnaireStepNameScreenState extends State<QuestionnaireStepNameScree
           buildForm(),
           SizedBox(height: 70),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              BlueRoundedButton(text: "Back", onPressed:  loadPreviousStep, padding: 35),
               BlueRoundedButton(text: "Next", onPressed: loadNextStep, padding: 35)
             ],
           )
@@ -72,7 +71,7 @@ class _QuestionnaireStepNameScreenState extends State<QuestionnaireStepNameScree
       key: _formKey,
       child: TextFormField(
         validator: (value) {
-          if (value.isEmpty) {
+          if (value.trim().isEmpty) {
             return 'Please enter your name';
           }
           return null;
@@ -83,17 +82,14 @@ class _QuestionnaireStepNameScreenState extends State<QuestionnaireStepNameScree
           color: Colors.white,
           decoration: TextDecoration.none,
         ),
+        cursorColor: Colors.white,
         decoration: InputDecoration(
           enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
           focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
-          errorStyle: TextStyle(color: Colors.white)
+          errorStyle: TextStyle(color: Colors.white),
         ),
       )
     );
-  }
-
-  loadPreviousStep(){
-    Navigator.pop(context);
   }
 
   loadNextStep() {

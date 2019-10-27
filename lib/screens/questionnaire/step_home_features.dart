@@ -89,11 +89,15 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
   }
 
   List<Widget> buildFilter() {
-    return homeFeatures.map((item) { return FilterButton(text: item.name, id: item.id, onPressed: onValueSelected); }).toList();
+    return homeFeatures.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected,); }).toList();
   }
 
   void onValueSelected(int id){
     homeFeaturesSelectedIds.add(id);
+  }
+
+  void onValueDeselected(int id){
+    homeFeaturesSelectedIds.remove(id);
   }
 
   loadPreviousStep(){
@@ -108,8 +112,12 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
         MaterialPageRoute(builder: (context) => QuestionnaireStepOutdoorSpaceScreen(requestData: requestData)),
       );
     } else {
-      final snackBar = SnackBar(content: Text('Please select one'));
-      _scaffoldKey.currentState.showSnackBar(snackBar);
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              backgroundColor: Colors.white,
+              content: Text('Please select one', style: TextStyle(color: Colors.black54),)
+          )
+      );
     }
   }
 

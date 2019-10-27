@@ -97,4 +97,12 @@ class FirebaseAuthService{
       onSuccess(authResult);
     }
   }
+
+  Future<bool> isLoggedIn() async {
+    FirebaseUser currentUser = await auth.currentUser();
+    if (currentUser == null) {
+      return false;
+    }
+    return true;
+  }
 }

@@ -4,11 +4,12 @@ import '../theme-provider.dart';
 
 class FilterButton extends StatefulWidget {
 
-  FilterButton({this.text, this.id, this.onPressed});
+  FilterButton({this.text, this.id, this.onSelected, this.onDeselected});
 
   final String text;
   final int id;
-  final Function onPressed;
+  final Function onSelected;
+  final Function onDeselected;
 
   @override
   _FilterButtonState createState() => _FilterButtonState();
@@ -44,7 +45,9 @@ class _FilterButtonState extends State<FilterButton> {
       selected = !selected;
     });
     if (selected) {
-      widget.onPressed(widget.id);
+      widget.onSelected(widget.id);
+    } else {
+      widget.onDeselected(widget.id);
     }
   }
 }

@@ -88,11 +88,15 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   }
 
   List<Widget> buildFilter() {
-    return driveways.map((item) { return FilterButton(text: item.name, id: item.id, onPressed: onValueChanged,); }).toList();
+    return driveways.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueChanged, onDeselected: onValueDeselected); }).toList();
   }
 
   void onValueChanged(int id){
     selectedDrivewaysIds.add(id);
+  }
+
+  void onValueDeselected(int id){
+    selectedDrivewaysIds.remove(id);
   }
 
   loadPreviousStep(){
@@ -107,9 +111,12 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
         MaterialPageRoute(builder: (context) => QuestionnaireStepMobilityIssuesScreen(requestData: requestData,)),
       );
     } else {
-      Scaffold.of(context).showSnackBar(SnackBar(
-        content: const Text('Please select one'),
-      ));
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(
+              backgroundColor: Colors.white,
+              content: Text('Please select one', style: TextStyle(color: Colors.black54),)
+          )
+      );
     }
   }
 

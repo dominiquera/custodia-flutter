@@ -1,9 +1,16 @@
+import 'package:custodia/models/maintenance_item.dart';
+import 'package:custodia/services/api.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
 
 class OverlayIgnore extends StatefulWidget {
+
+  OverlayIgnore({this.item});
+
+  final MaintenanceItem item;
+
   @override
   _OverlayIgnoreState createState() => _OverlayIgnoreState();
 }
@@ -53,7 +60,7 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
         children: <Widget>[
           BlueRoundedButton(text: "Ignore for now", onPressed: (){}, padding: 25),
           SizedBox(height: 50),
-          BlueRoundedButton(text: "Ignore forever", onPressed: (){}, padding: 25),
+          BlueRoundedButton(text: "Ignore forever", onPressed: ignoreItem, padding: 25),
           SizedBox(height: 50),
           FlatButton(
             child: Text("Cancel", style: TextStyle(color: Colors.white, fontSize: 22)),
@@ -62,5 +69,18 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
         ]
       ),
     );
+  }
+
+  void ignoreItem(){
+    print(widget.item.id);
+    APIService.ignoreMaintenanceItem(widget.item.id, onSuccess, onFail);
+  }
+
+  onSuccess(){
+    closeOverlay();
+  }
+
+  onFail(){
+
   }
 }

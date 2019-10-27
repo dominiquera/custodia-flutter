@@ -44,9 +44,7 @@ class DashboardSection extends StatelessWidget {
 
   buildItem(MaintenanceItem item){
     return SlidableListItem(
-      title: item.title,
-      description: item.summary,
-      points: item.points,
-      color: ThemeProvider.green3);
+      item: item,
+      color: accentColor);
   }
 }

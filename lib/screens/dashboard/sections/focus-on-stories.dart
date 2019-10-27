@@ -1,48 +1,39 @@
 import 'package:custodia/models/maintenance_item.dart';
-import 'package:custodia/screens/dashboard/widgets/slidable-card.dart';
-import 'package:custodia/screens/dashboard/widgets/slidable-list-item.dart';
 import 'package:custodia/screens/widgets/progress-indicator.dart';
 import 'package:custodia/services/api.dart';
 import 'package:flutter/material.dart';
-
 import '../../../theme-provider.dart';
 
-import 'block-footer.dart';
-import 'block-header.dart';
+import '../widgets/block-footer.dart';
+import '../widgets/block-header.dart';
+import '../widgets/slidable-list-item.dart';
 
-class OutsideThisWeek extends StatefulWidget {
+class FocusOnStories extends StatefulWidget {
   @override
-  _OutsideThisWeekState createState() => _OutsideThisWeekState();
+  _FocusOnStoriesState createState() => _FocusOnStoriesState();
 }
 
-class _OutsideThisWeekState extends State<OutsideThisWeek> {
+class _FocusOnStoriesState extends State<FocusOnStories> {
 
-  Color accentColor = ThemeProvider.green3;
+  Color accentColor = ThemeProvider.blue4;
   List<MaintenanceItem> items = [];
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    fetchItems();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 10),
-      color: ThemeProvider.lightBlue,
+      color: Colors.white,
       child: Column(
         children: <Widget>[
           HeaderItem(
-            title: "Outside This Month",
+            title: "Focus on stories",
             description: "Suggested for outsided the home. Slide the card to customize",
             colorAccent: accentColor
           ),
-          SlidableCard(),
+//          headerCard(),
           SizedBox(height: 20),
           buildChildren(),
-          FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: "OUTSIDE", accentColor: accentColor)
+          FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: "STORIES", accentColor: accentColor)
         ],
       ),
     );
@@ -58,14 +49,12 @@ class _OutsideThisWeekState extends State<OutsideThisWeek> {
 
   buildItem(MaintenanceItem item){
     return SlidableListItem(
-      title: item.title,
-      description: item.summary,
-      points: item.points,
+      item: item,
       color: ThemeProvider.green3);
   }
 
   void fetchItems() async {
-    items = await APIService.fetchTop3ItemsForSection(1);
+    items = await APIService.fetchTop3ItemsForSection(4);
     setState(() {});
   }
 }

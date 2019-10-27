@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Custodia',
       debugShowCheckedModeBanner: false,
       theme: ThemeProvider.theme,
-      home: SplashScreen()
+      home: DashboardScreen()
     );
   }
 

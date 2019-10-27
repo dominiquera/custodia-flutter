@@ -57,6 +57,7 @@ class LoginSelectScreen extends StatelessWidget {
   }
 
   void onAPiSignInSuccess(){
+    print(">>>>onAPiSignInSuccess");
     Navigator.pushReplacement(
       ctx,
       MaterialPageRoute(builder: (context) => DashboardScreen()),
