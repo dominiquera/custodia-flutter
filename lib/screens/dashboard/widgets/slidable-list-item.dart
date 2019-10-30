@@ -1,6 +1,6 @@
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/services/api.dart';
-import 'package:custodia/widgets/overlay-dialog.dart';
+import 'package:custodia/widgets/done-overlay-dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -10,10 +10,13 @@ import '../sections/overlay-ignore.dart';
 
 class SlidableListItem extends StatefulWidget {
 
-  SlidableListItem({this.item, this.color});
+  SlidableListItem({this.item, this.color, this.userId, this.onIgnore, this.key});
 
   final MaintenanceItem item;
   final Color color;
+  final int userId;
+  final Function onIgnore;
+  final Key key;
 
   @override
   _SlidableListItemState createState() => _SlidableListItemState();
@@ -23,6 +26,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      key: widget.key,
       actionPane: SlidableScrollActionPane(),
       actions: mainActions(context),
       secondaryActions: secondaryActions(context),
@@ -81,7 +85,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
   }
 
   markAsDone(){
-    APIService.markDoneMaintenanceItem(widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
+    APIService.markDoneMaintenanceItem(widget.userId, widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
   }
 
   void onMarkDoneSuccess(){
@@ -89,14 +93,14 @@ class _SlidableListItemState extends State<SlidableListItem> {
   }
 
   void onMarkDoneFailure() {
-
+    print(">>>onMarkDoneFailure");
   }
 
   showOverlayDialog() {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayDialog()
+        pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog()
       )
     );
   }
@@ -105,7 +109,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(item: widget.item)
+        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(userId: widget.userId, item: widget.item, onIgnore: widget.onIgnore)
       )
     );
   }

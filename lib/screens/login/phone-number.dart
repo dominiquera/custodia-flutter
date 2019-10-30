@@ -132,11 +132,17 @@ class _LoginPhoneNumberScreenState extends State<LoginPhoneNumberScreen> {
     );
   }
 
-  onVerificationCompleted(AuthCredential phoneAuthCredential) {
+  onVerificationCompleted(FirebaseUser user) {
 //    print(phoneAuthCredential);
-//    APIService.signInWithPhoneNumber(phoneAuthCredential, onAPiSignInSuccess, onApiSignInFailed);
+    APIService.signInWithPhoneNumber(user, onAPiSignInSuccess, onApiSignInFailed);
 
   }
+
+//  onVerificationCompleted(AuthCredential phoneAuthCredential) {
+////    print(phoneAuthCredential);
+////    APIService.signInWithPhoneNumber(phoneAuthCredential, onAPiSignInSuccess, onApiSignInFailed);
+//
+//  }
 
   void onAPiSignInSuccess(){
     Navigator.of(context).pushAndRemoveUntil(
@@ -144,11 +150,11 @@ class _LoginPhoneNumberScreenState extends State<LoginPhoneNumberScreen> {
     );
   }
 
-  void onApiSignInFailed(){
-//    Navigator.push(
-//      context,
-//      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: authResult)),
-//    );
+  void onApiSignInFailed(FirebaseUser user){
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(user: user)),
+    );
   }
 
   onVerificationFailed(String message){

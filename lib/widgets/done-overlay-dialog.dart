@@ -4,12 +4,12 @@ import '../theme-provider.dart';
 import 'blue-rounded-button.dart';
 import 'filter-button.dart';
 
-class OverlayDialog extends StatefulWidget {
+class DoneOverlayDialog extends StatefulWidget {
   @override
-  _OverlayDialogState createState() => _OverlayDialogState();
+  _DoneOverlayDialogState createState() => _DoneOverlayDialogState();
 }
 
-class _OverlayDialogState extends State<OverlayDialog> {
+class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -59,7 +59,7 @@ class _OverlayDialogState extends State<OverlayDialog> {
               Column(
                 children: <Widget>[
                   Text(
-                    "Well done John! You have increased the home score by 10 points!",
+                    "Well done {}! You have increased the home score by {} points!",
                     style: TextStyle(
                       fontSize: 38,
                       color: Colors.white,
@@ -88,7 +88,7 @@ class _OverlayDialogState extends State<OverlayDialog> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
-                  BlueRoundedButton(text: "Undo", onPressed: (){},padding: 25),
+//                  BlueRoundedButton(text: "Undo", onPressed: (){},padding: 25),
                   BlueRoundedButton(text: "Close", onPressed: closeOverlay, padding: 25),
                 ]
               )

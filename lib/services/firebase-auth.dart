@@ -1,3 +1,4 @@
+import 'package:custodia/utils/shared-prefs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -9,7 +10,7 @@ class FirebaseAuthService{
   static void verifyPhoneNumber(String phoneNumber, Function onCodeSend, Function onVerificationCompleted, Function onVerificationFailed) async {
 
     final PhoneVerificationCompleted verificationCompleted = (AuthCredential phoneAuthCredential) async {
-      signInWIthPhoneNumber(phoneAuthCredential, onVerificationFailed, onVerificationCompleted);
+      signInWIthPhoneNumber(phoneAuthCredential, onVerificationCompleted, onVerificationFailed,);
     };
 
     final PhoneVerificationFailed verificationFailed = (AuthException authException) {
@@ -35,23 +36,25 @@ class FirebaseAuthService{
   static signInWIthPhoneNumber(AuthCredential credential, Function onSignInSuccess, Function onSignInError, ) async {
     try {
       AuthResult authResult = await auth.signInWithCredential(credential);
+//      final FirebaseUser currentUser = await auth.currentUser();
 
-      if (authResult.additionalUserInfo.isNewUser) {
-        print(">>>>>>>new user");
-        onSignInSuccess(true, authResult);
-        //User logging in for the first time
-        // Redirect user to tutorial
-      }
-      else {
-        onSignInSuccess(false, authResult);
+      onSignInSuccess(authResult.user);
 
-        print(">>>>>>>old user");
+//      if (authResult.additionalUserInfo.isNewUser) {
+//        print(">>>>>>>new user");
+//        onSignInSuccess(authResult.user);
+//        //User logging in for the first time
+//        // Redirect user to tutorial
+//      }
+//      else {
+//        onSignInSuccess(authResult);
+//
+//        print(">>>>>>>old user");
+//
+//        //User has already logged in before.
+//        //Show user profile
+//      }
 
-        //User has already logged in before.
-        //Show user profile
-      }
-
-      final FirebaseUser currentUser = await auth.currentUser();
 
 
 
@@ -79,22 +82,22 @@ class FirebaseAuthService{
     AuthResult authResult = await auth.signInWithCredential(credential);
 //    authResult.user.email;
 
-//    authResult.user.uid;
-    if (authResult.additionalUserInfo.isNewUser) {
-      print(">>>>>>>new user");
-      //User logging in for the first time
-      // Redirect user to tutorial
-    }
-    else {
-      print(">>>>>>>old user");
-
-      //User has already logged in before.
-      //Show user profile
-    }
+//    ;
+//    if (authResult.additionalUserInfo.isNewUser) {
+//      print(">>>>>>>new user");
+//      //User logging in for the first time
+//      // Redirect user to tutorial
+//    }
+//    else {
+//      print(">>>>>>>old user");
+//
+//      //User has already logged in before.
+//      //Show user profile
+//    }
     final FirebaseUser user = authResult.user;
 
     if (user != null) {
-      onSuccess(authResult);
+      onSuccess(user);
     }
   }
 
@@ -104,5 +107,15 @@ class FirebaseAuthService{
       return false;
     }
     return true;
+  }
+
+  static Future<FirebaseUser> currentUser() async {
+    FirebaseUser currentUser = await auth.currentUser();
+    return currentUser;
+  }
+
+  static Future<void> signOut() async {
+    SharedPrefsService.setCurrentUserId(null);
+    return await auth.signOut();
   }
 }

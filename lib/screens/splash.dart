@@ -41,34 +41,54 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
+//  login user with Firebase, then check if there is user in database
   void getUser() async {
-    FirebaseUser user = await FirebaseAuth.instance.currentUser();
-//    TODO get authResult
-    var authResult;
-    if (user != null) {
-      print(">>>>>>>>user != null");
-      APIService.signInWithPhoneNumber(authResult, onAPiSignInSuccess, onApiSignInFailed);
-    } else {
-      print(">>>>>>>>user == null");
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => LoginSelectScreen()),
-      );
-    }
+    FirebaseAuth.instance.currentUser().then((user) {
+
+      if (user != null) {
+        if (user.phoneNumber.isNotEmpty) {
+          APIService.signInWithPhoneNumber(user, onAPIPhoneNumberSignInSuccess, onAPIPhoneNumberSignInFailed);
+        } else if (user.email.isNotEmpty) {
+          APIService.signInWithGoogleId(user, onAPIGoogleSignInSuccess, onAPIGoogleSignInFail);
+        }
+      } else {
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => LoginSelectScreen()),
+        );
+      }
+
+    });
+
   }
 
-  void onAPiSignInSuccess(){
+  void onAPIPhoneNumberSignInSuccess(){
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => DashboardScreen()),
     );
   }
 
-  void onApiSignInFailed(AuthResult result){
+  void onAPIPhoneNumberSignInFailed(AuthResult result){
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: result)),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen()),
+    );
+  }
+
+  void onAPIGoogleSignInSuccess(String body){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => DashboardScreen()),
+    );
+  }
+
+  void onAPIGoogleSignInFail(){
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen()),
     );
   }
 }

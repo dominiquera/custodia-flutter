@@ -29,8 +29,6 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   @override
   void initState() {
     requestData = widget.requestData;
-    print(">>>>>>>>>>>>>>>>>>");
-    print(requestData);
     fetchDriveways();
     super.initState();
   }

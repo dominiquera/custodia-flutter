@@ -1,4 +1,4 @@
-import 'package:custodia/widgets/overlay-dialog.dart';
+import 'package:custodia/widgets/done-overlay-dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -91,11 +91,10 @@ class _SlidableCardState extends State<SlidableCard> {
   }
 
   showOverlayDialog() {
-    print("---");
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayDialog()
+        pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog()
       )
     );
   }

@@ -8,6 +8,7 @@ import 'package:custodia/models/mobility_issue.dart';
 import 'package:custodia/models/outdoor_space.dart';
 import 'package:custodia/models/score.dart';
 import 'package:custodia/models/user.dart';
+import 'package:custodia/utils/shared-prefs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
@@ -16,7 +17,7 @@ import 'package:http/http.dart';
 class APIService {
 
   static String domainURL = "https://custodia.dominiquera.com/api/v1";
-  static int userId = 4;
+//  static int userId = 3;
 
   // Return a list of all user roles available in the system
   static fetchRoles() async {
@@ -135,9 +136,7 @@ class APIService {
   }
 
   //  Returns the current score for a given user id
-  static Future<Score> fetchScore() async {
-    print(">>>>> fetchScore");
-
+  static Future<Score> fetchScore(int userId) async {
     Response response = await get(
       '$domainURL/users/$userId/score',
     );
@@ -145,8 +144,6 @@ class APIService {
     if (response.statusCode == 200) {
       return Score.fromJson(json.decode(response.body));
     } else {
-      print(">>>>> score failed");
-
       throw Exception('Failed to load score');
     }
   }
@@ -159,7 +156,7 @@ class APIService {
   }
 
   //  Returns the list of ignored maintenance items for a given user id
-  static Future<List<MaintenanceItem>> fetchIgnoredMaintenanceItems() async {
+  static Future<List<MaintenanceItem>> fetchIgnoredMaintenanceItems(int userId) async {
     Response response = await get('$domainURL/users/$userId/ignored_maintenance_items');
     List<MaintenanceItem> maintenanceItems = [];
 
@@ -175,7 +172,7 @@ class APIService {
   }
 
   //  Returns the top 3 maintenance items due today for given user
-  static Future<List<MaintenanceItem>> fetchTop3Items() async {
+  static Future<List<MaintenanceItem>> fetchTop3Items(int userId) async {
     Response response = await get('$domainURL/users/$userId/top_three_maintenance_items_today');
     List<MaintenanceItem> maintenanceItems = [];
 
@@ -191,7 +188,7 @@ class APIService {
   }
 
   //  Returns the top 3 maintenance items due today for given user and section
-  static Future<List<MaintenanceItem>> fetchTop3ItemsForSection(int section) async {
+  static Future<List<MaintenanceItem>> fetchTop3ItemsForSection(int userId, int section) async {
     Response response = await get('$domainURL/users/$userId/section/$section/top_three_maintenance_items_today');
     List<MaintenanceItem> maintenanceItems = [];
 
@@ -222,47 +219,44 @@ class APIService {
     }
   }
 
-  static Future<void> signInWithGoogleId(AuthResult authResult, Function onSuccess, Function onFail) async {
-    print(">>>> API signInWithGoogleId");
-    print(authResult.user.uid);
+  static Future<void> signInWithGoogleId(FirebaseUser user, Function onSuccess, Function onFail) async {
     Response response = await post(
         '$domainURL/auth',
-        body: {"gauth": authResult.user.uid }
+        body: {"gauth": user.uid }
     );
 
     if (response.statusCode == 200) {
-      print("200");
-      onSuccess();
+
+      var jsonBody = json.decode(response.body);
+      SharedPrefsService.setCurrentUserId(jsonBody["id"]);
+
+      onSuccess(response.body);
     }
     if (response.statusCode == 404) {
-      print("404");
-
-      onFail(authResult);
+      onFail(user);
     }
   }
 
-  static Future<void> signInWithPhoneNumber(AuthResult result, Function onSuccess, Function onFail) async {
-    print(">>signInWithPhoneNumber");
-    print(result.user.phoneNumber);
+  static Future<void> signInWithPhoneNumber(FirebaseUser user, Function onSuccess, Function onFail) async {
     Response response = await post(
         '$domainURL/auth',
-        body: {"phone": result.user.phoneNumber }
+        body: {"phone": user.phoneNumber }
     );
 
-    print(response.statusCode);
-
     if (response.statusCode == 200) {
-      print("200");
+      var jsonBody = json.decode(response.body);
+      SharedPrefsService.setCurrentUserId(jsonBody["id"]);
+
       onSuccess();
     }
     if (response.statusCode == 404) {
-      print("400");
-      onFail(result);
+      onFail(user);
     }
   }
 
   //  Create new User
   static Future<void> createUser(
+      String googleAuthId,
       String token,
       String name,
       String email,
@@ -271,24 +265,23 @@ class APIService {
       List<int> features,
       List<int> driveways,
       List<int> mobilityIssues,
+      String phone,
       Function onSuccess,
       Function onFail
       ) async {
 
-    print(">>>>>createUser");
-
     String body = json.encode({
       "firebase_registration_token": token,
+      "google_auth_id": googleAuthId,
       "name": name,
       "email": email,
       "home_type": homeType,
       "outdoor_spaces": outdoorSpaces,
       "features": features,
       "driveways": driveways,
-      "mobility_issues": mobilityIssues
+      "mobility_issues": mobilityIssues,
+      "phone": phone
     });
-
-    print(body);
 
     Response response = await post(
       '$domainURL/users',
@@ -297,14 +290,10 @@ class APIService {
     );
 
     if (response.statusCode == 200) {
-      print(">>200");
-      print(response.body);
       onSuccess();
     }
 
     if (response.statusCode == 400) {
-      print(">>400");
-      print(response.body);
       onFail();
     }
   }
@@ -317,26 +306,24 @@ class APIService {
     );
   }
 
-  static Future<void> ignoreMaintenanceItem(int itemId, Function onSuccess, Function onFail) async {
+  static Future<void> ignoreMaintenanceItem(int userId, int itemId, Function onSuccess, Function onFail) async {
     Response response = await post(
         '$domainURL/users/$userId/maintenance_item/$itemId/ignored'
     );
 
     if (response.statusCode == 200) {
-      print("200");
       onSuccess();
     } else {
       onFail();
     }
   }
 
-  static Future<void> markDoneMaintenanceItem(int itemId, Function onSuccess, Function onFail) async {
+  static Future<void> markDoneMaintenanceItem(int userId, int itemId, Function onSuccess, Function onFail) async {
     Response response = await post(
-        '$domainURL/users/$userId/maintenance_item/$itemId//done'
+        '$domainURL/users/$userId/maintenance_item/$itemId/done'
     );
 
     if (response.statusCode == 200) {
-      print("200");
       onSuccess();
     } else {
       onFail();

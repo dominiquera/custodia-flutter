@@ -7,9 +7,11 @@ import '../../../theme-provider.dart';
 
 class OverlayIgnore extends StatefulWidget {
 
-  OverlayIgnore({this.item});
+  OverlayIgnore({this.item, this.userId, this.onIgnore});
 
   final MaintenanceItem item;
+  final int userId;
+  final Function onIgnore;
 
   @override
   _OverlayIgnoreState createState() => _OverlayIgnoreState();
@@ -58,9 +60,9 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          BlueRoundedButton(text: "Ignore for now", onPressed: (){}, padding: 25),
-          SizedBox(height: 50),
-          BlueRoundedButton(text: "Ignore forever", onPressed: ignoreItem, padding: 25),
+//          BlueRoundedButton(text: "Ignore for now", onPressed: (){}, padding: 25),
+//          SizedBox(height: 50),
+          BlueRoundedButton(text: "Ignore", onPressed: ignoreItem, padding: 25),
           SizedBox(height: 50),
           FlatButton(
             child: Text("Cancel", style: TextStyle(color: Colors.white, fontSize: 22)),
@@ -72,15 +74,16 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
   }
 
   void ignoreItem(){
-    print(widget.item.id);
-    APIService.ignoreMaintenanceItem(widget.item.id, onSuccess, onFail);
+    APIService.ignoreMaintenanceItem(widget.userId, widget.item.id, onSuccess, onFail);
+
   }
 
   onSuccess(){
     closeOverlay();
+    widget.onIgnore(widget.item.id);
   }
 
   onFail(){
-
+    print("failed to ignore item");
   }
 }

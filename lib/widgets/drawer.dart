@@ -1,4 +1,5 @@
 import 'package:custodia/screens/login/select.dart';
+import 'package:custodia/services/firebase-auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -74,8 +75,7 @@ class _DrawerContentState extends State<DrawerContent> {
   }
 
   logOut() async {
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-    await _auth.signOut().then((value){
+    FirebaseAuthService.signOut().then((value){
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => LoginSelectScreen()), (Route<dynamic> route) => false
       );

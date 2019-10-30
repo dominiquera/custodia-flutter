@@ -7,8 +7,12 @@ import '../../screens/questionnaire/step_name.dart';
 
 class QuestionnaireStepIntroScreen extends StatefulWidget {
 
-  QuestionnaireStepIntroScreen({this.authResult});
-  final AuthResult authResult;
+  QuestionnaireStepIntroScreen({this.user, this.token});
+//  final AuthResult authResult;
+  final FirebaseUser user;
+//  final String email;
+//  final String phoneNumber;
+  final String token;
 
   @override
   _QuestionnaireStepIntroScreenState createState() => _QuestionnaireStepIntroScreenState();
@@ -18,20 +22,24 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
 
   Map<String, dynamic> requestData = {
     "email": null,
+    "phone": null,
     "name": null,
+    "uid": null,
     "who_needs": null,
     "home_type": null,
     "home_features": null,
     "driveways": null,
     "outdoor_spaces": null,
     "mobility_issues": null,
-    "token": null
+    "token": null,
   };
 
   @override
   void initState() {
     getToken();
-    requestData["email"] = widget.authResult.user.email;
+    requestData["email"] = widget.user.email;
+    requestData["uid"] = widget.user.uid;
+    requestData["phone"] = widget.user.phoneNumber;
     super.initState();
   }
 
@@ -75,7 +83,7 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
   }
 
   void getToken() async {
-    IdTokenResult token = await widget.authResult.user.getIdToken();
+    IdTokenResult token = await widget.user.getIdToken();
     requestData["token"] = token.token;
   }
 }

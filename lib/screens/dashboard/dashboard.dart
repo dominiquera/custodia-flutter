@@ -6,7 +6,10 @@ import 'package:custodia/screens/dashboard/widgets/steps.dart';
 import 'package:custodia/screens/dashboard/widgets/top-3-checkpoints.dart';
 import 'package:custodia/screens/widgets/progress-indicator.dart';
 import 'package:custodia/services/api.dart';
+import 'package:custodia/services/firebase-auth.dart';
+import 'package:custodia/utils/shared-prefs.dart';
 import 'package:custodia/widgets/drawer.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gradient_app_bar/gradient_app_bar.dart';
@@ -21,6 +24,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
 
+  int currentAPIUserId;
   Score score;
   List<MaintenanceItem> outsideItems = [];
   List<MaintenanceItem> insideItems = [];
@@ -35,10 +39,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   DateTime now = DateTime.now();
   var formatter = DateFormat('dd MMMM');
-  String userName = "";
+  String userName = "{}";
 
   @override
   void initState() {
+    getCurrentUserId();
     sectionData = [
       {"id": 1, "title": "Outside This Month", "subtitle": "Suggested for outside the home. Slide the card to customize", "accentColor": ThemeProvider.green3, "items": outsideItems, "fetched": false},
       {"id": 2, "title": "Inside This Month", "subtitle": "Suggested for inside the home. Slide the card to customize", "accentColor": ThemeProvider.green3, "items": insideItems, "fetched": false},
@@ -49,9 +54,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
       {"id": 7, "title": "Related Services", "subtitle": "", "accentColor": Colors.red, "items": relatedServicesItems, "fetched": false},
       {"id": 8, "title": "Prevent This Month", "subtitle": "Suggested for inside the home. Slide the card to customize", "accentColor": ThemeProvider.blue7, "items": preventItems, "fetched": false},
     ];
-
-    fetchSections();
-    fetchScore();
     super.initState();
   }
 
@@ -76,14 +78,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
       children: <Widget>[
         header(),
         Steps(),
-        score != null
-          ? scoreBlock()
-          : Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Center(child: CircularProgressIndicator()),
-        ),
-        Top3Checkpoints(),
-        Column(children: buildSections())
+        score != null ? scoreBlock() : Container(),
+        currentAPIUserId != null ? Top3Checkpoints(userId: currentAPIUserId) : Container(),
+        currentAPIUserId != null ? Column(children: buildSections()) : Container()
       ]
     );
   }
@@ -96,7 +93,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           title: section["title"],
           subtitle: section["subtitle"],
           accentColor: section["accentColor"],
-          items: section["items"]
+          items: section["items"],
+          userId: currentAPIUserId
         );
       } else if (section["items"].isEmpty && section["fetched"] == false) {
         return ProgressIndicatorWithPadding();
@@ -128,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 children: <Widget>[
                   Expanded(
                     child: Text(
-                      "A 4 bedroom bungalow with 3000 sq/ft of lawn, a few hedges, gardens and a pool",
+                      "{home description}",
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
@@ -154,10 +152,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget buildScore(){
     return Text("${score.value}/850",
-        style: TextStyle(
-          fontSize: 16,
-          color: ThemeProvider.blue6,
-        )
+      style: TextStyle(
+        fontSize: 16,
+        color: ThemeProvider.blue6,
+      )
     );
   }
 
@@ -205,7 +203,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void fetchScore() async {
-    APIService.fetchScore().then((value) {
+    APIService.fetchScore(currentAPIUserId).then((value) {
       score = value;
       setState(() {});
     });
@@ -213,11 +211,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void fetchSections() async {
     sectionData.forEach((section) async {
-      section["items"] = await APIService.fetchTop3ItemsForSection(section["id"]);
-      APIService.fetchTop3ItemsForSection(section["id"]).then((result) {
+      section["items"] = await APIService.fetchTop3ItemsForSection(currentAPIUserId, section["id"]);
+      APIService.fetchTop3ItemsForSection(currentAPIUserId, section["id"]).then((result) {
         section["fetched"] = true;
         setState(() {});
       });
+    });
+  }
+
+  void getCurrentUserId() async {
+    SharedPrefsService.getCurrentUserId().then((userId) {
+      currentAPIUserId = userId;
+      fetchSections();
+      fetchScore();
     });
   }
 

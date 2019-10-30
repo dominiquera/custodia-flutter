@@ -27,8 +27,6 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   @override
   void initState() {
     requestData = widget.requestData;
-    print(">>>>>>>>>>>>>>>>>>");
-    print(requestData);
     super.initState();
   }
 

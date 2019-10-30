@@ -11,7 +11,7 @@ void main() {
     systemNavigationBarColor: Colors.black, // navigation bar color
   ));
 
-  FirebaseAuth.instance.signOut();
+//  FirebaseAuth.instance.signOut();
 
   runApp(MyApp());
 }
@@ -23,7 +23,8 @@ class MyApp extends StatelessWidget {
       title: 'Custodia',
       debugShowCheckedModeBanner: false,
       theme: ThemeProvider.theme,
-      home: DashboardScreen()
+//      home: DashboardScreen()
+    home: SplashScreen()
     );
   }
 

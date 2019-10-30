@@ -6,6 +6,10 @@ import '../../../theme-provider.dart';
 
 class Top3Checkpoints extends StatefulWidget {
 
+  final int userId;
+
+  Top3Checkpoints({this.userId});
+
   @override
   _Top3CheckpointsState createState() => _Top3CheckpointsState();
 }
@@ -159,13 +163,9 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
   }
 
   void getMaintenanceItems() async {
-    maintenanceItems = await APIService.fetchTop3Items();
-    print(">>>>>>");
-    print(maintenanceItems.length);
+    maintenanceItems = await APIService.fetchTop3Items(widget.userId);
     if (this.mounted){
-      setState(() {
-        maintenanceItems;
-      });
+      setState(() {});
     }
 
   }

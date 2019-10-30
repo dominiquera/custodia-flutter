@@ -1,9 +1,15 @@
 class Score {
 
-  final int value;
+   int value;
 
   Score({this.value});
 
   Score.fromJson(Map<String, dynamic> json)
-      : value = json["score"];
+  {
+    if (json["score"] < 0) {
+      this.value = 0;
+    } else {
+      this.value = json["score"];
+    }
+  }
 }

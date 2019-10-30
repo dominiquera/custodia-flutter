@@ -29,8 +29,6 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
   @override
   void initState() {
     requestData = widget.requestData;
-    print(">>>>>>>>>>>>>>>>>>");
-    print(requestData);
     fetchHomeTypes();
     super.initState();
   }

@@ -3,10 +3,13 @@ import 'package:custodia/screens/login/phone-number.dart';
 import 'package:custodia/screens/questionnaire/step_intro.dart';
 import 'package:custodia/services/api.dart';
 import 'package:custodia/services/firebase-auth.dart';
+import 'package:custodia/utils/shared-prefs.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'dart:convert';
+
 
 import '../../theme-provider.dart';
 
@@ -43,11 +46,9 @@ class LoginSelectScreen extends StatelessWidget {
     );
   }
 
-  void onGoogleSignInSuccess(AuthResult authResult){
-
-    APIService.signInWithGoogleId(authResult, onAPiSignInSuccess, onSignInFailed);
+  void onGoogleSignInSuccess(FirebaseUser user){
+    APIService.signInWithGoogleId(user, onAPiSignInSuccess, onAPIGoogleSignInFailed);
   }
-
 
   void openPhoneNumberLogin(BuildContext context) {
     Navigator.push(
@@ -56,18 +57,18 @@ class LoginSelectScreen extends StatelessWidget {
     );
   }
 
-  void onAPiSignInSuccess(){
-    print(">>>>onAPiSignInSuccess");
+  void onAPiSignInSuccess(String body){
+
     Navigator.pushReplacement(
       ctx,
       MaterialPageRoute(builder: (context) => DashboardScreen()),
     );
   }
 
-  void onSignInFailed(AuthResult authResult){
+  void onAPIGoogleSignInFailed(FirebaseUser user){
     Navigator.push(
       ctx,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: authResult)),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(user: user)),
     );
   }
 }

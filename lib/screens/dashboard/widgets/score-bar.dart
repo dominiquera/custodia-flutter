@@ -35,7 +35,7 @@ class _ScoreBarState extends State<ScoreBar> {
 
   Widget scoreBar() {
     return Stack(
-      key: _keyScoreBar,
+//      key: _keyScoreBar,
       alignment: Alignment.center,
       children: <Widget>[
         Container(
@@ -46,6 +46,7 @@ class _ScoreBarState extends State<ScoreBar> {
           ),
         ),
         Container(
+          key: _keyScoreBar,
           height: 15,
           decoration: BoxDecoration(
               gradient: ThemeProvider.rainbowGradientHorizontal,
@@ -68,7 +69,7 @@ class _ScoreBarState extends State<ScoreBar> {
   }
 
   Widget scoreBarTopLabels() {
-    List<String> values = ["300", "580", "640", "700", "750", "850"];
+    List<String> values = ["0", "170", "340", "510", "680", "850"];
     List<Widget> widgets = [];
     values.forEach((i){
       widgets.add(Text(i, style: TextStyle(fontSize: 12),));
@@ -94,15 +95,9 @@ class _ScoreBarState extends State<ScoreBar> {
   _afterLayout(_) {
     final RenderBox renderBox = _keyScoreBar.currentContext.findRenderObject();
     final width = renderBox.size.width;
-    var point = width / 1150;
-    print("SIZE: $width");
-    print(point);
-    print(widget.score.value);
+    var point = width / 880;
     setState(() {
-      print("set State>>>");
-      position = point * 500;
-      print(position);
-
+      position = (point * widget.score.value);
     });
   }
 }

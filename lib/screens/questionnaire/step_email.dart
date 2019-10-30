@@ -24,8 +24,6 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
   void initState() {
     requestData = widget.requestData;
     textController = TextEditingController(text: widget.requestData["email"]);
-    print(">>>>>>>>>>>>>>>>>>");
-    print(requestData);
     super.initState();
   }
 

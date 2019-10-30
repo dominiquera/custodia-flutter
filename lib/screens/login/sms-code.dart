@@ -114,9 +114,9 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
     FirebaseAuthService.signInWIthPhoneNumber(credential, onSignInSuccess, onSignInError);
   }
 
-  void onSignInSuccess(bool isNewUser, AuthResult authResult) {
+  void onSignInSuccess(FirebaseUser user) {
     print(">>>>onSignInSuccess");
-    APIService.signInWithPhoneNumber(authResult, onAPiSignInSuccess, onApiSignInFailed);
+    APIService.signInWithPhoneNumber(user, onAPiSignInSuccess, onApiSignInFailed);
 
 //    if (isNewUser) {
 //      openQuestionnaireScreen();
@@ -134,12 +134,12 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
     );
   }
 
-  void onApiSignInFailed(AuthResult result){
+  void onApiSignInFailed(FirebaseUser user){
     print(">>>>API onApiSignInFailed");
 
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(authResult: result)),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(user: user)),
     );
   }
 

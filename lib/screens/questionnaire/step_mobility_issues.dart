@@ -28,8 +28,6 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   @override
   void initState() {
     requestData = widget.requestData;
-    print(">>>>>>>>>>>>>>>>>>");
-    print(requestData);
     fetchMobilityIssues();
     super.initState();
   }

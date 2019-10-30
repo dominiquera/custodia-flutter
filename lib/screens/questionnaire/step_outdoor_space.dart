@@ -30,8 +30,6 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
   @override
   void initState() {
     requestData = widget.requestData;
-    print(">>>>>>>>>>>>>>>>>>");
-    print(requestData);
     fetchOutdoorSpaces();
     super.initState();
   }
