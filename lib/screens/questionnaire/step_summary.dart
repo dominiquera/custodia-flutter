@@ -2,6 +2,7 @@ import 'package:custodia/models/home_owner.dart';
 import 'package:custodia/screens/dashboard/dashboard.dart';
 import 'package:custodia/services/api.dart';
 import 'package:custodia/services/globals.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
@@ -75,13 +76,13 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
             ),
           ),
           SizedBox(height: 70),
-          BlueRoundedButton(text: "Start", onPressed: loadDashboard, padding: 80),
+          BlueRoundedButton(text: "Start", onPressed: registerUser, padding: 80),
         ],
       ),
     );
   }
 
-  loadDashboard() {
+  registerUser() {
     APIService.createUser(
         widget.requestData["uid"],
         widget.requestData["token"],
@@ -93,14 +94,24 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
         widget.requestData["driveways"],
         widget.requestData["mobility_issues"],
         widget.requestData["phone"],
+        widget.requestData["address"],
+        widget.requestData["zip_code"],
         onRegistrationSuccess, onRegistrationFailure);
   }
 
   void onRegistrationSuccess(){
+    APIService.signInWithGoogleId(widget.requestData["firebase_user"], onAPIGoogleSignInSuccess, onAPIGoogleSignInFail);
+  }
+
+  void onAPIGoogleSignInSuccess(){
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => DashboardScreen()),
     );
+  }
+
+  void onAPIGoogleSignInFail(){
+    print("Failed API sign in");
   }
 
   void onRegistrationFailure(){

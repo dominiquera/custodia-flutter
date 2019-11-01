@@ -230,7 +230,7 @@ class APIService {
       var jsonBody = json.decode(response.body);
       SharedPrefsService.setCurrentUserId(jsonBody["id"]);
 
-      onSuccess(response.body);
+      onSuccess();
     }
     if (response.statusCode == 404) {
       onFail(user);
@@ -266,12 +266,13 @@ class APIService {
       List<int> driveways,
       List<int> mobilityIssues,
       String phone,
+      String address,
+      String zipCode,
       Function onSuccess,
       Function onFail
       ) async {
 
     String body = json.encode({
-      "firebase_registration_token": token,
       "google_auth_id": googleAuthId,
       "name": name,
       "email": email,
@@ -280,8 +281,12 @@ class APIService {
       "features": features,
       "driveways": driveways,
       "mobility_issues": mobilityIssues,
-      "phone": phone
+      "phone": phone,
+      "address": address,
+      "zip": zipCode,
+      "firebase_registration_token": token,
     });
+
 
     Response response = await post(
       '$domainURL/users',

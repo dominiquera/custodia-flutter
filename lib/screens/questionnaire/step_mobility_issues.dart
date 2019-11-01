@@ -101,7 +101,7 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   }
 
   loadNextStep() {
-    if (selectedMobilityIssues.isNotEmpty) {
+    if (selectedMobilityIssues.isNotEmpty && selectedMobilityIssues.length == 1) {
       requestData["mobility_issues"] = selectedMobilityIssues;
       Navigator.push(
         context,

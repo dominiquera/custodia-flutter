@@ -8,10 +8,7 @@ import '../../screens/questionnaire/step_name.dart';
 class QuestionnaireStepIntroScreen extends StatefulWidget {
 
   QuestionnaireStepIntroScreen({this.user, this.token});
-//  final AuthResult authResult;
   final FirebaseUser user;
-//  final String email;
-//  final String phoneNumber;
   final String token;
 
   @override
@@ -31,7 +28,10 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
     "driveways": null,
     "outdoor_spaces": null,
     "mobility_issues": null,
+    "address": null,
+    "zip_code": null,
     "token": null,
+    "firebase_user": null,
   };
 
   @override
@@ -40,6 +40,7 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
     requestData["email"] = widget.user.email;
     requestData["uid"] = widget.user.uid;
     requestData["phone"] = widget.user.phoneNumber;
+    requestData["firebase_user"] = widget.user;
     super.initState();
   }
 

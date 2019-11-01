@@ -102,7 +102,7 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   }
 
   loadNextStep() {
-    if (selectedDrivewaysIds.isNotEmpty) {
+    if (selectedDrivewaysIds.isNotEmpty && selectedDrivewaysIds.length == 1) {
       requestData["driveways"] = selectedDrivewaysIds;
       Navigator.push(
         context,

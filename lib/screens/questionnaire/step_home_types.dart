@@ -24,7 +24,7 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
 
   Map<String, dynamic> requestData;
   List<HomeType> homeTypes = [];
-  int selectedHomeType;
+  List<int> selectedHomeType = [];
 
   @override
   void initState() {
@@ -90,11 +90,11 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   void onValueSelected(int id){
-    selectedHomeType = id;
+    selectedHomeType.add(id);
   }
 
   void onValueDeselected(int id){
-    selectedHomeType = null;
+    selectedHomeType.remove(id);
   }
 
   loadPreviousStep(){
@@ -102,18 +102,18 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   loadNextStep() {
-    if (selectedHomeType != null){
-      requestData["home_type"] = selectedHomeType.toString();
+    if (selectedHomeType != null && selectedHomeType.length == 1){
+      requestData["home_type"] = selectedHomeType.first.toString();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionnaireStepHomeFeaturesScreen(requestData: requestData)),
       );
     } else {
       _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-              backgroundColor: Colors.white,
-              content: Text('Please select one', style: TextStyle(color: Colors.black54),)
-          )
+        SnackBar(
+          backgroundColor: Colors.white,
+          content: Text('Please select one', style: TextStyle(color: Colors.black54),)
+        )
       );
     }
   }

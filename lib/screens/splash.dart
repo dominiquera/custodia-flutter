@@ -71,10 +71,10 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void onAPIPhoneNumberSignInFailed(AuthResult result){
+  void onAPIPhoneNumberSignInFailed(FirebaseUser user){
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen()),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(user: user)),
     );
   }
 
@@ -85,10 +85,10 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void onAPIGoogleSignInFail(){
+  void onAPIGoogleSignInFail(FirebaseUser user){
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen()),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepIntroScreen(user: user)),
     );
   }
 }

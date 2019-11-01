@@ -57,7 +57,7 @@ class LoginSelectScreen extends StatelessWidget {
     );
   }
 
-  void onAPiSignInSuccess(String body){
+  void onAPiSignInSuccess(){
 
     Navigator.pushReplacement(
       ctx,

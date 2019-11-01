@@ -1,3 +1,4 @@
+import 'package:custodia/screens/questionnaire/step_address.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
@@ -75,6 +76,9 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
           if (value.trim().isEmpty) {
             return 'Please enter your email';
           }
+          if (!RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+            return 'Please enter valid email';
+          }
           return null;
         },
         controller: textController,
@@ -82,8 +86,9 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
           fontSize: 20, color: Colors.white,
         ),
         decoration: InputDecoration(
-            enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
-            focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1))
+          enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
+          focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
+          errorStyle: TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -98,7 +103,7 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
       requestData["email"] = textController.text;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepWhoNeedsScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepAddressScreen(requestData: requestData)),
       );
     }
   }
