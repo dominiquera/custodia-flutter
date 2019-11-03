@@ -1,7 +1,8 @@
+import 'package:custodia/models/management_plan.dart';
 import 'package:custodia/screens/widgets/snack-bar.dart';
 import 'package:custodia/services/globals.dart';
 import 'package:flutter/material.dart';
-
+import 'package:custodia/services/api.dart';
 import '../../theme-provider.dart';
 import 'package:custodia/widgets/blue-rounded-button.dart';
 import 'package:custodia/widgets/filter-button.dart';
@@ -23,10 +24,12 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   String selectedPerson;
   List<int> selectedIds = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<ManagementPlan> managementPlans = [];
 
   @override
   void initState() {
     requestData = widget.requestData;
+    fetchManagementPlans();
     super.initState();
   }
 
@@ -84,7 +87,7 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   }
 
   List<Widget> buildFilter() {
-    return homeOwners.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected, ); }).toList();
+    return managementPlans.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected, ); }).toList();
   }
 
   void onValueSelected(int id){
@@ -117,4 +120,13 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
     }
 
   }
+
+  void fetchManagementPlans() {
+    APIService.fetchManagementPlans().then((value) {
+      managementPlans = value;
+      setState(() {});
+    });
+  }
+
+
 }

@@ -20,12 +20,11 @@ class QuestionnaireStepSummaryScreen extends StatefulWidget {
 
 class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummaryScreen> {
 
-  HomeOwner owner;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    owner = homeOwners.firstWhere((item) { return item.id == widget.requestData["who_needs"][0]; });
+    //owner = managementPlans.firstWhere((item) { return item.id == widget.requestData["who_needs"][0]; });
     super.initState();
   }
   @override
@@ -67,7 +66,8 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
                   )
                 ),
                 TextSpan(
-                  text: "let's review your ${owner.name} home managment plan",
+                  //text: "let's review your ${owner.name} home managment plan",
+                  text: "let's review your home managment plan",
                   style: TextStyle(
                     fontFamily: "RobotoLight"
                   )
@@ -93,6 +93,7 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
         widget.requestData["home_features"],
         widget.requestData["driveways"],
         widget.requestData["mobility_issues"],
+        widget.requestData["who_needs"],
         widget.requestData["phone"],
         widget.requestData["address"],
         widget.requestData["zip_code"],

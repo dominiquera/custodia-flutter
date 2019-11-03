@@ -47,9 +47,9 @@ class _SplashScreenState extends State<SplashScreen> {
     FirebaseAuth.instance.currentUser().then((user) {
 
       if (user != null) {
-        if (user.phoneNumber.isNotEmpty) {
+        if (user.phoneNumber != null && user.phoneNumber.isNotEmpty) {
           APIService.signInWithPhoneNumber(user, onAPIPhoneNumberSignInSuccess, onAPIPhoneNumberSignInFailed);
-        } else if (user.email.isNotEmpty) {
+        } else if (user.email != null && user.email.isNotEmpty) {
           APIService.signInWithGoogleId(user, onAPIGoogleSignInSuccess, onAPIGoogleSignInFail);
         }
       } else {
@@ -78,7 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  void onAPIGoogleSignInSuccess(String body){
+  void onAPIGoogleSignInSuccess(){
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => DashboardScreen()),

@@ -25,6 +25,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
 
   int currentAPIUserId;
+
   Score score;
   List<MaintenanceItem> outsideItems = [];
   List<MaintenanceItem> insideItems = [];
@@ -40,10 +41,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   DateTime now = DateTime.now();
   var formatter = DateFormat('dd MMMM');
   String userName = "{}";
+  String title = "";
 
   @override
   void initState() {
     getCurrentUserId();
+
     sectionData = [
       {"id": 1, "title": "Outside This Month", "subtitle": "Suggested for outside the home. Slide the card to customize", "accentColor": ThemeProvider.green3, "items": outsideItems, "fetched": false},
       {"id": 2, "title": "Inside This Month", "subtitle": "Suggested for inside the home. Slide the card to customize", "accentColor": ThemeProvider.green3, "items": insideItems, "fetched": false},
@@ -114,7 +117,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
             children: <Widget>[
               Text(
-                "Home Management Plan",
+                title,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 34,
@@ -209,6 +212,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
+  void fetchUserDetails() async {
+    APIService.fetchUserDetails(currentAPIUserId).then((value) {
+      title = value.title;
+      userName = value.name;
+      setState(() {});
+    });
+  }
+
   void fetchSections() async {
     sectionData.forEach((section) async {
       section["items"] = await APIService.fetchTop3ItemsForSection(currentAPIUserId, section["id"]);
@@ -224,6 +235,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       currentAPIUserId = userId;
       fetchSections();
       fetchScore();
+      fetchUserDetails();
     });
   }
 

@@ -1,9 +1,12 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:custodia/models/driveway_type.dart';
 import 'package:custodia/models/home_feature.dart';
 import 'package:custodia/models/home_type.dart';
 import 'package:custodia/models/maintenance_item.dart';
+import 'package:custodia/models/management_plan.dart';
+import 'package:custodia/models/userDetails.dart';
 import 'package:custodia/models/mobility_issue.dart';
 import 'package:custodia/models/outdoor_space.dart';
 import 'package:custodia/models/score.dart';
@@ -135,6 +138,24 @@ class APIService {
     }
   }
 
+  //  Return a list of all mobility issue types available in the system
+  static fetchManagementPlans() async {
+    Response response = await get(
+      '$domainURL/management_plans',
+    );
+
+    if (response.statusCode == 200) {
+      List<ManagementPlan> managegementPlans = [];
+      var body = json.decode(response.body);
+      for (var x in body) {
+        managegementPlans.add(ManagementPlan.fromJson(x));
+      }
+      return managegementPlans;
+    } else {
+      throw Exception('Failed to fetchManagementPlans');
+    }
+  }
+
   //  Returns the current score for a given user id
   static Future<Score> fetchScore(int userId) async {
     Response response = await get(
@@ -168,6 +189,20 @@ class APIService {
       return maintenanceItems;
     } else {
       throw Exception('Failed to load ignored maintenance items');
+    }
+  }
+
+  //  Returns the user details
+  static Future<UserDetails> fetchUserDetails(int userId) async {
+    Response response = await get('$domainURL/users/$userId/details');
+
+
+    if (response.statusCode == 200) {
+      var body = json.decode(response.body);
+      return UserDetails.fromJson(body);
+    } else {
+      log(json.decode(response.body));
+      throw Exception('Failed to fetchUserDetails');
     }
   }
 
@@ -265,6 +300,7 @@ class APIService {
       List<int> features,
       List<int> driveways,
       List<int> mobilityIssues,
+      List<int> managementPlans,
       String phone,
       String address,
       String zipCode,
@@ -281,6 +317,7 @@ class APIService {
       "features": features,
       "driveways": driveways,
       "mobility_issues": mobilityIssues,
+      "management_plans" : managementPlans,
       "phone": phone,
       "address": address,
       "zip": zipCode,
@@ -299,6 +336,7 @@ class APIService {
     }
 
     if (response.statusCode == 400) {
+      log(response.body);
       onFail();
     }
   }
