@@ -88,7 +88,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         header(),
         (stepsClosed == false) ? Steps() : Container(),
         score != null ? scoreBlock() : Container(),
-        top3MaintenanceItems != null ? Top3Checkpoints(items: top3MaintenanceItems) : Container(),
+        (top3MaintenanceItems != null && top3MaintenanceItems.isNotEmpty) ? Top3Checkpoints(items: top3MaintenanceItems) : Container(),
         currentAPIUserId != null ? Column(children: buildSections()) : Container()
       ]
     );
