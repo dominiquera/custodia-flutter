@@ -1,3 +1,4 @@
+import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/widgets/done-overlay-dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -6,6 +7,16 @@ import '../../../theme-provider.dart';
 import '../../learn-more-about.dart';
 
 class SlidableCard extends StatefulWidget {
+
+  SlidableCard({this.item, this.color, this.userId, this.onIgnore, this.onDone, this.key});
+
+  final MaintenanceItem item;
+  final Color color;
+  final int userId;
+  final Function onIgnore;
+  final Function onDone;
+  final Key key;
+
   @override
   _SlidableCardState createState() => _SlidableCardState();
 }
@@ -35,7 +46,7 @@ class _SlidableCardState extends State<SlidableCard> {
                 Positioned(
                   bottom: 10,
                   left: 10,
-                  child: Text("10 POINTS",
+                  child: Text("${widget.item.points} POINTS",
                     style: TextStyle(
                       fontSize: 16,
                       color: Colors.white,
@@ -55,16 +66,16 @@ class _SlidableCardState extends State<SlidableCard> {
                 padding: const EdgeInsets.all(20),
                 child: Column(
                   children: <Widget>[
+//                    Text(
+//                      "OUTSIDE",
+//                      style: TextStyle(
+//                        color: ThemeProvider.green1,
+//                        fontSize: 20,
+//                        fontFamily: "RobotoMedium"
+//                      )
+//                    ),
                     Text(
-                      "OUTSIDE",
-                      style: TextStyle(
-                        color: ThemeProvider.green1,
-                        fontSize: 20,
-                        fontFamily: "RobotoMedium"
-                      )
-                    ),
-                    Text(
-                      "Cut the grass this week",
+                      widget.item.title,
                       style: TextStyle(
                         fontSize: 28,
                         fontFamily: "RobotoMedium",
@@ -73,7 +84,7 @@ class _SlidableCardState extends State<SlidableCard> {
                     ),
                     SizedBox(height: 10),
                     Text(
-                      "It rained quite a bit last week, you may need to cut the grass and edge the property",
+                      widget.item.summary,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 16,

@@ -97,7 +97,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           subtitle: section["subtitle"],
           accentColor: section["accentColor"],
           items: section["items"],
-          userId: currentAPIUserId
+          userId: currentAPIUserId,
+          onUpdate: onSectionUpdate
         );
       } else if (section["items"].isEmpty && section["fetched"] == false) {
         return ProgressIndicatorWithPadding();
@@ -105,6 +106,11 @@ class _DashboardScreenState extends State<DashboardScreen> {
         return Container();
       }
     }).toList();
+  }
+
+  onSectionUpdate(){
+    fetchScore();
+    fetchSections();
   }
 
   Widget header() {
@@ -116,14 +122,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           padding: EdgeInsets.all(ThemeProvider.screenPadding),
           child: Column(
             children: <Widget>[
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 34,
-                  fontFamily: "RobotoBlack"
-                )
-              ),
+//              Text(
+//                title,
+//                style: TextStyle(
+//                  color: Colors.white,
+//                  fontSize: 34,
+//                  fontFamily: "RobotoBlack"
+//                )
+//              ),
               SizedBox(height: 15),
               Row(
                 children: <Widget>[
@@ -216,14 +222,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
     APIService.fetchUserDetails(currentAPIUserId).then((value) {
       title = value.title;
       userName = value.name;
+
       setState(() {});
     });
+
   }
 
   void fetchSections() async {
     sectionData.forEach((section) async {
-      section["items"] = await APIService.fetchTop3ItemsForSection(currentAPIUserId, section["id"]);
       APIService.fetchTop3ItemsForSection(currentAPIUserId, section["id"]).then((result) {
+
+        section["items"] = result;
         section["fetched"] = true;
         setState(() {});
       });

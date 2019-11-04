@@ -15,8 +15,9 @@ class DashboardSection extends StatefulWidget {
   final Color accentColor;
   final List<MaintenanceItem> items;
   final int userId;
+  final Function onUpdate;
 
-  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.userId});
+  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.userId, this.onUpdate});
 
   @override
   _DashboardSectionState createState() => _DashboardSectionState();
@@ -25,6 +26,24 @@ class DashboardSection extends StatefulWidget {
 class _DashboardSectionState extends State<DashboardSection> {
 
   List<Widget> items;
+
+  @override
+  void initState() {
+    int i = 1;
+    items = widget.items.map<Widget>((item) {
+      Widget widgetItem;
+      if (i == 1) {
+        widgetItem = buildHeaderItem(item);
+      } else {
+        widgetItem = buildItem(item);
+      }
+
+      i++;
+      return widgetItem;
+    }).toList();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,30 +59,41 @@ class _DashboardSectionState extends State<DashboardSection> {
           ),
 //          SlidableCard(),
           SizedBox(height: 20),
-          buildChildren(),
+          Column(children: items),
           FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: widget.title, accentColor: widget.accentColor)
         ],
       ),
     );
   }
 
-  buildChildren(){
-    items = widget.items.map<Widget>((item) => buildItem(item)).toList();
-    return Column(children: items);
+  Widget buildHeaderItem(MaintenanceItem item) {
+    return SlidableCard(
+      key: Key("index_${item.id}"),
+      userId: widget.userId,
+      item: item,
+      onIgnore: hideItem,
+      onDone: hideItem,
+      color: widget.accentColor,
+    );
   }
 
-  buildItem(MaintenanceItem item){
+  Widget buildItem(MaintenanceItem item){
     return SlidableListItem(
       key: Key("index_${item.id}"),
       userId: widget.userId,
       item: item,
-      onIgnore: onIgnore,
-      color: widget.accentColor);
+      onIgnore: hideItem,
+      onDone: hideItem,
+      color: widget.accentColor,
+    );
   }
 
-  onIgnore(int itemId) {
-//    setState(() {
-//      items.removeWhere((item) => item.key == Key("index_$itemId"));
-//    });
+  hideItem(int itemId) {
+    setState(() {
+      items.removeWhere((item) => item.key == Key("index_$itemId"));
+    });
+    widget.onUpdate();
   }
+
+
 }

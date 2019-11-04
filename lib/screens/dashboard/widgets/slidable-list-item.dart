@@ -10,12 +10,13 @@ import '../sections/overlay-ignore.dart';
 
 class SlidableListItem extends StatefulWidget {
 
-  SlidableListItem({this.item, this.color, this.userId, this.onIgnore, this.key});
+  SlidableListItem({this.item, this.color, this.userId, this.onIgnore, this.onDone, this.key});
 
   final MaintenanceItem item;
   final Color color;
   final int userId;
   final Function onIgnore;
+  final Function onDone;
   final Key key;
 
   @override
@@ -88,21 +89,18 @@ class _SlidableListItemState extends State<SlidableListItem> {
     APIService.markDoneMaintenanceItem(widget.userId, widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
   }
 
-  void onMarkDoneSuccess(){
-    showOverlayDialog();
+  void onMarkDoneSuccess(String body){
+    widget.onDone(widget.item.id);
+    Navigator.of(context).push(
+        PageRouteBuilder(
+            opaque: false,
+            pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog(item: widget.item)
+        )
+    );
   }
 
   void onMarkDoneFailure() {
     print(">>>onMarkDoneFailure");
-  }
-
-  showOverlayDialog() {
-    Navigator.of(context).push(
-      PageRouteBuilder(
-        opaque: false,
-        pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog()
-      )
-    );
   }
 
   showIgnoreOverlayDialog() {
@@ -161,7 +159,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
             ),
             child: Icon(Icons.cached, color: Colors.white, size: 30,)
         ),
-        onTap: showOverlayDialog,
+        onTap: () {},
       ),
       IconSlideAction(
         caption: 'Learn',
