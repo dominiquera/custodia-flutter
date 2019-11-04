@@ -42,7 +42,7 @@ class _SlidableCardState extends State<SlidableCard> {
         child: Column(
             children: <Widget>[
               Stack(children: <Widget>[
-                Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth),
+                buildImage(),
                 Positioned(
                   bottom: 10,
                   left: 10,
@@ -99,6 +99,16 @@ class _SlidableCardState extends State<SlidableCard> {
       ),
 
     );
+  }
+
+  buildImage(){
+    if (widget.item.imageUrl.isNotEmpty) {
+      return Image.network(
+        "https://custodia.dominiquera.com" + widget.item.imageUrl,
+      );
+    } else {
+      return Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth);
+    }
   }
 
   showOverlayDialog() {

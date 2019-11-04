@@ -103,7 +103,7 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   }
 
   loadNextStep() {
-    if (selectedIds.isNotEmpty && selectedIds.length == 1) {
+    if (selectedIds.isNotEmpty) {
       requestData["who_needs"] = selectedIds;
 
       Navigator.push(

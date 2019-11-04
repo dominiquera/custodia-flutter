@@ -11,6 +11,7 @@ class MaintenanceItem {
   final String summary;
   final String cautions;
   final String createdAt;
+  final String imageUrl;
 
   MaintenanceItem({
     this.id,
@@ -23,7 +24,9 @@ class MaintenanceItem {
     this.mobilityPriority,
     this.summary,
     this.cautions,
-    this.createdAt});
+    this.createdAt,
+    this.imageUrl
+  });
 
   MaintenanceItem.fromJson(Map<String, dynamic> json)
     : id = json["id"],
@@ -36,6 +39,7 @@ class MaintenanceItem {
       mobilityPriority = json["mobility_priority"],
       summary = json["summary"],
       cautions = json["cautions"],
-      createdAt = json["created_at"];
+      createdAt = json["created_at"],
+      imageUrl = json["image"];
 
 }
