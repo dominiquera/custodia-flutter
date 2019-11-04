@@ -38,7 +38,8 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
         title: Text(formatter.format(now), style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: navigateBack),
       ),
       body: body(),
     );
@@ -145,4 +146,8 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
     );
   }
 
+
+  void navigateBack() {
+    Navigator.pop(context);
+  }
 }
