@@ -182,7 +182,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: ThemeProvider.screenPadding),
             child: Text(
-              "Hello $userName, just a few things on for this week. Here is your dad's current Home Score.",
+              "Hello $userName, just a few things on for this week. Here is your current Home Score.",
               style: TextStyle(
                 fontSize: 26,
                 fontFamily: "RobotoMedium"
