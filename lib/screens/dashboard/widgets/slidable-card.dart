@@ -1,4 +1,5 @@
 import 'package:custodia/models/maintenance_item.dart';
+import 'package:custodia/services/api.dart';
 import 'package:custodia/widgets/done-overlay-dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -115,9 +116,27 @@ class _SlidableCardState extends State<SlidableCard> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog()
+        pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog(item: widget.item,)
       )
     );
+  }
+
+  markAsDone(){
+    APIService.markDoneMaintenanceItem(widget.userId, widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
+  }
+
+  void onMarkDoneSuccess(String body){
+    widget.onDone(widget.item.id);
+    Navigator.of(context).push(
+        PageRouteBuilder(
+            opaque: false,
+            pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog(item: widget.item)
+        )
+    );
+  }
+
+  void onMarkDoneFailure() {
+    print(">>>onMarkDoneFailure");
   }
 
   List<Widget> headerCardSlideActions() {
@@ -134,7 +153,7 @@ class _SlidableCardState extends State<SlidableCard> {
           ),
           child: Icon(Icons.check, color: Colors.white, size: 30,)
         ),
-        onTap: showOverlayDialog,
+        onTap: markAsDone,
       ),
       IconSlideAction(
         caption: 'Automate',
