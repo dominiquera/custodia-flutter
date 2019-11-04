@@ -6,7 +6,7 @@ import 'package:custodia/models/home_feature.dart';
 import 'package:custodia/models/home_type.dart';
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/models/management_plan.dart';
-import 'package:custodia/models/userDetails.dart';
+import 'package:custodia/models/user_details.dart';
 import 'package:custodia/models/mobility_issue.dart';
 import 'package:custodia/models/outdoor_space.dart';
 import 'package:custodia/models/score.dart';
@@ -367,7 +367,7 @@ class APIService {
     );
 
     if (response.statusCode == 200) {
-      onSuccess();
+      onSuccess(response.body);
     } else {
       onFail();
     }
