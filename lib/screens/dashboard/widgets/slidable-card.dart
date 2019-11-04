@@ -170,7 +170,7 @@ class _SlidableCardState extends State<SlidableCard> {
   openLearnMoreScreen() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LearnMoreAbout()),
+      MaterialPageRoute(builder: (context) => LearnMoreAboutPage(item: widget.item)),
     );
   }
 }

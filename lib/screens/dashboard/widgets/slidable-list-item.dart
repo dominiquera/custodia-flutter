@@ -181,7 +181,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
   openLearnMoreScreen() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LearnMoreAbout()),
+      MaterialPageRoute(builder: (context) => LearnMoreAboutPage(item: widget.item)),
     );
   }
 }

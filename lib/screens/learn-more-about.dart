@@ -1,7 +1,9 @@
+import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/widgets/drawer.dart';
 import 'package:custodia/widgets/list-item.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
+import 'package:intl/intl.dart';
 
 import '../theme-provider.dart';
 import 'package:flutube/flutube.dart';
@@ -9,15 +11,22 @@ import 'package:flutube/flutube.dart';
 import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
 
-class LearnMoreAbout extends StatefulWidget  {
+class LearnMoreAboutPage extends StatefulWidget  {
+
+  final MaintenanceItem item;
+  LearnMoreAboutPage({this.item});
+
   @override
-  _LearnMoreAboutState createState() => _LearnMoreAboutState();
+  _LearnMoreAboutPageState createState() => _LearnMoreAboutPageState();
 }
 
-class _LearnMoreAboutState extends State<LearnMoreAbout>  {
+class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
 
   Color accentColor = ThemeProvider.green4;
   Color accentColor2 = ThemeProvider.green3;
+
+  DateTime now = DateTime.now();
+  var formatter = DateFormat('dd MMMM');
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +35,7 @@ class _LearnMoreAboutState extends State<LearnMoreAbout>  {
         child: DrawerContent()
       ),
       appBar: GradientAppBar(
-        title: Text('July 3', style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
+        title: Text(formatter.format(now), style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
         automaticallyImplyLeading: false,
@@ -42,8 +51,8 @@ class _LearnMoreAboutState extends State<LearnMoreAbout>  {
       child: ListView(
         children: <Widget>[
           HeaderItem(
-            title: "Learn More About Cutting The Grass",
-            description: "Suggested for outsided the home. Slide the card to customize",
+            title: "Learn More About ${widget.item.title}",
+            description: widget.item.summary,
             colorAccent: accentColor2
           ),
           video(),
@@ -65,7 +74,7 @@ class _LearnMoreAboutState extends State<LearnMoreAbout>  {
     return FluTube(
       'https://www.youtube.com/watch?v=fq4N0hgOWzU',
       aspectRatio: 16 / 9,
-      autoPlay: true,
+      autoPlay: false,
       looping: true,
       onVideoStart: () {},
       onVideoEnd: () {},
