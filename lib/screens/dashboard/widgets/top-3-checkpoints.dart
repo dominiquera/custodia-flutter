@@ -6,9 +6,9 @@ import '../../../theme-provider.dart';
 
 class Top3Checkpoints extends StatefulWidget {
 
-  final int userId;
+  final List<MaintenanceItem>  items;
 
-  Top3Checkpoints({this.userId});
+  Top3Checkpoints({this.items});
 
   @override
   _Top3CheckpointsState createState() => _Top3CheckpointsState();
@@ -16,11 +16,9 @@ class Top3Checkpoints extends StatefulWidget {
 
 class _Top3CheckpointsState extends State<Top3Checkpoints> {
 
-  List<MaintenanceItem> maintenanceItems = [];
 
   @override
   void initState() {
-    getMaintenanceItems();
     super.initState();
   }
 
@@ -76,23 +74,11 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
   }
 
   top3Items(){
-    if (maintenanceItems.isEmpty) {
-      return Center(
-        child: Container(
-          width: 20,
-          height: 20,
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(ThemeProvider.orange)
-          )
-        ),
-      );
-    } else {
-      List<Widget> children = [];
-      maintenanceItems.asMap().forEach((index, item) { children.add(top3Item(index + 1, item));  });
-      return Column(
+    List<Widget> children = [];
+    widget.items.asMap().forEach((index, item) { children.add(top3Item(index + 1, item));  });
+    return Column(
         children: children
-      );
-    }
+    );
   }
 
   Widget top3Item(int index, MaintenanceItem maintenanceItem) {
@@ -160,13 +146,5 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
         ]
       ),
     );
-  }
-
-  void getMaintenanceItems() async {
-    maintenanceItems = await APIService.fetchTop3Items(widget.userId);
-    if (this.mounted){
-      setState(() {});
-    }
-
   }
 }

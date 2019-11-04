@@ -36,15 +36,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
   List<MaintenanceItem> relatedServicesItems = [];
   List<MaintenanceItem> preventItems = [];
 
+  List<MaintenanceItem> top3MaintenanceItems = [];
+
+
   List<Map<String, dynamic>> sectionData;
 
   DateTime now = DateTime.now();
   var formatter = DateFormat('dd MMMM');
   String userName = "{}";
-  String title = "";
+  String homeDescription = "";
+  bool stepsClosed;
 
   @override
   void initState() {
+    getSharedPrefs();
     getCurrentUserId();
 
     sectionData = [
@@ -78,11 +83,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget body() {
     return ListView(
+      addAutomaticKeepAlives: false,
       children: <Widget>[
         header(),
-        Steps(),
+        (stepsClosed == false) ? Steps() : Container(),
         score != null ? scoreBlock() : Container(),
-        currentAPIUserId != null ? Top3Checkpoints(userId: currentAPIUserId) : Container(),
+        top3MaintenanceItems != null ? Top3Checkpoints(items: top3MaintenanceItems) : Container(),
         currentAPIUserId != null ? Column(children: buildSections()) : Container()
       ]
     );
@@ -134,13 +140,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               Row(
                 children: <Widget>[
                   Expanded(
-                    child: Text(
-                      "{home description}",
+                    child: homeDescription != null ? Text(
+                      homeDescription,
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       )
-                    ),
+                    ) : Container(),
                   ),
                   Container(
                     padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
@@ -220,7 +226,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void fetchUserDetails() async {
     APIService.fetchUserDetails(currentAPIUserId).then((value) {
-      title = value.title;
+      homeDescription = value.title;
       userName = value.name;
 
       setState(() {});
@@ -242,10 +248,26 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void getCurrentUserId() async {
     SharedPrefsService.getCurrentUserId().then((userId) {
       currentAPIUserId = userId;
+      getMaintenanceItems();
+      print("USER id: $userId");
       fetchSections();
       fetchScore();
       fetchUserDetails();
     });
+  }
+
+  void getMaintenanceItems() async {
+    top3MaintenanceItems = await APIService.fetchTop3Items(currentAPIUserId);
+    if (this.mounted){
+      setState(() {});
+    }
+
+  }
+
+  void getSharedPrefs() async {
+    stepsClosed = await SharedPrefsService.getStepsState();
+    print("step closed $stepsClosed");
+    setState(() {});
   }
 
 }

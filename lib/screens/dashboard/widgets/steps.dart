@@ -10,13 +10,8 @@ class Steps extends StatefulWidget {
 
 class _StepsState extends State<Steps> {
 
-  bool stepsClosed;
+  bool stepsClosed = false;
 
-  @override
-  void initState() {
-    getSharedPrefs();
-    super.initState();
-  }
   @override
   Widget build(BuildContext context) {
     if (stepsClosed != null && stepsClosed == false) {
@@ -110,11 +105,6 @@ class _StepsState extends State<Steps> {
         ],
       ),
     );
-  }
-
-  void getSharedPrefs() async {
-    stepsClosed = await SharedPrefsService.getStepsState();
-    setState(() {});
   }
 
   void setSharedPrefs() async {

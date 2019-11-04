@@ -26,7 +26,7 @@ class _SlidableCardState extends State<SlidableCard> {
   Widget build(BuildContext context) {
     return Slidable(
       actionPane: SlidableScrollActionPane(),
-      actions: headerCardSlideActions(),
+      secondaryActions: headerCardSlideActions(),
       child: Container(
         margin: EdgeInsets.all(10),
         decoration: BoxDecoration(
