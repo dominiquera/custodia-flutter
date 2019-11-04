@@ -1,12 +1,12 @@
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/services/api.dart';
-import 'package:custodia/widgets/done-overlay-dialog.dart';
+import 'package:custodia/screens/dashboard/widgets/overlay-done.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../theme-provider.dart';
 import '../../learn-more-about.dart';
-import '../sections/overlay-ignore.dart';
+import 'overlay-ignore.dart';
 
 class SlidableListItem extends StatefulWidget {
 

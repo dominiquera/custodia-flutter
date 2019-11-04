@@ -1,9 +1,10 @@
 import 'package:custodia/models/maintenance_item.dart';
+import 'package:custodia/utils/globals.dart';
 import 'package:flutter/material.dart';
 
-import '../theme-provider.dart';
-import 'blue-rounded-button.dart';
-import 'filter-button.dart';
+import '../../../theme-provider.dart';
+import '../../widgets/blue-rounded-button.dart';
+import '../../widgets/filter-button.dart';
 
 class DoneOverlayDialog extends StatefulWidget {
 
@@ -64,7 +65,7 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
               Column(
                 children: <Widget>[
                   Text(
-                    "Well done! You have increased the home score by ${widget.item.points} points!",
+                    "Well done $userName! You have increased the home score by ${widget.item.points} points!",
                     style: TextStyle(
                       fontSize: 38,
                       color: Colors.white,

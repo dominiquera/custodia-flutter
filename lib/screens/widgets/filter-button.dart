@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme-provider.dart';
+import '../../theme-provider.dart';
 
 class FilterButton extends StatefulWidget {
 

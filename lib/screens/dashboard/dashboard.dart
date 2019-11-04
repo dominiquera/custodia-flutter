@@ -7,8 +7,9 @@ import 'package:custodia/screens/dashboard/widgets/top-3-checkpoints.dart';
 import 'package:custodia/screens/widgets/progress-indicator.dart';
 import 'package:custodia/services/api.dart';
 import 'package:custodia/services/firebase-auth.dart';
+import 'package:custodia/utils/globals.dart';
 import 'package:custodia/utils/shared-prefs.dart';
-import 'package:custodia/widgets/drawer.dart';
+import 'package:custodia/screens/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   DateTime now = DateTime.now();
   var formatter = DateFormat('dd MMMM');
-  String userName = "{}";
   String homeDescription = "";
   bool stepsClosed;
 

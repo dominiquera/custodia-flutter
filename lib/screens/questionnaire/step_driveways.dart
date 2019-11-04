@@ -6,8 +6,8 @@ import 'package:custodia/services/api.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
-import 'package:custodia/widgets/blue-rounded-button.dart';
-import 'package:custodia/widgets/filter-button.dart';
+import 'package:custodia/screens/widgets/blue-rounded-button.dart';
+import 'package:custodia/screens/widgets/filter-button.dart';
 
 class QuestionnaireStepDrivewaysScreen extends StatefulWidget {
 

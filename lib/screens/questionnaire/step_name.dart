@@ -2,7 +2,7 @@ import 'package:custodia/screens/questionnaire/step_email.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
-import 'package:custodia/widgets/blue-rounded-button.dart';
+import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 
 class QuestionnaireStepNameScreen extends StatefulWidget {
 

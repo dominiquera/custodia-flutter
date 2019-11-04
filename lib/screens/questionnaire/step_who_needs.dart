@@ -4,8 +4,8 @@ import 'package:custodia/services/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:custodia/services/api.dart';
 import '../../theme-provider.dart';
-import 'package:custodia/widgets/blue-rounded-button.dart';
-import 'package:custodia/widgets/filter-button.dart';
+import 'package:custodia/screens/widgets/blue-rounded-button.dart';
+import 'package:custodia/screens/widgets/filter-button.dart';
 import '../../screens/questionnaire/step_home_types.dart';
 
 class QuestionnaireStepWhoNeedsScreen extends StatefulWidget {

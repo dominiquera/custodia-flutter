@@ -3,7 +3,7 @@ import 'package:custodia/services/firebase-auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../theme-provider.dart';
+import '../../theme-provider.dart';
 
 class DrawerContent extends StatefulWidget {
   @override

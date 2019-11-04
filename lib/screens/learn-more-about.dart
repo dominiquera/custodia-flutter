@@ -1,6 +1,6 @@
 import 'package:custodia/models/maintenance_item.dart';
-import 'package:custodia/widgets/drawer.dart';
-import 'package:custodia/widgets/list-item.dart';
+import 'package:custodia/screens/widgets/drawer.dart';
+import 'package:custodia/screens/widgets/list-item.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:intl/intl.dart';

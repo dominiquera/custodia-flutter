@@ -6,7 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
-import 'package:custodia/widgets/blue-rounded-button.dart';
+import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 
 class QuestionnaireStepSummaryScreen extends StatefulWidget {
 

@@ -4,7 +4,7 @@ import 'package:custodia/screens/questionnaire/step_intro.dart';
 import 'package:custodia/services/api.dart';
 import 'package:custodia/services/firebase-auth.dart';
 import 'package:custodia/utils/shared-prefs.dart';
-import 'package:custodia/widgets/blue-rounded-button.dart';
+import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
