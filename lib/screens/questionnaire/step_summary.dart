@@ -105,9 +105,8 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
   }
 
   void onAPIGoogleSignInSuccess(){
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => DashboardScreen()),
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (context) => DashboardScreen()), (Route<dynamic> route) => false
     );
   }
 
