@@ -128,10 +128,10 @@ class _SlidableCardState extends State<SlidableCard> {
   void onMarkDoneSuccess(String body){
     widget.onDone(widget.item.id);
     Navigator.of(context).push(
-        PageRouteBuilder(
-            opaque: false,
-            pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog(item: widget.item)
-        )
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog(item: widget.item)
+      )
     );
   }
 

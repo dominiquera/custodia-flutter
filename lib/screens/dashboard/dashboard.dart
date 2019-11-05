@@ -117,6 +117,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   onSectionUpdate(){
     fetchScore();
     fetchSections();
+    getTop3MaintenanceItems();
   }
 
   Widget header() {
@@ -248,7 +249,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void getCurrentUserId() async {
     SharedPrefsService.getCurrentUserId().then((userId) {
       currentAPIUserId = userId;
-      getMaintenanceItems();
+      getTop3MaintenanceItems();
       print("USER id: $userId");
       fetchSections();
       fetchScore();
@@ -256,7 +257,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     });
   }
 
-  void getMaintenanceItems() async {
+  void getTop3MaintenanceItems() async {
     top3MaintenanceItems = await APIService.fetchTop3Items(currentAPIUserId);
     if (this.mounted){
       setState(() {});
