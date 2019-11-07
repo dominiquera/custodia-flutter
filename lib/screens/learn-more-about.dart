@@ -1,6 +1,9 @@
+import 'package:custodia/models/learn_item.dart';
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/screens/widgets/drawer.dart';
 import 'package:custodia/screens/widgets/list-item.dart';
+import 'package:custodia/screens/widgets/progress-indicator.dart';
+import 'package:custodia/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:intl/intl.dart';
@@ -24,9 +27,16 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
 
   Color accentColor = ThemeProvider.green4;
   Color accentColor2 = ThemeProvider.green3;
+  LearnItem learnItem;
 
   DateTime now = DateTime.now();
   var formatter = DateFormat('dd MMMM');
+
+  @override
+  void initState() {
+    fetchLearnMaintenanceItem();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +51,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
         automaticallyImplyLeading: true,
         leading: IconButton(icon: Icon(Icons.arrow_back_ios), onPressed: navigateBack),
       ),
-      body: body(),
+      body: learnItem != null ? body() : ProgressIndicatorWithPadding(),
     );
   }
 
@@ -52,20 +62,20 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
       child: ListView(
         children: <Widget>[
           HeaderItem(
-            title: "Learn More About ${widget.item.title}",
-            description: widget.item.summary,
+            title: "Learn More About ${learnItem.title}",
+            description: learnItem.summary,
             colorAccent: accentColor2
           ),
-          video(),
           SizedBox(height: 20),
-          ListItem(
-            description: "Trim the hedges to keep them looking nice",
-            color: accentColor),
-          ListItem(
-            description: "Trim the hedges to keep them looking nice",
-            color: accentColor),
+          learnItem != null && learnItem.videoUrl != null ? video() : Container(),
+          SizedBox(height: 20),
+//          ListItem(
+//            description: "Trim the hedges to keep them looking nice",
+//            color: accentColor),
+//          ListItem(
+//            description: "Trim the hedges to keep them looking nice",
+//            color: accentColor),
           details()
-
         ],
       ),
     );
@@ -73,10 +83,10 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
 
   video(){
     return FluTube(
-      'https://www.youtube.com/watch?v=fq4N0hgOWzU',
+      learnItem.videoUrl,
       aspectRatio: 16 / 9,
       autoPlay: false,
-      looping: true,
+      looping: false,
       onVideoStart: () {},
       onVideoEnd: () {},
     );
@@ -86,6 +96,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
     return Padding(
       padding: EdgeInsets.only(left: ThemeProvider.screenPadding, right: ThemeProvider.screenPadding, bottom: 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
@@ -111,6 +122,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
           SizedBox(height: 10),
           Text(
             description,
+            textAlign: TextAlign.left,
             style: TextStyle(
               fontSize: 20
             )
@@ -137,17 +149,21 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
               colorAccent: accentColor2
           ),
           SizedBox(height: 20),
-          detailsItem("Frequency", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.blue1),
-          detailsItem("Tools", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.green1),
-          detailsItem("Materials", "Weekly in the Spring and early Summer, Bi-weekly late sumeer and fall", ThemeProvider.blue5),
-          FooterItem(mainText: "BACK TO YOUR ", accentText: "HMP", accentColor: accentColor2)
+          learnItem.interval != null ? detailsItem("Frequency", learnItem.interval, ThemeProvider.blue1) : Container(),
+          learnItem.tools.isNotEmpty ? detailsItem("Tools", learnItem.tools.map((item) { return item.value; }).join(", "), ThemeProvider.green1) : Container(),
+          learnItem.materials.isNotEmpty ? detailsItem("Materials", learnItem.materials.map((item) { return item.value; }).join(", "), ThemeProvider.blue5) : Container(),
+          FooterItem(mainText: "BACK TO YOUR ", accentText: "HMP", accentColor: accentColor2, onTap: navigateBack)
         ],
       ),
     );
   }
 
-
   void navigateBack() {
     Navigator.pop(context);
+  }
+
+  void fetchLearnMaintenanceItem() async {
+    learnItem = await APIService.fetchLearnMaintenanceItem(widget.item.id);
+    setState(() {});
   }
 }

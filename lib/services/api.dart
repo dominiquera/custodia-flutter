@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:custodia/models/driveway_type.dart';
 import 'package:custodia/models/home_feature.dart';
 import 'package:custodia/models/home_type.dart';
+import 'package:custodia/models/learn_item.dart';
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/models/management_plan.dart';
 import 'package:custodia/models/user_details.dart';
@@ -370,6 +371,17 @@ class APIService {
       onSuccess(response.body);
     } else {
       onFail();
+    }
+  }
+
+  //  Returns learning data for the maintenance item
+  static Future<LearnItem> fetchLearnMaintenanceItem(int itemId) async {
+    Response response = await get('$domainURL/learning/$itemId');
+
+    if (response.statusCode == 200) {
+      return LearnItem.fromJson(json.decode(response.body)["data"][0]);
+    } else {
+      throw Exception('Failed to load learn maintenance items');
     }
   }
 }
