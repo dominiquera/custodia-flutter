@@ -239,9 +239,9 @@ class APIService {
     }
   }
 
-  //  Returns maintenance items belonging to a given section
-  static Future<List<MaintenanceItem>> fetchMaintenanceItems(int section) async {
-    Response response = await get('$domainURL/sections/$section/maintenance_items');
+  //  Returns the list of maintenance items for a given user id and section id
+  static Future<List<MaintenanceItem>> fetchMaintenanceItems(int userId, int sectionId) async {
+    Response response = await get('$domainURL/users/$userId/section/$sectionId/all_maintenance_items');
     List<MaintenanceItem> maintenanceItems = [];
 
     if (response.statusCode == 200) {
@@ -251,7 +251,7 @@ class APIService {
       }
       return maintenanceItems;
     } else {
-      throw Exception('Failed to load maintenanceItems for section');
+      throw Exception('Failed to load maintenance items for section');
     }
   }
 
@@ -382,6 +382,17 @@ class APIService {
       return LearnItem.fromJson(json.decode(response.body)["data"][0]);
     } else {
       throw Exception('Failed to load learn maintenance items');
+    }
+  }
+
+  // Automates maintenance item
+  static Future<bool> automateMaintenanceItem(int userId, int itemId) async {
+    Response response = await post('$domainURL/users/$userId/maintenance_item/$itemId/apiAutomate');
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      throw Exception('Failed to automate maintenance items');
     }
   }
 }

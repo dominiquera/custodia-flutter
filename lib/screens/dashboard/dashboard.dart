@@ -104,7 +104,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
           accentColor: section["accentColor"],
           items: section["items"],
           userId: currentAPIUserId,
-          onUpdate: onSectionUpdate
+          onUpdate: onSectionUpdate,
+          id: section["id"]
         );
       } else if (section["items"].isEmpty && section["fetched"] == false) {
         return ProgressIndicatorWithPadding();
@@ -267,7 +268,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void getSharedPrefs() async {
     stepsClosed = await SharedPrefsService.getStepsState();
-    print("step closed $stepsClosed");
     setState(() {});
   }
 

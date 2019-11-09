@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
 
+import '../month-list.dart';
 import 'block-footer.dart';
 import 'block-header.dart';
 
@@ -16,8 +17,9 @@ class DashboardSection extends StatefulWidget {
   final List<MaintenanceItem> items;
   final int userId;
   final Function onUpdate;
+  final int id;
 
-  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.userId, this.onUpdate});
+  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.userId, this.onUpdate, this.id});
 
   @override
   _DashboardSectionState createState() => _DashboardSectionState();
@@ -60,7 +62,12 @@ class _DashboardSectionState extends State<DashboardSection> {
 //          SlidableCard(),
           SizedBox(height: 20),
           Column(children: items),
-          FooterItem(mainText: "MORE THIS MONTH FOR ", accentText: widget.title, accentColor: widget.accentColor)
+          FooterItem(
+            mainText: "MORE THIS MONTH FOR ",
+            accentText: widget.title,
+            accentColor: widget.accentColor,
+            onTap: openMonthList
+          )
         ],
       ),
     );
@@ -96,4 +103,12 @@ class _DashboardSectionState extends State<DashboardSection> {
   }
 
 
+
+  openMonthList() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ItemsMonthListPage(userId: widget.userId, sectionId: widget.id, accentColor: widget.accentColor)),
+    );
+
+  }
 }
