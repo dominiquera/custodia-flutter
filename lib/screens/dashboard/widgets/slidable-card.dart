@@ -10,13 +10,12 @@ import 'overlay-automate.dart';
 
 class SlidableCard extends StatefulWidget {
 
-  SlidableCard({this.item, this.color, this.userId, this.onIgnore, this.onDone, this.key});
+  SlidableCard({this.item, this.color, this.userId, this.onActionDone, this.key});
 
   final MaintenanceItem item;
   final Color color;
   final int userId;
-  final Function onIgnore;
-  final Function onDone;
+  final Function onActionDone;
   final Key key;
 
   @override
@@ -127,7 +126,7 @@ class _SlidableCardState extends State<SlidableCard> {
   }
 
   void onMarkDoneSuccess(String body){
-    widget.onDone(widget.item.id);
+    widget.onActionDone(widget.item.id);
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
@@ -198,7 +197,7 @@ class _SlidableCardState extends State<SlidableCard> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(userId: widget.userId, item: widget.item, onAutomate: null)
+        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(userId: widget.userId, item: widget.item, onAutomate: widget.onActionDone)
       )
     );
   }

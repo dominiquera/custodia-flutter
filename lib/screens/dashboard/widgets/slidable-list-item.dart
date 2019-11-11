@@ -11,13 +11,12 @@ import 'overlay-ignore.dart';
 
 class SlidableListItem extends StatefulWidget {
 
-  SlidableListItem({this.item, this.color, this.userId, this.onIgnore, this.onDone, this.key});
+  SlidableListItem({this.item, this.color, this.userId, this.onActionDone, this.key});
 
   final MaintenanceItem item;
   final Color color;
   final int userId;
-  final Function onIgnore;
-  final Function onDone;
+  final Function onActionDone;
   final Key key;
 
   @override
@@ -91,7 +90,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
   }
 
   void onMarkDoneSuccess(String body){
-    widget.onDone(widget.item.id);
+    widget.onActionDone(widget.item.id);
     Navigator.of(context).push(
         PageRouteBuilder(
             opaque: false,
@@ -108,7 +107,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(userId: widget.userId, item: widget.item, onIgnore: widget.onIgnore)
+        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(userId: widget.userId, item: widget.item, onIgnore: widget.onActionDone)
       )
     );
   }
@@ -190,7 +189,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(userId: widget.userId, item: widget.item, onAutomate: null)
+        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(userId: widget.userId, item: widget.item, onAutomate: widget.onActionDone)
       )
     );
   }

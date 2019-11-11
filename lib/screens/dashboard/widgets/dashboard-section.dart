@@ -78,8 +78,7 @@ class _DashboardSectionState extends State<DashboardSection> {
       key: Key("index_${item.id}"),
       userId: widget.userId,
       item: item,
-      onIgnore: hideItem,
-      onDone: hideItem,
+      onActionDone: hideItem,
       color: widget.accentColor,
     );
   }
@@ -89,8 +88,7 @@ class _DashboardSectionState extends State<DashboardSection> {
       key: Key("index_${item.id}"),
       userId: widget.userId,
       item: item,
-      onIgnore: hideItem,
-      onDone: hideItem,
+      onActionDone: hideItem,
       color: widget.accentColor,
     );
   }

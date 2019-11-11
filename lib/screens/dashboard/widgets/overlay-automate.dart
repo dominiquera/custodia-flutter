@@ -75,16 +75,14 @@ class _OverlayAutomateState extends State<OverlayAutomate> {
     bool response = await APIService.automateMaintenanceItem(widget.userId, widget.item.id);
     if (response) {
       onSuccess();
-      print(">>>automate");
     } else {
-      print(">>>no automate");
-
+      print("automate failed");
     }
   }
 
   onSuccess(){
     closeOverlay();
-//    widget.onAutomate(widget.item.id);
+    widget.onAutomate(widget.item.id);
   }
 
   onFail(){
