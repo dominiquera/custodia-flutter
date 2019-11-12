@@ -17,7 +17,11 @@ class _ListItemState extends State<ListItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: ThemeProvider.screenPadding, left: ThemeProvider.screenPadding, right: ThemeProvider.screenPadding),
+      padding: EdgeInsets.only(
+        bottom: ThemeProvider.screenPadding,
+        left: ThemeProvider.screenPadding,
+        right: ThemeProvider.screenPadding
+      ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[

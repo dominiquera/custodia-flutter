@@ -6,16 +6,16 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../theme-provider.dart';
 import '../../learn-more-about.dart';
+import 'overlay-automate.dart';
 
 class SlidableCard extends StatefulWidget {
 
-  SlidableCard({this.item, this.color, this.userId, this.onIgnore, this.onDone, this.key});
+  SlidableCard({this.item, this.color, this.userId, this.onActionDone, this.key});
 
   final MaintenanceItem item;
   final Color color;
   final int userId;
-  final Function onIgnore;
-  final Function onDone;
+  final Function onActionDone;
   final Key key;
 
   @override
@@ -126,7 +126,7 @@ class _SlidableCardState extends State<SlidableCard> {
   }
 
   void onMarkDoneSuccess(String body){
-    widget.onDone(widget.item.id);
+    widget.onActionDone(widget.item.id);
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
@@ -167,7 +167,7 @@ class _SlidableCardState extends State<SlidableCard> {
           ),
           child: Icon(Icons.cached, color: Colors.white, size: 30,)
         ),
-        onTap: showOverlayDialog,
+        onTap: showAutomateOverlayDialog,
       ),
       IconSlideAction(
         caption: 'Learn',
@@ -190,6 +190,15 @@ class _SlidableCardState extends State<SlidableCard> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => LearnMoreAboutPage(item: widget.item)),
+    );
+  }
+
+  void showAutomateOverlayDialog() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(userId: widget.userId, item: widget.item, onAutomate: widget.onActionDone)
+      )
     );
   }
 }

@@ -6,17 +6,17 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../theme-provider.dart';
 import '../../learn-more-about.dart';
+import 'overlay-automate.dart';
 import 'overlay-ignore.dart';
 
 class SlidableListItem extends StatefulWidget {
 
-  SlidableListItem({this.item, this.color, this.userId, this.onIgnore, this.onDone, this.key});
+  SlidableListItem({this.item, this.color, this.userId, this.onActionDone, this.key});
 
   final MaintenanceItem item;
   final Color color;
   final int userId;
-  final Function onIgnore;
-  final Function onDone;
+  final Function onActionDone;
   final Key key;
 
   @override
@@ -90,7 +90,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
   }
 
   void onMarkDoneSuccess(String body){
-    widget.onDone(widget.item.id);
+    widget.onActionDone(widget.item.id);
     Navigator.of(context).push(
         PageRouteBuilder(
             opaque: false,
@@ -107,7 +107,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(userId: widget.userId, item: widget.item, onIgnore: widget.onIgnore)
+        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(userId: widget.userId, item: widget.item, onIgnore: widget.onActionDone)
       )
     );
   }
@@ -159,7 +159,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
             ),
             child: Icon(Icons.cached, color: Colors.white, size: 30,)
         ),
-        onTap: () {},
+        onTap: showAutomateOverlayDialog,
       ),
       IconSlideAction(
         caption: 'Learn',
@@ -182,6 +182,15 @@ class _SlidableListItemState extends State<SlidableListItem> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => LearnMoreAboutPage(item: widget.item)),
+    );
+  }
+
+  void showAutomateOverlayDialog() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(userId: widget.userId, item: widget.item, onAutomate: widget.onActionDone)
+      )
     );
   }
 }
