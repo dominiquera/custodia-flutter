@@ -124,19 +124,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Stack(
       alignment: Alignment.bottomLeft,
       children: <Widget>[
-        Image.asset("assets/images/house.jpg", height: 500, fit: BoxFit.fitHeight,),
+        //Image.asset("assets/images/house.jpg", height: 500, fit: BoxFit.fitHeight,),
         Padding(
           padding: EdgeInsets.all(ThemeProvider.screenPadding),
           child: Column(
             children: <Widget>[
-//              Text(
-//                title,
-//                style: TextStyle(
-//                  color: Colors.white,
-//                  fontSize: 34,
-//                  fontFamily: "RobotoBlack"
-//                )
-//              ),
+              Text(
+                  homeDescription,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 34,
+                  fontFamily: "RobotoBlack"
+                )
+              ),
               SizedBox(height: 15),
               Row(
                 children: <Widget>[
@@ -145,12 +145,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       homeDescription,
                       style: TextStyle(
                         fontSize: 18,
-                        color: Colors.white,
+                        color: Colors.black,
                       )
                     ) : Container(),
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 7),
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
                     decoration: BoxDecoration(
                       color: ThemeProvider.lime,
                       borderRadius: BorderRadius.circular(20.0)
