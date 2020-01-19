@@ -56,14 +56,14 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
           Text("What features does this home have?",
             style: TextStyle(
                 fontSize: 35,
-                fontFamily: "RobotoLight",
+                fontFamily: "NunitoLight",
                 color: Colors.white
             )
           ),
           Text("Select one or several",
             style: TextStyle(
                 fontSize: 18,
-                fontFamily: "RobotoLight",
+                fontFamily: "NunitoLight",
                 color: Colors.white
             )
           ),

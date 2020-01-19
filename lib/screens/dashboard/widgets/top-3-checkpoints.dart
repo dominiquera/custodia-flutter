@@ -46,7 +46,7 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
           Text(
             "TOP THREE TODAY",
             style: TextStyle(
-              fontFamily: "RobotoBlack",
+              fontFamily: "NunitoBlack",
               color: ThemeProvider.orange,
               fontSize: 24,
               shadows: <Shadow>[
@@ -62,7 +62,7 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
           Text(
             "These are the suggested top three checkpoints",
             style: TextStyle(
-              fontFamily: "RobotoMedium",
+              fontFamily: "NunitoMedium",
               color: ThemeProvider.grey2
             )
           ),
@@ -103,7 +103,7 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
                   child: Text(
                     index.toString(),
                     style: TextStyle(
-                      fontFamily: "RobotoMedium",
+                      fontFamily: "NunitoMedium",
                       color: ThemeProvider.orange,
                       fontSize: 22
                     )
@@ -115,7 +115,7 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
                 "${maintenanceItem.points} POINTS",
                 style: TextStyle(
                   color: ThemeProvider.orange,
-                  fontFamily: "RobotoMedium",
+                  fontFamily: "NunitoMedium",
                   fontSize: 12
                 )
               )
@@ -130,11 +130,11 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
                   style: TextStyle(
                     fontSize: 22,
                     color: ThemeProvider.darkGrey,
-                    fontFamily: "RobotoMedium"
+                    fontFamily: "NunitoMedium"
                   )
                 ),
                 SizedBox(height: 5),
-                Text(maintenanceItem.summary,
+                Text(maintenanceItem.description,
                   style: TextStyle(
                     fontSize: 20,
                     color: ThemeProvider.darkGrey,

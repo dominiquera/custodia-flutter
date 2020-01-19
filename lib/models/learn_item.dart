@@ -9,7 +9,7 @@ class LearnItem {
   final List<LearnItemSection> materials;
   final String summary;
   final String videoUrl;
-  final String interval;
+  //final String interval;
 
   LearnItem({
     this.id,
@@ -18,7 +18,7 @@ class LearnItem {
     this.videoUrl,
     this.tools,
     this.materials,
-    this.interval
+    //this.interval
   });
 
   LearnItem.fromJson(Map<String, dynamic> json)
@@ -27,6 +27,6 @@ class LearnItem {
         title = json["title"],
         videoUrl = json["video"],
         tools = json["tools"].map<LearnItemSection>((item) {return LearnItemSection.fromJson(item); } ).toList(),
-        materials = json["materials"].map<LearnItemSection>((item) {return LearnItemSection.fromJson(item); } ).toList(),
-        interval = json["interval"]["name"];
+        materials = json["materials"].map<LearnItemSection>((item) {return LearnItemSection.fromJson(item); } ).toList();
+        //interval = json["interval"]["name"];
 }

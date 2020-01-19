@@ -72,7 +72,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         child: DrawerContent()
       ),
       appBar: GradientAppBar(
-        title: Text(formatter.format(now), style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
+        title: Text(formatter.format(now), style: TextStyle(fontFamily: "NunitoBlack", fontSize: 28)),
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
         automaticallyImplyLeading: false,
@@ -135,7 +135,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 34,
-                  fontFamily: "RobotoBlack"
+                  fontFamily: "NunitoBlack"
                 )
               ),
               SizedBox(height: 15),
@@ -187,7 +187,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               "Hello $userName, just a few things on for this week. Here is your current Home Score.",
               style: TextStyle(
                 fontSize: 26,
-                fontFamily: "RobotoMedium"
+                fontFamily: "NunitoMedium"
               ),
             ),
           ),

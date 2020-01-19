@@ -56,20 +56,20 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
                 TextSpan(
                   text: "Ok ",
                   style: TextStyle(
-                    fontFamily: "RobotoLight"
+                    fontFamily: "NunitoLight"
                   )
                 ),
                 TextSpan(
                   text: "${widget.requestData["name"]}, \n",
                   style: TextStyle(
-                    fontFamily: "RobotoMedium"
+                    fontFamily: "NunitoMedium"
                   )
                 ),
                 TextSpan(
                   //text: "let's review your ${owner.name} home managment plan",
                   text: "let's review your home managment plan",
                   style: TextStyle(
-                    fontFamily: "RobotoLight"
+                    fontFamily: "NunitoLight"
                   )
                 ),
               ],

@@ -1,4 +1,5 @@
 import 'package:custodia/screens/questionnaire/step_email.dart';
+import 'package:custodia/screens/questionnaire/step_address.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
@@ -48,7 +49,7 @@ class _QuestionnaireStepNameScreenState extends State<QuestionnaireStepNameScree
           Text("What's your name",
             style: TextStyle(
               fontSize: 35,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
@@ -82,6 +83,8 @@ class _QuestionnaireStepNameScreenState extends State<QuestionnaireStepNameScree
           color: Colors.white,
           decoration: TextDecoration.none,
         ),
+        autofocus: true,
+        textCapitalization: TextCapitalization.sentences,
         cursorColor: Colors.white,
         decoration: InputDecoration(
           enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
@@ -97,7 +100,7 @@ class _QuestionnaireStepNameScreenState extends State<QuestionnaireStepNameScree
       requestData["name"] = textController.text;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepEmailScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepAddressScreen(requestData: requestData)),
       );
     }
   }

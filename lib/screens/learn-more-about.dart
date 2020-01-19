@@ -45,7 +45,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
         child: DrawerContent()
       ),
       appBar: GradientAppBar(
-        title: Text(formatter.format(now), style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)),
+        title: Text(formatter.format(now), style: TextStyle(fontFamily: "NunitoBlack", fontSize: 28)),
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
         automaticallyImplyLeading: true,
@@ -113,7 +113,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
                 title,
                 style: TextStyle(
                   fontSize: 26,
-                  fontFamily: "RobotoMedium",
+                  fontFamily: "NunitoMedium",
                   color: ThemeProvider.darkGrey
                 )
               ),
@@ -149,7 +149,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
               colorAccent: accentColor2
           ),
           SizedBox(height: 20),
-          learnItem.interval != null ? detailsItem("Frequency", learnItem.interval, ThemeProvider.blue1) : Container(),
+          //learnItem.interval != null ? detailsItem("Frequency", learnItem.interval, ThemeProvider.blue1) : Container(),
           learnItem.tools.isNotEmpty ? detailsItem("Tools", learnItem.tools.map((item) { return item.value; }).join(", "), ThemeProvider.green1) : Container(),
           learnItem.materials.isNotEmpty ? detailsItem("Materials", learnItem.materials.map((item) { return item.value; }).join(", "), ThemeProvider.blue5) : Container(),
           FooterItem(mainText: "BACK TO YOUR ", accentText: "HMP", accentColor: accentColor2, onTap: navigateBack)

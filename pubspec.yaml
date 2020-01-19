@@ -74,4 +74,15 @@ flutter:
     - family: RobotoBlack
       fonts:
         - asset: assets/fonts/roboto-black.ttf
-
+    - family: NunitoLight
+      fonts:
+        - asset: assets/fonts/Nunito-Light.ttf
+    - family: NunitoRegular
+      fonts:
+        - asset: assets/fonts/Nunito-Regular.ttf
+    - family: NunitoMedium
+      fonts:
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+    - family: NunitoBlack
+      fonts:
+        - asset: assets/fonts/Nunito-Black.ttf

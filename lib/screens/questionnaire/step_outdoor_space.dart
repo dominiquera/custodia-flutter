@@ -56,14 +56,14 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
           Text("Does it have any outdoor space?",
             style: TextStyle(
               fontSize: 35,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
           Text("Select all that apply",
             style: TextStyle(
               fontSize: 18,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),

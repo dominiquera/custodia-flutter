@@ -62,10 +62,10 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text("Seniors and their families now have the tool they need to help them live long in their home.",
+          Text("Now seniors can live longer, safer, and more enjoyable lives at home.",
             style: TextStyle(
               fontSize: 27,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),

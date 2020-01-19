@@ -69,7 +69,7 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
                     style: TextStyle(
                       fontSize: 38,
                       color: Colors.white,
-                      fontFamily: "RobotoLight",
+                      fontFamily: "NunitoLight",
                       shadows: <Shadow>[
                         Shadow(
                           offset: Offset(2.0, 2.0),
@@ -85,7 +85,7 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
 //                    style: TextStyle(
 //                        fontSize: 18,
 //                        color: Colors.white,
-//                        fontFamily: "RobotoLight"
+//                        fontFamily: "NunitoLight"
 //                    ),
 //                  ),
                   SizedBox(height: 20),
@@ -119,7 +119,7 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
 //                    style: TextStyle(
 //                        fontSize: 38,
 //                        color: Colors.white,
-//                        fontFamily: "RobotoLight",
+//                        fontFamily: "NunitoLight",
 //                        shadows: <Shadow>[
 //                          Shadow(
 //                            offset: Offset(2.0, 2.0),
@@ -135,7 +135,7 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
 //                    style: TextStyle(
 //                      fontSize: 18,
 //                      color: Colors.white,
-//                      fontFamily: "RobotoLight"
+//                      fontFamily: "NunitoLight"
 //                    ),
 //                  ),
 //                  SizedBox(height: 20),

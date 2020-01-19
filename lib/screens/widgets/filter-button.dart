@@ -10,9 +10,10 @@ class FilterButton extends StatefulWidget {
   final int id;
   final Function onSelected;
   final Function onDeselected;
-
+  bool selected = false;
   @override
   _FilterButtonState createState() => _FilterButtonState();
+
 }
 
 class _FilterButtonState extends State<FilterButton> {

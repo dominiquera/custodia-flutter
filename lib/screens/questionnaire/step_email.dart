@@ -1,4 +1,5 @@
 import 'package:custodia/screens/questionnaire/step_address.dart';
+import 'package:custodia/screens/questionnaire/step_summary.dart';
 import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
@@ -46,10 +47,10 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("What's your email",
+          Text("Enter your email address",
             style: TextStyle(
               fontSize: 35,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
@@ -85,6 +86,7 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
         style: TextStyle(
           fontSize: 20, color: Colors.white,
         ),
+        autofocus: true,
         decoration: InputDecoration(
           enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
           focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
@@ -103,7 +105,7 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
       requestData["email"] = textController.text;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepAddressScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
       );
     }
   }

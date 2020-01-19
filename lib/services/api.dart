@@ -20,8 +20,23 @@ import 'package:http/http.dart';
 
 class APIService {
 
-  static String domainURL = "https://custodia.dominiquera.com/api/v1";
-//  static int userId = 3;
+
+  static String translateManagementPlan(List<int> l) {
+    if(l.length == 1) {
+      return "Dad";
+    } else if(l.length == 2) {
+      return "Your Parents";
+    }
+    else if(l.length == 3) {
+      return "Other";
+    }
+    else if(l.length == 4) {
+      return "Other";
+    }
+  }
+
+  static String domainURL = "http://35.183.234.234/api/v1";
+  //  static int userId = 3;
 
   // Return a list of all user roles available in the system
   static fetchRoles() async {
@@ -215,7 +230,9 @@ class APIService {
     if (response.statusCode == 200) {
       var body = json.decode(response.body);
       for(var x in body["maintenance_items"]) {
-        maintenanceItems.add(MaintenanceItem.fromJson(x));
+        MaintenanceItem mi = MaintenanceItem.fromJson(x);
+        maintenanceItems.add(mi);
+        print(mi.description);
       }
       return maintenanceItems;
     } else {

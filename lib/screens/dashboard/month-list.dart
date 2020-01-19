@@ -42,7 +42,7 @@ class _ItemsMonthListPageState extends State<ItemsMonthListPage> {
       appBar: GradientAppBar(
         title: Text(
           formatter.format(now),
-          style: TextStyle(fontFamily: "RobotoBlack", fontSize: 28)
+          style: TextStyle(fontFamily: "NunitoBlack", fontSize: 28)
         ),
         centerTitle: false,
         gradient: ThemeProvider.blueGradientHorizontal,
@@ -94,7 +94,7 @@ class _ItemsMonthListPageState extends State<ItemsMonthListPage> {
                     item.title.toUpperCase(),
                     style: TextStyle(
                         fontSize: 24,
-                        fontFamily: "RobotoMedium"
+                        fontFamily: "NunitoMedium"
                     )
                 ),
                 Text(

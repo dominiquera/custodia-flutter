@@ -1,3 +1,4 @@
+
 class MaintenanceItem {
 
   final int id;
@@ -12,6 +13,7 @@ class MaintenanceItem {
   final String cautions;
   final String createdAt;
   final String imageUrl;
+  final String description;
 
   MaintenanceItem({
     this.id,
@@ -25,7 +27,8 @@ class MaintenanceItem {
     this.summary,
     this.cautions,
     this.createdAt,
-    this.imageUrl
+    this.imageUrl,
+    this.description,
   });
 
   MaintenanceItem.fromJson(Map<String, dynamic> json)
@@ -40,6 +43,7 @@ class MaintenanceItem {
       summary = json["summary"],
       cautions = json["cautions"],
       createdAt = json["created_at"],
-      imageUrl = json["image"];
+      description = json["months"]["description"],
+      imageUrl = json["months"]["image"];
 
 }

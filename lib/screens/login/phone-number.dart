@@ -73,7 +73,7 @@ class _LoginPhoneNumberScreenState extends State<LoginPhoneNumberScreen> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
-                  fontFamily: "RobotoMedium"
+                  fontFamily: "NunitoMedium"
                 )
               ),
             )

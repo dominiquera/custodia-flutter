@@ -7,7 +7,7 @@ import '../../theme-provider.dart';
 import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 import 'package:custodia/screens/widgets/filter-button.dart';
 import '../../screens/questionnaire/step_summary.dart';
-
+import '../../screens/questionnaire/step_email.dart';
 class QuestionnaireStepMobilityIssuesScreen extends StatefulWidget {
 
   QuestionnaireStepMobilityIssuesScreen({this.requestData});
@@ -51,17 +51,17 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("Does your Dad have any mobility issues?",
+          Text("Does your "+APIService.translateManagementPlan(requestData["who_needs"])+" have any mobility issues?",
             style: TextStyle(
               fontSize: 35,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
           Text("Select any one below",
             style: TextStyle(
               fontSize: 18,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
@@ -105,7 +105,7 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
       requestData["mobility_issues"] = selectedMobilityIssues;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepEmailScreen(requestData: requestData)),
       );
     } else {
       _scaffoldKey.currentState.showSnackBar(

@@ -48,7 +48,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
           Text("What's your address",
             style: TextStyle(
               fontSize: 35,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),

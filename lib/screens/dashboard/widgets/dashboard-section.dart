@@ -63,7 +63,7 @@ class _DashboardSectionState extends State<DashboardSection> {
           SizedBox(height: 20),
           Column(children: items),
           FooterItem(
-            mainText: "MORE THIS MONTH FOR ",
+            mainText: "MORE FOR THIS MONTH FOR ",
             accentText: widget.title,
             accentColor: widget.accentColor,
             onTap: openMonthList

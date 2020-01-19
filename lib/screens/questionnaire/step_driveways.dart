@@ -52,17 +52,17 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("What type of driveways this home have",
+          Text("Does this home have a driveway?",
             style: TextStyle(
               fontSize: 35,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
           Text("Select any one below",
             style: TextStyle(
               fontSize: 18,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),

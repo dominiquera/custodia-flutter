@@ -39,7 +39,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
             Container(
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: widget.color,
+                image: DecorationImage(image: NetworkImage("http://35.183.234.234" + widget.item.imageUrl),fit: BoxFit.cover),
                 borderRadius: BorderRadius.circular(3)
               ),
               width: 90,
@@ -64,16 +64,16 @@ class _SlidableListItemState extends State<SlidableListItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.item.title.toUpperCase(),
+                    widget.item.title,
                     style: TextStyle(
-                      fontSize: 24,
-                      fontFamily: "RobotoMedium"
+                      fontSize: 20,
+                      fontFamily: "NunitoMedium"
                     )
                   ),
                   Text(
-                    widget.item.summary,
+                    widget.item.description,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 13,
                     )
                   )
                 ],

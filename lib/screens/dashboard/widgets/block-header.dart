@@ -20,7 +20,7 @@ class HeaderItem extends StatelessWidget {
           Text(title,
             style: TextStyle(
               color: colorAccent,
-              fontFamily: "RobotoBlack",
+              fontFamily: "NunitoBlack",
               fontSize: 26
             )
           ),

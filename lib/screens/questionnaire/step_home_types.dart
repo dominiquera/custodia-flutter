@@ -1,6 +1,7 @@
 import 'package:custodia/models/home_type.dart';
 import 'package:custodia/screens/questionnaire/step_home_features.dart';
 import 'package:custodia/screens/widgets/centered_progress_indicator.dart';
+
 import 'package:custodia/services/api.dart';
 import 'package:flutter/material.dart';
 
@@ -55,14 +56,14 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
           Text("What type of home is it?",
             style: TextStyle(
               fontSize: 35,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
           Text("Select one",
             style: TextStyle(
               fontSize: 18,
-              fontFamily: "RobotoLight",
+              fontFamily: "NunitoLight",
               color: Colors.white
             )
           ),
@@ -86,7 +87,12 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   List<Widget> buildFilter() {
-    return homeTypes.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected,); }).toList();
+
+    return homeTypes.map((item) {
+      FilterButton f = FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected,);
+      return f;
+    }).toList();
+
   }
 
   void onValueSelected(int id){

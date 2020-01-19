@@ -110,6 +110,6 @@ class ThemeProvider {
 
   static final theme = ThemeData(
     scaffoldBackgroundColor: Colors.white,
-    fontFamily: 'RobotoRegular',
+    fontFamily: 'NunitoRegular',
   );
 }

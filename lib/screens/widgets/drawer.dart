@@ -67,7 +67,7 @@ class _DrawerContentState extends State<DrawerContent> {
           style: TextStyle(
             color: Colors.white,
             fontSize: 28,
-            fontFamily: "RobotoBlack"
+            fontFamily: "NunitoBlack"
           )
         ),
       )

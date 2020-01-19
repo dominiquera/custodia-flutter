@@ -66,29 +66,32 @@ class _SlidableCardState extends State<SlidableCard> {
               Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
 //                    Text(
 //                      "OUTSIDE",
 //                      style: TextStyle(
 //                        color: ThemeProvider.green1,
 //                        fontSize: 20,
-//                        fontFamily: "RobotoMedium"
+//                        fontFamily: "NunitoMedium"
 //                      )
 //                    ),
                     Text(
                       widget.item.title,
+                      textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 28,
-                        fontFamily: "RobotoMedium",
+                        fontSize: 20,
+                        fontFamily: "NunitoMedium",
                         color: ThemeProvider.grey2
                       )
                     ),
                     SizedBox(height: 10),
                     Text(
-                      widget.item.summary,
-                      textAlign: TextAlign.center,
+                      widget.item.description,
+                      textAlign: TextAlign.left,
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: 13,
                         color: ThemeProvider.darkGrey
                       )
                     )
@@ -103,9 +106,10 @@ class _SlidableCardState extends State<SlidableCard> {
   }
 
   buildImage(){
-    if (widget.item.imageUrl.isNotEmpty) {
+    print(widget.item);
+    if (widget.item.imageUrl != null && widget.item.imageUrl != "") {
       return Image.network(
-        "https://custodia.dominiquera.com" + widget.item.imageUrl,
+        "http://35.183.234.234" + widget.item.imageUrl,
       );
     } else {
       return Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth);

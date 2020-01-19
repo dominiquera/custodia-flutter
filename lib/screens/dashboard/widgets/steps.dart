@@ -97,7 +97,7 @@ class _StepsState extends State<Steps> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 22,
-              fontFamily: "RobotoMedium",
+              fontFamily: "NunitoMedium",
               color: ThemeProvider.grey1,
               height: 0.9
             )

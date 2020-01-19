@@ -82,7 +82,7 @@ class _LoginSmsCodeScreenState extends State<LoginSmsCodeScreen> {
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
-                  fontFamily: "RobotoMedium"
+                  fontFamily: "NunitoMedium"
                 )
               ),
             )
