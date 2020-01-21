@@ -40,35 +40,37 @@ class _SlidableCardState extends State<SlidableCard> {
             )
           ]
         ),
-        child: Column(
-            children: <Widget>[
-              Stack(children: <Widget>[
-                buildImage(),
-                Positioned(
-                  bottom: 10,
-                  left: 10,
-                  child: Text("${widget.item.points} POINTS",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(1.0, 1.0),
-                          blurRadius: 1.0,
-                          color: ThemeProvider.darkGrey,
-                        ),
-                      ]
-                    )
+        child: InkWell(
+          onTap: openLearnMoreScreen,
+          child: Column(
+              children: <Widget>[
+                Stack(children: <Widget>[
+                  buildImage(),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    child: Text("${widget.item.points} POINTS",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            shadows: <Shadow>[
+                              Shadow(
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 1.0,
+                                color: ThemeProvider.darkGrey,
+                              ),
+                            ]
+                        )
+                    ),
                   ),
+                ]
                 ),
-              ]
-              ),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
 //                    Text(
 //                      "OUTSIDE",
 //                      style: TextStyle(
@@ -77,28 +79,29 @@ class _SlidableCardState extends State<SlidableCard> {
 //                        fontFamily: "NunitoMedium"
 //                      )
 //                    ),
-                    Text(
-                      widget.item.title,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: "NunitoMedium",
-                        color: ThemeProvider.grey2
+                      Text(
+                          widget.item.title,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: "NunitoMedium",
+                              color: ThemeProvider.grey2
+                          )
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                          widget.item.description,
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                              fontSize: 13,
+                              color: ThemeProvider.darkGrey
+                          )
                       )
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      widget.item.description,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(
-                        fontSize: 13,
-                        color: ThemeProvider.darkGrey
-                      )
-                    )
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ]
+              ]
+          ),
         ),
       ),
 

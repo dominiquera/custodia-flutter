@@ -31,55 +31,58 @@ class _SlidableListItemState extends State<SlidableListItem> {
       actionPane: SlidableScrollActionPane(),
       actions: mainActions(context),
       secondaryActions: secondaryActions(context),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.all(5),
-              decoration: BoxDecoration(
-                image: DecorationImage(image: NetworkImage("http://35.183.234.234" + widget.item.imageUrl),fit: BoxFit.cover),
-                borderRadius: BorderRadius.circular(3)
+      child: InkWell(
+        onTap: openLearnMoreScreen,
+        child: Padding(
+          padding: const EdgeInsets.all(10),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                    image: DecorationImage(image: NetworkImage("http://35.183.234.234" + widget.item.imageUrl),fit: BoxFit.cover),
+                    borderRadius: BorderRadius.circular(3)
+                ),
+                width: 90,
+                height: 90,
+                child: Text(
+                    "${widget.item.points} points",
+                    style: TextStyle(
+                      color: Colors.white,
+                      shadows: <Shadow>[
+                        Shadow(
+                          offset: Offset(1.0, 1.0),
+                          blurRadius: 1.0,
+                          color: ThemeProvider.grey1,
+                        ),
+                      ],
+                    )
+                ),
               ),
-              width: 90,
-              height: 90,
-              child: Text(
-                "${widget.item.points} points",
-                style: TextStyle(
-                  color: Colors.white,
-                  shadows: <Shadow>[
-                    Shadow(
-                      offset: Offset(1.0, 1.0),
-                      blurRadius: 1.0,
-                      color: ThemeProvider.grey1,
+              SizedBox(width: 25),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                        widget.item.title,
+                        style: TextStyle(
+                            fontSize: 20,
+                            fontFamily: "NunitoMedium"
+                        )
                     ),
+                    Text(
+                        widget.item.description,
+                        style: TextStyle(
+                          fontSize: 13,
+                        )
+                    )
                   ],
-                )
-              ),
-            ),
-            SizedBox(width: 25),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    widget.item.title,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "NunitoMedium"
-                    )
-                  ),
-                  Text(
-                    widget.item.description,
-                    style: TextStyle(
-                      fontSize: 13,
-                    )
-                  )
-                ],
-              ),
-            )
-          ],
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
