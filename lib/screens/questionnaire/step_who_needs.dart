@@ -87,15 +87,25 @@ class _QuestionnaireStepWhoNeedsScreenState extends State<QuestionnaireStepWhoNe
   }
 
   List<Widget> buildFilter() {
-    return managementPlans.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected, ); }).toList();
+    return managementPlans.map((item) {
+      return FilterButton(
+        text: item.name,
+        id: item.id,
+        onSelected: onValueSelected,
+        onDeselected: onValueDeselected,
+        selected: selectedIds.contains(item.id) ? true : false,
+      );
+    }).toList();
   }
 
   void onValueSelected(int id){
     selectedIds.add(id);
+    setState(() {});
   }
 
   void onValueDeselected(int id){
     selectedIds.remove(id);
+    setState(() {});
   }
 
   loadPreviousStep(){

@@ -22,7 +22,7 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
 
   Map<String, dynamic> requestData;
   List<MobilityIssue> mobilityIssues = [];
-  List<int> selectedMobilityIssues = [];
+  List<int> selectedIds = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -85,15 +85,26 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   }
 
   List<Widget> buildFilter() {
-    return mobilityIssues.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueChanged, onDeselected: onValueDeselected); }).toList();
+    return mobilityIssues.map((item) {
+      return FilterButton(
+        text: item.name,
+        id: item.id,
+        onSelected: onValueSelected,
+        onDeselected: onValueDeselected,
+        selected: selectedIds.contains(item.id) ? true : false,
+      );
+    }).toList();
   }
 
-  void onValueChanged(int id) {
-    selectedMobilityIssues.add(id);
+  void onValueSelected(int id) {
+    selectedIds.clear();
+    selectedIds.add(id);
+    setState(() {});
   }
 
   void onValueDeselected(int id){
-    selectedMobilityIssues.remove(id);
+    selectedIds.remove(id);
+    setState(() {});
   }
 
   loadPreviousStep(){
@@ -101,8 +112,8 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
   }
 
   loadNextStep() {
-    if (selectedMobilityIssues.isNotEmpty && selectedMobilityIssues.length == 1) {
-      requestData["mobility_issues"] = selectedMobilityIssues;
+    if (selectedIds.isNotEmpty && selectedIds.length == 1) {
+      requestData["mobility_issues"] = selectedIds;
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionnaireStepEmailScreen(requestData: requestData)),

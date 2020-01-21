@@ -25,7 +25,7 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
 
   Map<String, dynamic> requestData;
   List<HomeType> homeTypes = [];
-  List<int> selectedHomeType = [];
+  List<int> selectedIds = [];
 
   @override
   void initState() {
@@ -87,20 +87,27 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   List<Widget> buildFilter() {
-
     return homeTypes.map((item) {
-      FilterButton f = FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected,);
-      return f;
+      return FilterButton(
+        text: item.name,
+        id: item.id,
+        onSelected: onValueSelected,
+        onDeselected: onValueDeselected,
+        selected: selectedIds.contains(item.id) ? true : false,
+      );
     }).toList();
 
   }
 
   void onValueSelected(int id){
-    selectedHomeType.add(id);
+    selectedIds.clear();
+    selectedIds.add(id);
+    setState(() {});
   }
 
   void onValueDeselected(int id){
-    selectedHomeType.remove(id);
+    selectedIds.remove(id);
+    setState(() {});
   }
 
   loadPreviousStep(){
@@ -108,8 +115,8 @@ class _QuestionnaireStepHomeTypesScreenState extends State<QuestionnaireStepHome
   }
 
   loadNextStep() {
-    if (selectedHomeType != null && selectedHomeType.length == 1){
-      requestData["home_type"] = selectedHomeType.first.toString();
+    if (selectedIds != null && selectedIds.length == 1){
+      requestData["home_type"] = selectedIds.first.toString();
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionnaireStepHomeFeaturesScreen(requestData: requestData)),

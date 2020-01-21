@@ -2,22 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../theme-provider.dart';
 
-class FilterButton extends StatefulWidget {
+class FilterButton extends StatelessWidget {
 
-  FilterButton({this.text, this.id, this.onSelected, this.onDeselected});
+  FilterButton({this.text, this.id, this.onSelected, this.onDeselected, this.selected = false});
 
   final String text;
   final int id;
   final Function onSelected;
   final Function onDeselected;
-  bool selected = false;
-  @override
-  _FilterButtonState createState() => _FilterButtonState();
-
-}
-
-class _FilterButtonState extends State<FilterButton> {
-  bool selected = false;
+  final bool selected;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +23,7 @@ class _FilterButtonState extends State<FilterButton> {
           borderRadius: BorderRadius.circular(5.0)
         ),
         child: Text(
-          widget.text,
+          text,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 14,
@@ -42,13 +35,11 @@ class _FilterButtonState extends State<FilterButton> {
   }
 
   void changeState() {
-    setState(() {
-      selected = !selected;
-    });
-    if (selected) {
-      widget.onSelected(widget.id);
+  var isSelected = !selected;
+    if (isSelected) {
+      onSelected(id);
     } else {
-      widget.onDeselected(widget.id);
+      onDeselected(id);
     }
   }
 }

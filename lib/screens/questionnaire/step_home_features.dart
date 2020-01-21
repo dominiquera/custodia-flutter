@@ -23,7 +23,7 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
   Map<String, dynamic> requestData;
 
   List<HomeFeature> homeFeatures = [];
-  List<int> homeFeaturesSelectedIds = [];
+  List<int> selectedIds = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -87,15 +87,24 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
   }
 
   List<Widget> buildFilter() {
-    return homeFeatures.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected,); }).toList();
+    return homeFeatures.map((item) {
+      return FilterButton(
+        text: item.name,
+        id: item.id,
+        onSelected: onValueSelected,
+        onDeselected: onValueDeselected,
+        selected: selectedIds.contains(item.id) ? true : false,
+      ); }).toList();
   }
 
   void onValueSelected(int id){
-    homeFeaturesSelectedIds.add(id);
+    selectedIds.add(id);
+    setState(() {});
   }
 
   void onValueDeselected(int id){
-    homeFeaturesSelectedIds.remove(id);
+    selectedIds.remove(id);
+    setState(() {});
   }
 
   loadPreviousStep(){
@@ -103,8 +112,8 @@ class _QuestionnaireStepHomeFeaturesScreenState extends State<QuestionnaireStepH
   }
 
   loadNextStep() {
-    if( homeFeaturesSelectedIds.isNotEmpty) {
-      requestData["home_features"] = homeFeaturesSelectedIds;
+    if(selectedIds.isNotEmpty) {
+      requestData["home_features"] = selectedIds;
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionnaireStepOutdoorSpaceScreen(requestData: requestData)),

@@ -24,7 +24,7 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
 
   Map<String, dynamic> requestData;
   List<OutdoorSpace> outdoorSpaces = [];
-  List<int> outdoorSpacesSelectedIds = [];
+  List<int> selectedIds = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -87,15 +87,24 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
   }
 
   List<Widget> buildFilter() {
-    return outdoorSpaces.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueSelected, onDeselected: onValueDeselected,); }).toList();
+    return outdoorSpaces.map((item) {
+      return FilterButton(
+        text: item.name,
+        id: item.id,
+        onSelected: onValueSelected,
+        onDeselected: onValueDeselected,
+        selected: selectedIds.contains(item.id) ? true : false,
+      ); }).toList();
   }
 
   void onValueSelected(int id){
-    outdoorSpacesSelectedIds.add(id);
+    selectedIds.add(id);
+    setState(() {});
   }
 
   void onValueDeselected(int id){
-    outdoorSpacesSelectedIds.remove(id);
+    selectedIds.remove(id);
+    setState(() {});
   }
 
   loadPreviousStep(){
@@ -103,8 +112,8 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
   }
 
   loadNextStep() {
-    if (outdoorSpacesSelectedIds.isNotEmpty) {
-      requestData["outdoor_spaces"] = outdoorSpacesSelectedIds;
+    if (selectedIds.isNotEmpty) {
+      requestData["outdoor_spaces"] = selectedIds;
 
       Navigator.push(
         context,
@@ -112,10 +121,10 @@ class _QuestionnaireStepOutdoorSpaceScreenState extends State<QuestionnaireStepO
       );
     } else {
       _scaffoldKey.currentState.showSnackBar(
-          SnackBar(
-              backgroundColor: Colors.white,
-              content: Text('Please select one', style: TextStyle(color: Colors.black54),)
-          )
+        SnackBar(
+          backgroundColor: Colors.white,
+          content: Text('Please select one', style: TextStyle(color: Colors.black54),)
+        )
       );
     }
   }

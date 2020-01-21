@@ -23,7 +23,7 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
 
   Map<String, dynamic> requestData;
   List<DrivewayType> driveways = [];
-  List<int> selectedDrivewaysIds = [];
+  List<int> selectedIds = [];
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -86,15 +86,25 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   }
 
   List<Widget> buildFilter() {
-    return driveways.map((item) { return FilterButton(text: item.name, id: item.id, onSelected: onValueChanged, onDeselected: onValueDeselected); }).toList();
+    return driveways.map((item) {
+      return FilterButton(
+          text: item.name,
+          id: item.id,
+          onSelected: onValueSelected,
+          onDeselected: onValueDeselected,
+          selected: selectedIds.contains(item.id) ? true : false,
+      ); }).toList();
   }
 
-  void onValueChanged(int id){
-    selectedDrivewaysIds.add(id);
+  void onValueSelected(int id){
+    selectedIds.clear();
+    selectedIds.add(id);
+    setState(() {});
   }
 
   void onValueDeselected(int id){
-    selectedDrivewaysIds.remove(id);
+    selectedIds.remove(id);
+    setState(() {});
   }
 
   loadPreviousStep(){
@@ -102,8 +112,8 @@ class _QuestionnaireStepDrivewaysScreenState extends State<QuestionnaireStepDriv
   }
 
   loadNextStep() {
-    if (selectedDrivewaysIds.isNotEmpty && selectedDrivewaysIds.length == 1) {
-      requestData["driveways"] = selectedDrivewaysIds;
+    if (selectedIds.isNotEmpty && selectedIds.length == 1) {
+      requestData["driveways"] = selectedIds;
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionnaireStepMobilityIssuesScreen(requestData: requestData,)),
