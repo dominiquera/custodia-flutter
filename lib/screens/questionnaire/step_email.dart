@@ -47,7 +47,7 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("Enter your email address",
+          Text("Enter your email address?",
             style: TextStyle(
               fontSize: 35,
               fontFamily: "NunitoLight",
@@ -105,7 +105,7 @@ class _QuestionnaireStepEmailScreenState extends State<QuestionnaireStepEmailScr
       requestData["email"] = textController.text;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepWhoNeedsScreen(requestData: requestData)),
       );
     }
   }

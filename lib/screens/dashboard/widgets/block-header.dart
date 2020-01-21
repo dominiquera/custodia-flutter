@@ -16,16 +16,21 @@ class HeaderItem extends StatelessWidget {
       padding: EdgeInsets.only(top: 10, left: ThemeProvider.screenPadding, right: ThemeProvider.screenPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+
           Text(title,
+            textAlign: TextAlign.left,
             style: TextStyle(
+
               color: colorAccent,
               fontFamily: "NunitoBlack",
-              fontSize: 26
+              fontSize: 24
             )
           ),
           Text(
             description,
+            textAlign: TextAlign.left,
             style: TextStyle(color: ThemeProvider.grey2),
           ),
         ],

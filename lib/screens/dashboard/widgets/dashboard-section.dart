@@ -53,6 +53,8 @@ class _DashboardSectionState extends State<DashboardSection> {
       padding: const EdgeInsets.only(top: 10),
       color: ThemeProvider.lightBlue,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           HeaderItem(
             title: widget.title,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme-provider.dart';
 import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 import '../../screens/questionnaire/step_who_needs.dart';
-
+import '../../screens/questionnaire/step_summary.dart';
 class QuestionnaireStepAddressScreen extends StatefulWidget {
 
   QuestionnaireStepAddressScreen({this.requestData});
@@ -126,7 +126,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepWhoNeedsScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
       );
     }
   }

@@ -100,7 +100,7 @@ class _QuestionnaireStepNameScreenState extends State<QuestionnaireStepNameScree
       requestData["name"] = textController.text;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepAddressScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepEmailScreen(requestData: requestData)),
       );
     }
   }

@@ -8,6 +8,7 @@ import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 import 'package:custodia/screens/widgets/filter-button.dart';
 import '../../screens/questionnaire/step_summary.dart';
 import '../../screens/questionnaire/step_email.dart';
+import '../../screens/questionnaire/step_address.dart';
 class QuestionnaireStepMobilityIssuesScreen extends StatefulWidget {
 
   QuestionnaireStepMobilityIssuesScreen({this.requestData});
@@ -116,7 +117,7 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
       requestData["mobility_issues"] = selectedIds;
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => QuestionnaireStepEmailScreen(requestData: requestData)),
+        MaterialPageRoute(builder: (context) => QuestionnaireStepAddressScreen(requestData: requestData)),
       );
     } else {
       _scaffoldKey.currentState.showSnackBar(
