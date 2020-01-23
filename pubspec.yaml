@@ -61,6 +61,7 @@ flutter:
     - assets/images/pointer.png
     - assets/images/grass.png
     - assets/images/logo.png
+    - assets/images/checkmark.png
   fonts:
     - family: RobotoLight
       fonts:

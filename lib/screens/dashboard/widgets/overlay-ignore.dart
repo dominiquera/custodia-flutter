@@ -62,8 +62,10 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
         children: <Widget>[
 //          BlueRoundedButton(text: "Ignore for now", onPressed: (){}, padding: 25),
 //          SizedBox(height: 50),
-          BlueRoundedButton(text: "Ignore", onPressed: ignoreItem, padding: 25),
-          SizedBox(height: 50),
+          BlueRoundedButton(text: "Ignore Once", onPressed: ignoreItemOnce, padding: 25),
+          SizedBox(height: 35),
+          BlueRoundedButton(text: "Ignore Forever", onPressed: ignoreItem, padding: 25),
+          SizedBox(height: 35),
           FlatButton(
             child: Text("Cancel", style: TextStyle(color: Colors.white, fontSize: 22)),
             onPressed: closeOverlay,
@@ -75,7 +77,10 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
 
   void ignoreItem(){
     APIService.ignoreMaintenanceItem(widget.userId, widget.item.id, onSuccess, onFail);
+  }
 
+  void ignoreItemOnce(){
+    APIService.ignoreMaintenanceItemOnce(widget.userId, widget.item.id, onSuccess, onFail);
   }
 
   onSuccess(){

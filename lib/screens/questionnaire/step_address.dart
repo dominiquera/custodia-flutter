@@ -96,6 +96,17 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
               if (value.trim().isEmpty) {
                 return 'Please enter your zip code';
               }
+              // Removed /i at the end
+              // Removed / in front - Thanks to Günter for warning
+              RegExp regExp = new RegExp(
+                r"^(?!.*[DFIOQU])[A-VXY][0-9][A-Z] ?[0-9][A-Z][0-9]$",
+                caseSensitive: false,
+                multiLine: false,
+              );
+              if(!regExp.hasMatch(value.trim())) {
+                return 'Please enter valid zip code';
+              }
+
               return null;
             },
             controller: zipTextController,
@@ -120,6 +131,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
   }
 
   loadNextStep() {
+
     if (_formKey.currentState.validate()) {
       requestData["address"] = addressTextController.text;
       requestData["zip_code"] = zipTextController.text;

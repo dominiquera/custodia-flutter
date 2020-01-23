@@ -7,6 +7,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../../theme-provider.dart';
 import '../../learn-more-about.dart';
 import 'overlay-automate.dart';
+import 'overlay-ignore.dart';
 
 class SlidableCard extends StatefulWidget {
 
@@ -27,6 +28,7 @@ class _SlidableCardState extends State<SlidableCard> {
   Widget build(BuildContext context) {
     return Slidable(
       actionPane: SlidableScrollActionPane(),
+      actions: mainActions(context),
       secondaryActions: headerCardSlideActions(),
       child: Container(
         margin: EdgeInsets.all(10),
@@ -117,6 +119,34 @@ class _SlidableCardState extends State<SlidableCard> {
     } else {
       return Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth);
     }
+  }
+
+  List<Widget> mainActions(BuildContext context) {
+    return <Widget>[
+      IconSlideAction(
+        caption: 'Ignore',
+        color: ThemeProvider.blue8,
+        iconWidget: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.block, color: Colors.white, size: 30,)
+        ),
+        onTap: showIgnoreOverlayDialog,
+      )
+    ];
+  }
+
+  showIgnoreOverlayDialog() {
+    Navigator.of(context).push(
+        PageRouteBuilder(
+            opaque: false,
+            pageBuilder: (BuildContext context, _, __) => OverlayIgnore(userId: widget.userId, item: widget.item, onIgnore: widget.onActionDone)
+        )
+    );
   }
 
   showOverlayDialog() {

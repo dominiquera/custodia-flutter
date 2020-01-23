@@ -64,6 +64,7 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
             children: <Widget>[
               Column(
                 children: <Widget>[
+//                  Image.asset("assets/images/checkmark.png", width: 50,height: 50,),
                   Text(
                     "Well done $userName! You have increased the home score by ${widget.item.points} points!",
                     style: TextStyle(

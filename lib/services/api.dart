@@ -23,15 +23,20 @@ class APIService {
 
   static String translateManagementPlan(List<int> l) {
     if(l.length == 1) {
-      return "Dad";
+      if(l.contains(1)) return "Mom";
+      else if(l.contains(2)) return "Dad";
+      return "Family";
+
     } else if(l.length == 2) {
-      return "Your Parents";
+      if(l.contains(1) && l.contains(2)) return "Parents";
+      if(l.contains(1) || l.contains(2)) return "Family";
+      return "Family";
     }
     else if(l.length == 3) {
-      return "Other";
+      return "Family";
     }
     else if(l.length == 4) {
-      return "Other";
+      return "Family";
     }
   }
 
@@ -166,6 +171,10 @@ class APIService {
       for (var x in body) {
         managegementPlans.add(ManagementPlan.fromJson(x));
       }
+
+
+
+
       return managegementPlans;
     } else {
       throw Exception('Failed to fetchManagementPlans');
@@ -370,6 +379,18 @@ class APIService {
   static Future<void> ignoreMaintenanceItem(int userId, int itemId, Function onSuccess, Function onFail) async {
     Response response = await post(
         '$domainURL/users/$userId/maintenance_item/$itemId/ignored'
+    );
+
+    if (response.statusCode == 200) {
+      onSuccess();
+    } else {
+      onFail();
+    }
+  }
+
+  static Future<void> ignoreMaintenanceItemOnce(int userId, int itemId, Function onSuccess, Function onFail) async {
+    Response response = await post(
+        '$domainURL/users/$userId/maintenance_item/$itemId/ignoredOnce'
     );
 
     if (response.statusCode == 200) {
