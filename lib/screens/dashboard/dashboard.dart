@@ -12,6 +12,7 @@ import 'package:custodia/utils/shared-prefs.dart';
 import 'package:custodia/screens/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
@@ -69,7 +70,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: Drawer(
-        child: DrawerContent()
+          child: DrawerContent()
       ),
       appBar: GradientAppBar(
         title: Text(formatter.format(now), style: TextStyle(fontFamily: "NunitoBlack", fontSize: 28)),
@@ -83,14 +84,45 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget body() {
     return ListView(
-      addAutomaticKeepAlives: false,
+        children: <Widget>[ buildItem() ]
+    );
+  }
+
+  buildItem() {
+    return Column(
       children: <Widget>[
         header(),
         (stepsClosed == false) ? Steps() : Container(),
-        score != null ? scoreBlock() : Container(),
-        (top3MaintenanceItems != null && top3MaintenanceItems.isNotEmpty) ? Top3Checkpoints(items: top3MaintenanceItems) : Container(),
-        currentAPIUserId != null ? Column(children: buildSections()) : Container()
-      ]
+        SizedBox(height: 30),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: ThemeProvider.screenPadding,
+          ),
+          child: Text(
+            "Hello $userName, just a few things on for this week. Here is your current Home Score.",
+            style: TextStyle(
+                fontSize: 26,
+                fontFamily: "NunitoMedium"
+            ),
+          ),
+        ),
+        SizedBox(height: 30),
+        Container(
+          height: 5,
+          decoration: BoxDecoration(
+              gradient: ThemeProvider.greyGradientVertical
+          ),
+        ),
+        StickyHeader(
+          header: score != null ? scoreBlock() : Container(),
+          content: Column(
+            children: <Widget>[
+              (top3MaintenanceItems != null && top3MaintenanceItems.isNotEmpty) ? Top3Checkpoints(items: top3MaintenanceItems) : Container(),
+              currentAPIUserId != null ? Column(children: buildSections()) : Container(),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
@@ -99,13 +131,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
       if (section["items"].isNotEmpty) {
         return DashboardSection(
-          title: section["title"],
-          subtitle: section["subtitle"],
-          accentColor: section["accentColor"],
-          items: section["items"],
-          userId: currentAPIUserId,
-          onUpdate: onSectionUpdate,
-          id: section["id"]
+            title: section["title"],
+            subtitle: section["subtitle"],
+            accentColor: section["accentColor"],
+            items: section["items"],
+            userId: currentAPIUserId,
+            onUpdate: onSectionUpdate,
+            id: section["id"]
         );
       } else if (section["items"].isEmpty && section["fetched"] == false) {
         return ProgressIndicatorWithPadding();
@@ -129,38 +161,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Padding(
           padding: EdgeInsets.all(ThemeProvider.screenPadding),
           child: Column(
-            children: <Widget>[
-              Text(
-                  homeDescription,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 34,
-                  fontFamily: "NunitoBlack"
-                )
-              ),
-              SizedBox(height: 15),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: homeDescription != null ? Text(
-                      homeDescription,
-                      style: TextStyle(
-                        fontSize: 18,
+              children: <Widget>[
+                Text(
+                    homeDescription,
+                    style: TextStyle(
                         color: Colors.black,
-                      )
-                    ) : Container(),
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
-                    decoration: BoxDecoration(
-                      color: ThemeProvider.lime,
-                      borderRadius: BorderRadius.circular(20.0)
+                        fontSize: 34,
+                        fontFamily: "NunitoBlack"
+                    )
+                ),
+                SizedBox(height: 15),
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: homeDescription != null ? Text(
+                          homeDescription,
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          )
+                      ) : Container(),
                     ),
-                    child: score != null ? buildScore() : Container(width: 20, height: 20, child: CircularProgressIndicator(),)
-                  )
-                ],
-              )
-            ]
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+                        decoration: BoxDecoration(
+                            color: ThemeProvider.lime,
+                            borderRadius: BorderRadius.circular(20.0)
+                        ),
+                        child: score != null ? buildScore() : Container(width: 20, height: 20, child: CircularProgressIndicator(),)
+                    )
+                  ],
+                )
+              ]
           ),
         )
       ],
@@ -169,52 +201,38 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget buildScore(){
     return Text("${score.value}/850",
-      style: TextStyle(
-        fontSize: 16,
-        color: ThemeProvider.blue6,
-      )
+        style: TextStyle(
+          fontSize: 16,
+          color: ThemeProvider.blue6,
+        )
     );
   }
 
   Widget scoreBlock() {
-    return Padding(
-      padding: EdgeInsets.only(top: ThemeProvider.screenPadding, bottom: ThemeProvider.screenPadding),
-      child: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ThemeProvider.screenPadding),
-            child: Text(
-              "Hello $userName, just a few things on for this week. Here is your current Home Score.",
-              style: TextStyle(
-                fontSize: 26,
-                fontFamily: "NunitoMedium"
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: EdgeInsets.only(top: ThemeProvider.screenPadding, bottom: ThemeProvider.screenPadding),
+        child: Column(
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: ThemeProvider.screenPadding),
+              child: Column(
+                  children: <Widget>[
+//                  Align(
+//                    alignment: Alignment.centerRight,
+//                    child: IconButton(
+//                      padding: EdgeInsets.all(0),
+//                      onPressed: (){},
+//                      icon: Icon(Icons.info, color: ThemeProvider.blue1)
+//                    ),
+//                  ),
+                    ScoreBar(score: score)
+                  ]
               ),
             ),
-          ),
-          SizedBox(height: 30),
-          Container(
-            height: 5,
-            decoration: BoxDecoration(
-              gradient: ThemeProvider.greyGradientVertical
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: ThemeProvider.screenPadding),
-            child: Column(
-              children: <Widget>[
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: IconButton(
-                    padding: EdgeInsets.all(0),
-                    onPressed: (){},
-                    icon: Icon(Icons.info, color: ThemeProvider.blue1)
-                  ),
-                ),
-                ScoreBar(score: score)
-              ]
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

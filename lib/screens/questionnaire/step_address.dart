@@ -30,12 +30,17 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: ThemeProvider.blueGradientDiagonal,
-        ),
-        padding: EdgeInsets.symmetric(horizontal: 45),
-        child: body(),
+      body: Stack(
+        children: <Widget>[
+          Container(
+            decoration: BoxDecoration(
+              gradient: ThemeProvider.blueGradientDiagonal,
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 45),
+            child: body(),
+          ),
+          buildSkipButton()
+        ],
       ),
     );
   }
@@ -59,9 +64,9 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               BlueRoundedButton(text: "Back", onPressed:  loadPreviousStep, padding: 35),
-              BlueRoundedButton(text: "Next", onPressed: loadNextStep, padding: 35)
+              BlueRoundedButton(text: "Next", onPressed: loadNextStep, padding: 35),
             ],
-          )
+          ),
         ],
       ),
     );
@@ -75,7 +80,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
           TextFormField(
             validator: (value) {
               if (value.trim().isEmpty) {
-                return 'What\'s your address';
+                return 'Please enter your city and street';
               }
               return null;
             },
@@ -135,11 +140,40 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
     if (_formKey.currentState.validate()) {
       requestData["address"] = addressTextController.text;
       requestData["zip_code"] = zipTextController.text;
-
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
       );
     }
+  }
+
+  Widget buildSkipButton() {
+    return Positioned(
+      top: 20,
+      right: 20,
+      child: SafeArea(
+        child: FlatButton(
+          child: Text(
+            "Skip",
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.white,
+            )
+          ),
+          onPressed: skipStep
+        ),
+      ),
+    );
+  }
+
+  void skipStep() {
+    // TODO change to empty string after backend check removed
+    requestData["address"] = "-";
+    requestData["zip_code"] = "-";
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => QuestionnaireStepWhoNeedsScreen(requestData: requestData)),
+    );
   }
 }
