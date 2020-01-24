@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
 import '../../widgets/blue-rounded-button.dart';
-import '../../widgets/filter-button.dart';
+import 'package:drop_cap_text/drop_cap_text.dart';
 
 class DoneOverlayDialog extends StatefulWidget {
 
@@ -64,13 +64,16 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
             children: <Widget>[
               Column(
                 children: <Widget>[
-//                  Image.asset("assets/images/checkmark.png", width: 50,height: 50,),
-                  Text(
+                  Image.asset("assets/images/checkmark.png", width: 50,height: 50,),
+                  DropCapText(
                     "Well done $userName! You have increased the home score by ${widget.item.points} points!",
+                    dropCapPosition: DropCapPosition.start,
+                    dropCapPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
                     style: TextStyle(
                       fontSize: 38,
                       color: Colors.white,
                       fontFamily: "NunitoLight",
+                      height: 1.3,
                       shadows: <Shadow>[
                         Shadow(
                           offset: Offset(2.0, 2.0),
@@ -79,7 +82,18 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
                         ),
                       ]
                     ),
-                  ),
+                    dropCap: DropCap(
+                        width: 40,
+                        height: 45,
+                        child: Container(
+                          child: Icon(Icons.done, size: 30, color: Colors.white,),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: ThemeProvider.lime),
+                        )
+                    ),
+                  )
+                  ,
 //                  SizedBox(height: 20),
 //                  Text(
 //                    "We choose the best day to provide your service. We hope it works for you.",
