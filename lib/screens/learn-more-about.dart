@@ -9,10 +9,11 @@ import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:intl/intl.dart';
 
 import '../theme-provider.dart';
-import 'package:flutube/flutube.dart';
 
 import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
+
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class LearnMoreAboutPage extends StatefulWidget  {
 
@@ -82,13 +83,17 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
   }
 
   video(){
-    return FluTube(
-      learnItem.videoUrl,
-      aspectRatio: 16 / 9,
-      autoPlay: false,
-      looping: false,
-      onVideoStart: () {},
-      onVideoEnd: () {},
+    YoutubePlayerController _controller = YoutubePlayerController(
+      initialVideoId: learnItem.videoUrl.split("=")[1],
+      flags: YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+      ),
+    );
+
+    return YoutubePlayer(
+      controller: _controller,
+      showVideoProgressIndicator: false,
     );
   }
 
