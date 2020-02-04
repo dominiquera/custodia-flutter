@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:custodia/services/api.dart';
 import '../../theme-provider.dart';
 import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 import '../../screens/questionnaire/step_who_needs.dart';
@@ -50,7 +50,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("What's your address",
+          Text("What's your "+APIService.translateManagementPlan(requestData["who_needs"])+"'s address",
             style: TextStyle(
               fontSize: 35,
               fontFamily: "NunitoLight",
@@ -173,7 +173,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => QuestionnaireStepWhoNeedsScreen(requestData: requestData)),
+      MaterialPageRoute(builder: (context) => QuestionnaireStepSummaryScreen(requestData: requestData)),
     );
   }
 }

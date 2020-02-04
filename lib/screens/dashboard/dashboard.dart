@@ -54,7 +54,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     getCurrentUserId();
 
     sectionData = [
-      {"id": 1, "title": "Outside This Month", "subtitle": "Suggested for outside the home. Slide the card to customize", "accentColor": ThemeProvider.green3, "items": outsideItems, "fetched": false},
+      {"id": 1, "title": "Outside This Month", "subtitle": "Suggestions for outside your 's home.", "accentColor": ThemeProvider.green3, "items": outsideItems, "fetched": false},
       {"id": 2, "title": "Inside This Month", "subtitle": "Suggested for inside the home. Slide the card to customize", "accentColor": ThemeProvider.green3, "items": insideItems, "fetched": false},
       {"id": 3, "title": "Clean This Month", "subtitle": "Suggested for outside the home. Slide the card to customize", "accentColor": ThemeProvider.lightBrown, "items":  cleanItems, "fetched": false},
       {"id": 4, "title": "Focus on Stories", "subtitle": "A few stories suggested for you. Slide the card to customize", "accentColor": ThemeProvider.blue4, "items": storiesItems, "fetched": false},
