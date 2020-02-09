@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/models/score.dart';
 import 'package:custodia/screens/dashboard/widgets/dashboard-section.dart';
@@ -29,14 +31,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   int currentAPIUserId;
 
   Score score;
-  List<MaintenanceItem> outsideItems = [];
-  List<MaintenanceItem> insideItems = [];
-  List<MaintenanceItem> storiesItems = [];
-  List<MaintenanceItem> cleanItems = [];
-  List<MaintenanceItem> careItems = [];
-  List<MaintenanceItem> productsItems = [];
-  List<MaintenanceItem> relatedServicesItems = [];
-  List<MaintenanceItem> preventItems = [];
+//  List<MaintenanceItem> outsideItems = [];
+//  List<MaintenanceItem> insideItems = [];
+//  List<MaintenanceItem> storiesItems = [];
+//  List<MaintenanceItem> cleanItems = [];
+//  List<MaintenanceItem> careItems = [];
+//  List<MaintenanceItem> productsItems = [];
+//  List<MaintenanceItem> relatedServicesItems = [];
+//  List<MaintenanceItem> preventItems = [];
 
   List<MaintenanceItem> top3MaintenanceItems = [];
 
@@ -46,6 +48,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   DateTime now = DateTime.now();
   var formatter = DateFormat('dd MMMM');
   String homeDescription = "";
+  String subtitle = "";
   bool stepsClosed;
 
   @override
@@ -54,15 +57,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     getCurrentUserId();
 
     sectionData = [
-      {"id": 1, "title": "Outside This Month", "subtitle": "Suggestions for outside your 's home.", "accentColor": ThemeProvider.green3, "items": outsideItems, "fetched": false},
-      {"id": 2, "title": "Inside This Month", "subtitle": "Suggested for inside the home. Slide the card to customize", "accentColor": ThemeProvider.green3, "items": insideItems, "fetched": false},
-      {"id": 3, "title": "Clean This Month", "subtitle": "Suggested for outside the home. Slide the card to customize", "accentColor": ThemeProvider.lightBrown, "items":  cleanItems, "fetched": false},
-      {"id": 4, "title": "Focus on Stories", "subtitle": "A few stories suggested for you. Slide the card to customize", "accentColor": ThemeProvider.blue4, "items": storiesItems, "fetched": false},
-      {"id": 5, "title": "A Focus on Care", "subtitle": "", "accentColor": Colors.red, "items": careItems, "fetched": false},
-      {"id": 6, "title": "Meaningful Producs", "subtitle": "Suggested products that make the home more enjoyable. Slide the card to customize", "accentColor": ThemeProvider.blue7, "items": productsItems, "fetched": false},
-      {"id": 7, "title": "Related Services", "subtitle": "", "accentColor": Colors.red, "items": relatedServicesItems, "fetched": false},
-      {"id": 8, "title": "Prevent This Month", "subtitle": "Suggested for inside the home. Slide the card to customize", "accentColor": ThemeProvider.blue7, "items": preventItems, "fetched": false},
+      {"id": 1, "title": "Outside This Month", "subtitle": "", "accentColor": Color.fromARGB(255, 99, 163, 15), "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(255, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
+      {"id": 2, "title": "Inside This Month", "subtitle": "", "accentColor": ThemeProvider.green3, "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
+      {"id": 3, "title": "Clean This Month", "subtitle": "Suggested Cleaning For This Week", "accentColor": Color.fromARGB(255, 54, 166, 146), "items":  [], "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "fetched": false},
+      {"id": 4, "title": "Focus on Stories", "subtitle": "A few stories suggested for you. Slide the card to customize", "accentColor": ThemeProvider.blue4, "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
+      {"id": 5, "title": "A Focus on Care", "subtitle": "", "accentColor": Color.fromARGB(255, 219, 62, 78), "backgroundCardColor": Color.fromARGB(255, 250, 250, 250), "backgroundColor": Color.fromARGB(1, 250, 250, 250), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
+      {"id": 6, "title": "Meaningful Producs", "subtitle": "Suggested products that make the home more enjoyable. Slide the card to customize", "accentColor": ThemeProvider.blue7, "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
+      {"id": 7, "title": "Related Services", "subtitle": "", "accentColor": Colors.red, "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
+      {"id": 8, "title": "Prevent This Month", "subtitle": "Prevent future issues with simple maintenance", "accentColor": Color.fromARGB(255, 0, 80, 197), "backgroundCardColor": Color.fromARGB(255, 0, 80, 197), "textCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 250, 250, 250), "items": [], "fetched": false},
     ];
+
     super.initState();
   }
 
@@ -92,21 +96,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
     return Column(
       children: <Widget>[
         header(),
-        (stepsClosed == false) ? Steps() : Container(),
-        SizedBox(height: 30),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: ThemeProvider.screenPadding,
-          ),
-          child: Text(
-            "Hello $userName, just a few things on for this week. Here is your current Home Score.",
-            style: TextStyle(
-                fontSize: 26,
-                fontFamily: "NunitoMedium"
-            ),
-          ),
-        ),
-        SizedBox(height: 30),
+//        (stepsClosed == false) ? Steps() : Container(),
+//        SizedBox(height: 30),
+//        Padding(
+//          padding: EdgeInsets.symmetric(
+//            horizontal: ThemeProvider.screenPadding,
+//          ),
+////          child: Text(
+////            "Hello $userName, just a few things on for this week. Here is your current Home Score.",
+////            style: TextStyle(
+////                fontSize: 26,
+////                fontFamily: "NunitoMedium"
+////            ),
+////          ),
+//        ),
+//        SizedBox(height: 30),
         Container(
           height: 5,
           decoration: BoxDecoration(
@@ -134,6 +138,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             title: section["title"],
             subtitle: section["subtitle"],
             accentColor: section["accentColor"],
+            backgroundColor: section["backgroundColor"],
+            backgroundCardColor: section["backgroundCardColor"],
+            textCardColor: section["textCardColor"],
             items: section["items"],
             userId: currentAPIUserId,
             onUpdate: onSectionUpdate,
@@ -174,22 +181,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Row(
                   children: <Widget>[
                     Expanded(
-                      child: homeDescription != null ? Text(
-                          homeDescription,
+                      child: subtitle != null ? Text(
+                          subtitle,
                           style: TextStyle(
                             fontSize: 18,
                             color: Colors.black,
                           )
                       ) : Container(),
                     ),
-                    Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
-                        decoration: BoxDecoration(
-                            color: ThemeProvider.lime,
-                            borderRadius: BorderRadius.circular(20.0)
-                        ),
-                        child: score != null ? buildScore() : Container(width: 20, height: 20, child: CircularProgressIndicator(),)
-                    )
+//                    Container(
+//                        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 7),
+//                        decoration: BoxDecoration(
+//                            color: ThemeProvider.lime,
+//                            borderRadius: BorderRadius.circular(20.0)
+//                        ),
+//                        child: score != null ? buildScore() : Container(width: 20, height: 20, child: CircularProgressIndicator(),)
+//                    )
                   ],
                 )
               ]
@@ -248,6 +255,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
     APIService.fetchUserDetails(currentAPIUserId).then((value) {
       homeDescription = value.title;
       userName = value.name;
+      subtitle = value.subtitle;
+
+      sectionData[0]["subtitle"] = value.outside;
+      sectionData[1]["subtitle"] = value.inside;
 
       setState(() {});
     });

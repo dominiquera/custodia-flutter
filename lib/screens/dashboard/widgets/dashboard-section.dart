@@ -14,12 +14,16 @@ class DashboardSection extends StatefulWidget {
   final String title;
   final String subtitle;
   final Color accentColor;
+  final Color backgroundColor;
+  final Color backgroundCardColor;
+  final Color textCardColor;
+
   final List<MaintenanceItem> items;
   final int userId;
   final Function onUpdate;
   final int id;
 
-  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.userId, this.onUpdate, this.id});
+  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.userId, this.onUpdate, this.id,this.backgroundColor,this.textCardColor,this.backgroundCardColor});
 
   @override
   _DashboardSectionState createState() => _DashboardSectionState();
@@ -51,7 +55,7 @@ class _DashboardSectionState extends State<DashboardSection> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.only(top: 10),
-      color: ThemeProvider.lightBlue,
+      color: widget.backgroundColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -82,6 +86,9 @@ class _DashboardSectionState extends State<DashboardSection> {
       item: item,
       onActionDone: hideItem,
       color: widget.accentColor,
+      backgroundColor: widget.backgroundColor,
+      backgroundCardColor: widget.backgroundCardColor,
+      textCardColor:widget.textCardColor
     );
   }
 

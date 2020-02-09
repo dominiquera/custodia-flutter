@@ -351,6 +351,7 @@ class APIService {
       "firebase_registration_token": token,
     });
 
+    log("#####"+token);
 
     Response response = await post(
       '$domainURL/users',

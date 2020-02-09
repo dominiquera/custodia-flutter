@@ -1,9 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:io';
 import '../../theme-provider.dart';
 import 'package:custodia/screens/widgets/blue-rounded-button.dart';
 import '../../screens/questionnaire/step_name.dart';
+//import 'package:firebase_messaging/firebase_messaging.dart';
 
 class QuestionnaireStepIntroScreen extends StatefulWidget {
 
@@ -37,6 +38,7 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
   @override
   void initState() {
     getToken();
+//    firebaseCloudMessaging_Listeners();
     requestData["email"] = widget.user.email;
     requestData["uid"] = widget.user.uid;
     requestData["phone"] = widget.user.phoneNumber;
@@ -82,6 +84,39 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
       MaterialPageRoute(builder: (context) => QuestionnaireStepNameScreen(requestData: requestData)),
     );
   }
+//
+//  FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+//
+//  void firebaseCloudMessaging_Listeners() {
+//    if (Platform.isIOS) iOS_Permission();
+//
+//    _firebaseMessaging.getToken().then((token){
+//      print(token);
+//    });
+//
+//    _firebaseMessaging.configure(
+//      onMessage: (Map<String, dynamic> message) async {
+//        print('on message $message');
+//      },
+//      onResume: (Map<String, dynamic> message) async {
+//        print('on resume $message');
+//      },
+//      onLaunch: (Map<String, dynamic> message) async {
+//        print('on launch $message');
+//      },
+//    );
+//  }
+//
+//  void iOS_Permission() {
+//    _firebaseMessaging.requestNotificationPermissions(
+//        IosNotificationSettings(sound: true, badge: true, alert: true)
+//    );
+//    _firebaseMessaging.onIosSettingsRegistered
+//        .listen((IosNotificationSettings settings)
+//    {
+//      print("Settings registered: $settings");
+//    });
+//  }
 
   void getToken() async {
     IdTokenResult token = await widget.user.getIdToken();
