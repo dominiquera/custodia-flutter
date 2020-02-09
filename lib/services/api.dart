@@ -11,12 +11,12 @@ import 'package:custodia/models/user_details.dart';
 import 'package:custodia/models/mobility_issue.dart';
 import 'package:custodia/models/outdoor_space.dart';
 import 'package:custodia/models/score.dart';
-import 'package:custodia/models/user.dart';
+import 'package:custodia/utils/globals.dart';
 import 'package:custodia/utils/shared-prefs.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart';
 
-//import 'network_util.dart';
+import 'package:custodia/utils/globals.dart' as globals;
 
 class APIService {
 
@@ -41,7 +41,6 @@ class APIService {
   }
 
   static String domainURL = "http://35.183.234.234/api/v1";
-  //  static int userId = 3;
 
   // Return a list of all user roles available in the system
   static fetchRoles() async {
@@ -182,9 +181,9 @@ class APIService {
   }
 
   //  Returns the current score for a given user id
-  static Future<Score> fetchScore(int userId) async {
+  static Future<Score> fetchScore() async {
     Response response = await get(
-      '$domainURL/users/$userId/score',
+      '$domainURL/users/${globals.userId}/score',
     );
 
     if (response.statusCode == 200) {
@@ -202,8 +201,8 @@ class APIService {
   }
 
   //  Returns the list of ignored maintenance items for a given user id
-  static Future<List<MaintenanceItem>> fetchIgnoredMaintenanceItems(int userId) async {
-    Response response = await get('$domainURL/users/$userId/ignored_maintenance_items');
+  static Future<List<MaintenanceItem>> fetchIgnoredMaintenanceItems() async {
+    Response response = await get('$domainURL/users/${globals.userId}/ignored_maintenance_items');
     List<MaintenanceItem> maintenanceItems = [];
 
     if (response.statusCode == 200) {
@@ -218,8 +217,8 @@ class APIService {
   }
 
   //  Returns the user details
-  static Future<UserDetails> fetchUserDetails(int userId) async {
-    Response response = await get('$domainURL/users/$userId/details');
+  static Future<UserDetails> fetchUserDetails() async {
+    Response response = await get('$domainURL/users/${globals.userId}/details');
 
 
     if (response.statusCode == 200) {
@@ -232,8 +231,8 @@ class APIService {
   }
 
   //  Returns the top 3 maintenance items due today for given user
-  static Future<List<MaintenanceItem>> fetchTop3Items(int userId) async {
-    Response response = await get('$domainURL/users/$userId/top_three_maintenance_items_today');
+  static Future<List<MaintenanceItem>> fetchTop3Items() async {
+    Response response = await get('$domainURL/users/${globals.userId}/top_three_maintenance_items_today');
     List<MaintenanceItem> maintenanceItems = [];
 
     if (response.statusCode == 200) {
@@ -250,8 +249,8 @@ class APIService {
   }
 
   //  Returns the top 3 maintenance items due today for given user and section
-  static Future<List<MaintenanceItem>> fetchTop3ItemsForSection(int userId, int section) async {
-    Response response = await get('$domainURL/users/$userId/section/$section/top_three_maintenance_items_today');
+  static Future<List<MaintenanceItem>> fetchTop3ItemsForSection(int section) async {
+    Response response = await get('$domainURL/users/${globals.userId}/section/$section/top_three_maintenance_items_today');
     List<MaintenanceItem> maintenanceItems = [];
 
     if (response.statusCode == 200) {
@@ -266,8 +265,8 @@ class APIService {
   }
 
   //  Returns the list of maintenance items for a given user id and section id
-  static Future<List<MaintenanceItem>> fetchMaintenanceItems(int userId, int sectionId) async {
-    Response response = await get('$domainURL/users/$userId/section/$sectionId/all_maintenance_items');
+  static Future<List<MaintenanceItem>> fetchMaintenanceItems(int sectionId) async {
+    Response response = await get('$domainURL/users/${globals.userId}/section/$sectionId/all_maintenance_items');
     List<MaintenanceItem> maintenanceItems = [];
 
     if (response.statusCode == 200) {
@@ -291,6 +290,7 @@ class APIService {
 
       var jsonBody = json.decode(response.body);
       SharedPrefsService.setCurrentUserId(jsonBody["id"]);
+      globals.userId = jsonBody["id"];
 
       onSuccess();
     }
@@ -308,6 +308,7 @@ class APIService {
     if (response.statusCode == 200) {
       var jsonBody = json.decode(response.body);
       SharedPrefsService.setCurrentUserId(jsonBody["id"]);
+      globals.userId = jsonBody["id"];
 
       onSuccess();
     }
@@ -372,14 +373,14 @@ class APIService {
   //  Update user's current score
   static Future<Response> updateUserScore(String score) {
     return post(
-        '$domainURL/users/{user}/score',
+        '$domainURL/users/${globals.userId}/score',
         body: {"score": score}
     );
   }
 
-  static Future<void> ignoreMaintenanceItem(int userId, int itemId, Function onSuccess, Function onFail) async {
+  static Future<void> ignoreMaintenanceItem(int itemId, Function onSuccess, Function onFail) async {
     Response response = await post(
-        '$domainURL/users/$userId/maintenance_item/$itemId/ignored'
+        '$domainURL/users/${globals.userId}/maintenance_item/$itemId/ignored'
     );
 
     if (response.statusCode == 200) {
@@ -389,9 +390,9 @@ class APIService {
     }
   }
 
-  static Future<void> ignoreMaintenanceItemOnce(int userId, int itemId, Function onSuccess, Function onFail) async {
+  static Future<void> ignoreMaintenanceItemOnce(int itemId, Function onSuccess, Function onFail) async {
     Response response = await post(
-        '$domainURL/users/$userId/maintenance_item/$itemId/ignoredOnce'
+        '$domainURL/users/${globals.userId}/maintenance_item/$itemId/ignoredOnce'
     );
 
     if (response.statusCode == 200) {
@@ -401,9 +402,9 @@ class APIService {
     }
   }
 
-  static Future<void> markDoneMaintenanceItem(int userId, int itemId, Function onSuccess, Function onFail) async {
+  static Future<void> markDoneMaintenanceItem(int itemId, Function onSuccess, Function onFail) async {
     Response response = await post(
-        '$domainURL/users/$userId/maintenance_item/$itemId/done'
+        '$domainURL/users/${globals.userId}/maintenance_item/$itemId/done'
     );
 
     if (response.statusCode == 200) {
@@ -425,8 +426,8 @@ class APIService {
   }
 
   // Automates maintenance item
-  static Future<bool> automateMaintenanceItem(int userId, int itemId) async {
-    Response response = await post('$domainURL/users/$userId/maintenance_item/$itemId/apiAutomate');
+  static Future<bool> automateMaintenanceItem(int itemId) async {
+    Response response = await post('$domainURL/users/${globals.userId}/maintenance_item/$itemId/apiAutomate');
 
     if (response.statusCode == 200) {
       return true;

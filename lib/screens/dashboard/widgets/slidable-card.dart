@@ -164,7 +164,7 @@ class _SlidableCardState extends State<SlidableCard> {
     Navigator.of(context).push(
         PageRouteBuilder(
             opaque: false,
-            pageBuilder: (BuildContext context, _, __) => OverlayIgnore(userId: widget.userId, item: widget.item, onIgnore: widget.onActionDone)
+            pageBuilder: (BuildContext context, _, __) => OverlayIgnore(item: widget.item, onIgnore: widget.onActionDone)
         )
     );
   }
@@ -179,7 +179,7 @@ class _SlidableCardState extends State<SlidableCard> {
   }
 
   markAsDone(){
-    APIService.markDoneMaintenanceItem(widget.userId, widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
+    APIService.markDoneMaintenanceItem(widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
   }
 
   void onMarkDoneSuccess(String body){
@@ -254,7 +254,7 @@ class _SlidableCardState extends State<SlidableCard> {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,
-        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(userId: widget.userId, item: widget.item, onAutomate: widget.onActionDone)
+        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(item: widget.item, onAutomate: widget.onActionDone)
       )
     );
   }

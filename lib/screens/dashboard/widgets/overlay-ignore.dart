@@ -1,16 +1,16 @@
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/services/api.dart';
 import 'package:custodia/screens/widgets/blue-rounded-button.dart';
+import 'package:custodia/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 
 import '../../../theme-provider.dart';
 
 class OverlayIgnore extends StatefulWidget {
 
-  OverlayIgnore({this.item, this.userId, this.onIgnore});
+  OverlayIgnore({this.item, this.onIgnore});
 
   final MaintenanceItem item;
-  final int userId;
   final Function onIgnore;
 
   @override
@@ -76,11 +76,11 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
   }
 
   void ignoreItem(){
-    APIService.ignoreMaintenanceItem(widget.userId, widget.item.id, onSuccess, onFail);
+    APIService.ignoreMaintenanceItem(widget.item.id, onSuccess, onFail);
   }
 
   void ignoreItemOnce(){
-    APIService.ignoreMaintenanceItemOnce(widget.userId, widget.item.id, onSuccess, onFail);
+    APIService.ignoreMaintenanceItemOnce(widget.item.id, onSuccess, onFail);
   }
 
   onSuccess(){

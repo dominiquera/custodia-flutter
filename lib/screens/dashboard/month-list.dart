@@ -2,6 +2,7 @@ import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/screens/widgets/drawer.dart';
 import 'package:custodia/screens/widgets/progress-indicator.dart';
 import 'package:custodia/services/api.dart';
+import 'package:custodia/utils/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
@@ -12,10 +13,9 @@ import '../../theme-provider.dart';
 class ItemsMonthListPage extends StatefulWidget {
 
   final int sectionId;
-  final int userId;
   final Color accentColor;
 
-  ItemsMonthListPage({this.sectionId, this.userId, this.accentColor});
+  ItemsMonthListPage({this.sectionId, this.accentColor});
 
   @override
   _ItemsMonthListPageState createState() => _ItemsMonthListPageState();
@@ -112,7 +112,7 @@ class _ItemsMonthListPageState extends State<ItemsMonthListPage> {
   }
 
   void getItems() async {
-    items = await APIService.fetchMaintenanceItems(widget.userId, widget.sectionId);
+    items = await APIService.fetchMaintenanceItems(widget.sectionId);
     setState(() {});
   }
 

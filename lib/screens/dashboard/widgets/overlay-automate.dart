@@ -8,10 +8,9 @@ import '../../../theme-provider.dart';
 
 class OverlayAutomate extends StatefulWidget {
 
-  OverlayAutomate({this.item, this.userId, this.onAutomate});
+  OverlayAutomate({this.item, this.onAutomate});
 
   final MaintenanceItem item;
-  final int userId;
   final Function onAutomate;
 
   @override
@@ -23,13 +22,15 @@ class _OverlayAutomateState extends State<OverlayAutomate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: Container(
-        padding: EdgeInsets.all(ThemeProvider.screenPadding),
-        decoration: BoxDecoration(
-          gradient: ThemeProvider.blueTransparentGradientDiagonal
+      backgroundColor: Colors.white.withOpacity(0),
+      body: SafeArea(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: ThemeProvider.screenPadding),
+          decoration: BoxDecoration(
+            gradient: ThemeProvider.blueTransparentGradientDiagonal
+          ),
+          child: body(context)
         ),
-        child: body(context)
       ),
     );
   }
@@ -39,58 +40,54 @@ class _OverlayAutomateState extends State<OverlayAutomate> {
   }
 
   Widget body(BuildContext context) {
-    return SizedBox.expand(
-      child: Padding(
+    return ListView(
         padding: const EdgeInsets.all(15.0),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Column(
             children: <Widget>[
-              Column(
-                children: <Widget>[
-                  DropCapText(
-                    "Great, let's make that request for you.",
-                    dropCapPosition: DropCapPosition.start,
-                    dropCapPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                    style: TextStyle(
-                      fontSize: 38,
-                      color: Colors.white,
-                      fontFamily: "NunitoLight",
-                      height: 1.3,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(2.0, 2.0),
-                          blurRadius: 5.0,
-                          color: ThemeProvider.darkGrey,
-                        ),
-                      ]
+              DropCapText(
+                "Great, let's make that request for you.",
+                dropCapPosition: DropCapPosition.start,
+                dropCapPadding: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                style: TextStyle(
+                  fontSize: 38,
+                  color: Colors.white,
+                  fontFamily: "NunitoLight",
+                  height: 1.3,
+                  shadows: <Shadow>[
+                    Shadow(
+                      offset: Offset(2.0, 2.0),
+                      blurRadius: 5.0,
+                      color: ThemeProvider.darkGrey,
                     ),
-                    dropCap: DropCap(
-                        width: 40,
-                        height: 45,
-                        child: Container(
-                          child: Icon(Icons.room_service, size: 30, color: Colors.white,),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ThemeProvider.blue4),
-                        )
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                ],
+                  ]
+                ),
+                dropCap: DropCap(
+                  width: 40,
+                  height: 45,
+                  child: Container(
+                    child: Icon(Icons.room_service, size: 30, color: Colors.white,),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: ThemeProvider.blue4),
+                  )
+                ),
               ),
-              buildRequestTitle(),
-              buildRequestBody(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  BlueRoundedButton(text: "Cancel", onPressed: closeOverlay, padding: 25),
-                  BlueRoundedButton(text: "Submit", onPressed: automateItem, padding: 25),
-                ]
-              )
+            ],
+          ),
+          SizedBox(height: 40),
+          buildRequestTitle(),
+          SizedBox(height: 30),
+          buildRequestBody(),
+          SizedBox(height: 30),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              BlueRoundedButton(text: "Cancel", onPressed: closeOverlay, padding: 25),
+              BlueRoundedButton(text: "Submit", onPressed: automateItem, padding: 25),
             ]
-        ),
-      ),
+          )
+        ]
     );
   }
 
@@ -99,7 +96,7 @@ class _OverlayAutomateState extends State<OverlayAutomate> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text("Request Subject", style: TextStyle(fontSize: 18, color: Colors.white),),
-        Text("--", style: TextStyle(fontSize: 30, color: Colors.white),),
+        Text(widget.item.title, style: TextStyle(fontSize: 26, color: Colors.white),),
       ],
     );
   }
@@ -137,7 +134,7 @@ class _OverlayAutomateState extends State<OverlayAutomate> {
   }
 
   void automateItem() async {
-    bool response = await APIService.automateMaintenanceItem(widget.userId, widget.item.id);
+    bool response = await APIService.automateMaintenanceItem(widget.item.id);
     if (response) {
       onSuccess();
     } else {

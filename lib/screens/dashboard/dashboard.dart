@@ -9,7 +9,7 @@ import 'package:custodia/screens/dashboard/widgets/top-3-checkpoints.dart';
 import 'package:custodia/screens/widgets/progress-indicator.dart';
 import 'package:custodia/services/api.dart';
 import 'package:custodia/services/firebase-auth.dart';
-import 'package:custodia/utils/globals.dart';
+import 'package:custodia/utils/globals.dart' as globals;
 import 'package:custodia/utils/shared-prefs.dart';
 import 'package:custodia/screens/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -27,8 +27,6 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-
-  int currentAPIUserId;
 
   Score score;
 //  List<MaintenanceItem> outsideItems = [];
@@ -102,13 +100,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
 //          padding: EdgeInsets.symmetric(
 //            horizontal: ThemeProvider.screenPadding,
 //          ),
-////          child: Text(
-////            "Hello $userName, just a few things on for this week. Here is your current Home Score.",
-////            style: TextStyle(
-////                fontSize: 26,
-////                fontFamily: "NunitoMedium"
-////            ),
-////          ),
+//          child: Text(
+//            "Hello ${globals.userName}, just a few things on for this week. Here is your current Home Score.",
+//            style: TextStyle(
+//                fontSize: 26,
+//                fontFamily: "NunitoMedium"
+//            ),
+//          ),
 //        ),
 //        SizedBox(height: 30),
         Container(
@@ -122,7 +120,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           content: Column(
             children: <Widget>[
               (top3MaintenanceItems != null && top3MaintenanceItems.isNotEmpty) ? Top3Checkpoints(items: top3MaintenanceItems) : Container(),
-              currentAPIUserId != null ? Column(children: buildSections()) : Container(),
+              globals.userId != null ? Column(children: buildSections()) : Container(),
             ],
           ),
         ),
@@ -142,7 +140,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
             backgroundCardColor: section["backgroundCardColor"],
             textCardColor: section["textCardColor"],
             items: section["items"],
-            userId: currentAPIUserId,
             onUpdate: onSectionUpdate,
             id: section["id"]
         );
@@ -245,16 +242,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void fetchScore() async {
-    APIService.fetchScore(currentAPIUserId).then((value) {
+    APIService.fetchScore().then((value) {
       score = value;
       setState(() {});
     });
   }
 
   void fetchUserDetails() async {
-    APIService.fetchUserDetails(currentAPIUserId).then((value) {
+    APIService.fetchUserDetails().then((value) {
       homeDescription = value.title;
-      userName = value.name;
+      globals.userName = value.name;
       subtitle = value.subtitle;
 
       sectionData[0]["subtitle"] = value.outside;
@@ -267,7 +264,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void fetchSections() async {
     sectionData.forEach((section) async {
-      APIService.fetchTop3ItemsForSection(currentAPIUserId, section["id"]).then((result) {
+      APIService.fetchTop3ItemsForSection(section["id"]).then((result) {
 
         section["items"] = result;
         section["fetched"] = true;
@@ -277,10 +274,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void getCurrentUserId() async {
-    SharedPrefsService.getCurrentUserId().then((userId) {
-      currentAPIUserId = userId;
+    SharedPrefsService.getCurrentUserId().then((id) {
+      globals.userId = id;
       getTop3MaintenanceItems();
-      print("USER id: $userId");
+      print("USER id: userId");
       fetchSections();
       fetchScore();
       fetchUserDetails();
@@ -288,7 +285,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   void getTop3MaintenanceItems() async {
-    top3MaintenanceItems = await APIService.fetchTop3Items(currentAPIUserId);
+    top3MaintenanceItems = await APIService.fetchTop3Items();
     if (this.mounted){
       setState(() {});
     }

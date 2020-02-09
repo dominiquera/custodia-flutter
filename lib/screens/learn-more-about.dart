@@ -4,6 +4,7 @@ import 'package:custodia/screens/widgets/drawer.dart';
 import 'package:custodia/screens/widgets/list-item.dart';
 import 'package:custodia/screens/widgets/progress-indicator.dart';
 import 'package:custodia/services/api.dart';
+import 'package:custodia/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 import 'package:intl/intl.dart';
@@ -14,6 +15,10 @@ import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
+import 'dashboard/widgets/overlay-automate.dart';
+import 'dashboard/widgets/overlay-done.dart';
+import 'dashboard/widgets/overlay-ignore.dart';
 
 class LearnMoreAboutPage extends StatefulWidget  {
 
@@ -70,6 +75,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
           SizedBox(height: 20),
           learnItem != null && learnItem.videoUrl != null ? video() : Container(),
           SizedBox(height: 20),
+          buildButtonsRow(),
 //          ListItem(
 //            description: "Trim the hedges to keep them looking nice",
 //            color: accentColor),
@@ -169,6 +175,82 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
 
   void fetchLearnMaintenanceItem() async {
     learnItem = await APIService.fetchLearnMaintenanceItem(widget.item.id);
-    setState(() {});
+    if (this.mounted){
+      setState(() {});
+    }
+  }
+
+  buildButtonsRow() {
+    return Padding(
+      padding: EdgeInsets.only(left: ThemeProvider.screenPadding, right: ThemeProvider.screenPadding, bottom: 20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          FlatButton.icon(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            onPressed: showIgnoreOverlayDialog,
+            color: ThemeProvider.red,
+            icon: Icon(Icons.block, color: Colors.white,),
+            label: Text("Ignore", style: TextStyle(color: Colors.white),),
+          ),
+          FlatButton.icon(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            onPressed: showAutomateOverlayDialog,
+            color: ThemeProvider.blue4,
+            icon: Icon(Icons.room_service, color: Colors.white,),
+            label: Text("Request", style: TextStyle(color: Colors.white),),
+          ),
+          FlatButton.icon(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            onPressed: markAsDone,
+            color: ThemeProvider.green3,
+            icon: Icon(Icons.done, color: Colors.white,),
+            label: Text("Done",
+              style: TextStyle(
+                color: Colors.white
+              )
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  void showIgnoreOverlayDialog() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => OverlayIgnore(
+          item: widget.item,
+          onIgnore: (int id){}
+        )
+      )
+    );
+  }
+
+  markAsDone(){
+    APIService.markDoneMaintenanceItem(widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);
+  }
+
+  void onMarkDoneSuccess(String body){
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => DoneOverlayDialog(item: widget.item)
+      )
+    );
+  }
+
+  void onMarkDoneFailure() {
+    print(">>>onMarkDoneFailure");
+  }
+
+  void showAutomateOverlayDialog() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => OverlayAutomate(item: widget.item, onAutomate: (){})
+      )
+    );
   }
 }
