@@ -22,7 +22,6 @@ class HeaderItem extends StatelessWidget {
           Text(title,
             textAlign: TextAlign.left,
             style: TextStyle(
-
               color: colorAccent,
               fontFamily: "NunitoBlack",
               fontSize: 24

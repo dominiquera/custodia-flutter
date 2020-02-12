@@ -48,6 +48,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   String homeDescription = "";
   String subtitle = "";
   bool stepsClosed;
+  int totalItems = 0;
+  int fetchedSectionsCount = 0;
 
   @override
   void initState() {
@@ -72,7 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       endDrawer: Drawer(
-          child: DrawerContent()
+        child: DrawerContent()
       ),
       appBar: GradientAppBar(
         title: Text(formatter.format(now), style: TextStyle(fontFamily: "NunitoBlack", fontSize: 28)),
@@ -129,10 +131,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   List<Widget> buildSections(){
-    return sectionData.map((section) {
+    if (fetchedSectionsCount == sectionData.length && totalItems == 0) {
+      return buildNoTasksLeft();
+    } else {
+      return sectionData.map((section) {
 
-      if (section["items"].isNotEmpty) {
-        return DashboardSection(
+        if (section["items"].isNotEmpty) {
+          return DashboardSection(
             title: section["title"],
             subtitle: section["subtitle"],
             accentColor: section["accentColor"],
@@ -142,13 +147,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
             items: section["items"],
             onUpdate: onSectionUpdate,
             id: section["id"]
-        );
-      } else if (section["items"].isEmpty && section["fetched"] == false) {
-        return ProgressIndicatorWithPadding();
-      } else {
-        return Container();
-      }
-    }).toList();
+          );
+        } else if (section["items"].isEmpty && section["fetched"] == false) {
+          return ProgressIndicatorWithPadding();
+        } else {
+          return Container();
+        }
+      }).toList();
+
+    }
+
   }
 
   onSectionUpdate(){
@@ -167,12 +175,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
           child: Column(
               children: <Widget>[
                 Text(
-                    homeDescription,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 34,
-                        fontFamily: "NunitoBlack"
-                    )
+                  homeDescription,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 34,
+                    fontFamily: "NunitoBlack"
+                  )
                 ),
                 SizedBox(height: 15),
                 Row(
@@ -205,10 +213,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Widget buildScore(){
     return Text("${score.value}/850",
-        style: TextStyle(
-          fontSize: 16,
-          color: ThemeProvider.blue6,
-        )
+      style: TextStyle(
+        fontSize: 16,
+        color: ThemeProvider.blue6,
+      )
     );
   }
 
@@ -265,10 +273,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void fetchSections() async {
     sectionData.forEach((section) async {
       APIService.fetchTop3ItemsForSection(section["id"]).then((result) {
-
         section["items"] = result;
         section["fetched"] = true;
-        setState(() {});
+        totalItems = totalItems + section["items"].length;
+        fetchedSectionsCount = fetchedSectionsCount + 1;
+        if (this.mounted){
+          setState((){});
+        }
+
       });
     });
   }
@@ -295,6 +307,50 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void getSharedPrefs() async {
     stepsClosed = await SharedPrefsService.getStepsState();
     setState(() {});
+  }
+
+  List<Widget> buildNoTasksLeft(){
+
+    return [
+      Container(
+        padding: EdgeInsets.symmetric(
+          vertical: 20,
+          horizontal: ThemeProvider.screenPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Container(
+              height: 220,
+              decoration: BoxDecoration(
+                color: Colors.lightBlue,
+                borderRadius: BorderRadius.all(Radius.circular(8)),
+                image: DecorationImage(
+                  image: AssetImage("assets/images/no_tasks.png"),
+                  fit: BoxFit.cover
+                )
+              ),
+            ),
+            SizedBox(height: 20,),
+            Text(
+              "Check back later to have more ways to help your seniors live a more enjoyable life at home",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton.icon(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  onPressed: (){},
+                  color: ThemeProvider.blue4,
+                  icon: Icon(Icons.room_service, color: Colors.white,),
+                  label: Text("Make a Request", style: TextStyle(color: Colors.white),),
+                ),
+              ],
+            ),
+          ],
+        ),
+      )
+    ];
   }
 
 }
