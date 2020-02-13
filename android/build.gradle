@@ -15,6 +15,10 @@ allprojects {
         google()
         jcenter()
     }
+
+    configurations.all {
+        resolutionStrategy.force "com.google.firebase:firebase-iid:20.0.1"
+    }
 }
 
 rootProject.buildDir = '../build'
