@@ -6,6 +6,8 @@ import '../../../theme-provider.dart';
 import '../../widgets/blue-rounded-button.dart';
 import 'package:drop_cap_text/drop_cap_text.dart';
 
+import '../dashboard.dart';
+
 class DoneOverlayDialog extends StatefulWidget {
 
   final MaintenanceItem item;
@@ -41,6 +43,8 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
 
   void closeOverlay() {
     Navigator.pop(context);
+    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
+        DashboardScreen()), (Route<dynamic> route) => false);
   }
 
   Widget closeIconButton() {
@@ -64,7 +68,6 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
             children: <Widget>[
               Column(
                 children: <Widget>[
-                  Image.asset("assets/images/checkmark.png", width: 50,height: 50,),
                   DropCapText(
                     "Well done $userName! You have increased the home score by ${widget.item.points} points!",
                     dropCapPosition: DropCapPosition.start,
