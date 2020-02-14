@@ -6,7 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../../../theme-provider.dart';
 import '../../learn-more-about.dart';
-import 'overlay-automate.dart';
+import 'overlay-request.dart';
 import 'overlay-ignore.dart';
 
 class SlidableCard extends StatefulWidget {
@@ -53,17 +53,12 @@ class _SlidableCardState extends State<SlidableCard> {
                 Stack(children: <Widget>[
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8.0),
-                    child:  buildImage(),
+                    child: buildImage(),
                   ),
-
-
                   Positioned(
-
                     bottom: 0,
                     left: 0,
-
                     child: Container(
-
                       padding: EdgeInsets.fromLTRB(3, 3, 20, 3),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.only(topRight: Radius.circular(20.0)),

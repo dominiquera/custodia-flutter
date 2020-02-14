@@ -16,7 +16,7 @@ import 'dashboard/widgets/block-header.dart';
 
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-import 'dashboard/widgets/overlay-automate.dart';
+import 'dashboard/widgets/overlay-request.dart';
 import 'dashboard/widgets/overlay-done.dart';
 import 'dashboard/widgets/overlay-ignore.dart';
 
@@ -73,7 +73,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
             colorAccent: accentColor2
           ),
           SizedBox(height: 20),
-          learnItem != null && learnItem.videoUrl != null ? video() : Container(),
+          buildImage(),
           SizedBox(height: 20),
           buildButtonsRow(),
 //          ListItem(
@@ -88,18 +88,44 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
     );
   }
 
+  buildImage(){
+    Image image;
+    if (widget.item.imageUrl != null && widget.item.imageUrl != "") {
+      image = Image.network(
+        "http://35.183.234.234" + widget.item.imageUrl,
+      );
+    } else {
+      image = Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth);
+    }
+
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ThemeProvider.screenPadding,
+        right: ThemeProvider.screenPadding,
+      ),
+      child: image,
+    );
+  }
+
   video(){
     YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: learnItem.videoUrl.split("=")[1],
+      initialVideoId: learnItem.videoUrl,
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
       ),
     );
 
-    return YoutubePlayer(
-      controller: _controller,
-      showVideoProgressIndicator: false,
+    return Padding(
+      padding: EdgeInsets.only(
+        left: ThemeProvider.screenPadding,
+        right: ThemeProvider.screenPadding,
+        bottom: 20
+      ),
+      child: YoutubePlayer(
+        controller: _controller,
+        showVideoProgressIndicator: false,
+      ),
     );
   }
 
@@ -160,6 +186,8 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
               colorAccent: accentColor2
           ),
           SizedBox(height: 20),
+          learnItem != null && learnItem.videoUrl != null ? video() : Container(),
+
           //learnItem.interval != null ? detailsItem("Frequency", learnItem.interval, ThemeProvider.blue1) : Container(),
           learnItem.tools.isNotEmpty ? detailsItem("Tools", learnItem.tools.map((item) { return item.value; }).join(", "), ThemeProvider.green1) : Container(),
           learnItem.materials.isNotEmpty ? detailsItem("Materials", learnItem.materials.map((item) { return item.value; }).join(", "), ThemeProvider.blue5) : Container(),
@@ -188,16 +216,16 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
         children: <Widget>[
           FlatButton.icon(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-            onPressed: showIgnoreOverlayDialog,
+            onPressed: showCloseOverlayDialog,
             color: ThemeProvider.red,
             icon: Icon(Icons.block, color: Colors.white,),
-            label: Text("Ignore", style: TextStyle(color: Colors.white),),
+            label: Text("Close", style: TextStyle(color: Colors.white),),
           ),
           FlatButton.icon(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: showAutomateOverlayDialog,
             color: ThemeProvider.blue4,
-            icon: Icon(Icons.room_service, color: Colors.white,),
+            icon: Image.asset("assets/images/request.png", width: 20,),
             label: Text("Request", style: TextStyle(color: Colors.white),),
           ),
           FlatButton.icon(
@@ -216,7 +244,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
     );
   }
 
-  void showIgnoreOverlayDialog() {
+  void showCloseOverlayDialog() {
     Navigator.of(context).push(
       PageRouteBuilder(
         opaque: false,

@@ -44,6 +44,7 @@ class _OverlayAutomateState extends State<OverlayAutomate> {
         padding: const EdgeInsets.all(15.0),
         children: <Widget>[
           Column(
+            mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               DropCapText(
                 "Great, let's make that request for you.",
@@ -66,7 +67,8 @@ class _OverlayAutomateState extends State<OverlayAutomate> {
                   width: 40,
                   height: 45,
                   child: Container(
-                    child: Icon(Icons.room_service, size: 30, color: Colors.white,),
+                    padding: EdgeInsets.all(8),
+                    child: Image.asset("assets/images/request.png", width: 10,),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: ThemeProvider.blue4),

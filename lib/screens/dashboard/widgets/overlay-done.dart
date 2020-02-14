@@ -44,7 +44,7 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
   void closeOverlay() {
     Navigator.pop(context);
     Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
-        DashboardScreen()), (Route<dynamic> route) => false);
+      DashboardScreen()), (Route<dynamic> route) => false);
   }
 
   Widget closeIconButton() {
@@ -86,14 +86,14 @@ class _DoneOverlayDialogState extends State<DoneOverlayDialog> {
                       ]
                     ),
                     dropCap: DropCap(
-                        width: 40,
-                        height: 45,
-                        child: Container(
-                          child: Icon(Icons.done, size: 30, color: Colors.white,),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ThemeProvider.lime),
-                        )
+                      width: 40,
+                      height: 45,
+                      child: Container(
+                        child: Icon(Icons.done, size: 30, color: Colors.white,),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ThemeProvider.lime),
+                      )
                     ),
                   )
                   ,

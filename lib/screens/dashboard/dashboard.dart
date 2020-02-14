@@ -310,7 +310,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
   }
 
   List<Widget> buildNoTasksLeft(){
-
     return [
       Container(
         padding: EdgeInsets.symmetric(
@@ -342,7 +341,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   onPressed: (){},
                   color: ThemeProvider.blue4,
-                  icon: Icon(Icons.room_service, color: Colors.white,),
+                  icon: Image.asset("assets/images/request.png", width: 20,),
                   label: Text("Make a Request", style: TextStyle(color: Colors.white),),
                 ),
               ],

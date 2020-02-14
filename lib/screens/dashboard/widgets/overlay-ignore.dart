@@ -62,9 +62,9 @@ class _OverlayIgnoreState extends State<OverlayIgnore> {
         children: <Widget>[
 //          BlueRoundedButton(text: "Ignore for now", onPressed: (){}, padding: 25),
 //          SizedBox(height: 50),
-          BlueRoundedButton(text: "Ignore Once", onPressed: ignoreItemOnce, padding: 25),
+          BlueRoundedButton(text: "Reminds me later", onPressed: ignoreItemOnce, padding: 25),
           SizedBox(height: 35),
-          BlueRoundedButton(text: "Ignore Forever", onPressed: ignoreItem, padding: 25),
+          BlueRoundedButton(text: "I don’t need this", onPressed: ignoreItem, padding: 25),
           SizedBox(height: 35),
           FlatButton(
             child: Text("Cancel", style: TextStyle(color: Colors.white, fontSize: 22)),
