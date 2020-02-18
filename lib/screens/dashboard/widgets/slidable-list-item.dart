@@ -150,7 +150,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
         onTap: markAsDone,
       ),
       IconSlideAction(
-        caption: 'Automate',
+        caption: 'Request',
         color: ThemeProvider.blue8,
         iconWidget: Container(
             width: 40,
@@ -159,7 +159,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
               color: ThemeProvider.blue7,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.cached, color: Colors.white, size: 30,)
+            child: Icon(Icons.room_service, color: Colors.white, size: 30,)
         ),
         onTap: showAutomateOverlayDialog,
       ),
