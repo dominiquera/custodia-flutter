@@ -86,7 +86,7 @@ class _SlidableCardState extends State<SlidableCard> {
                   padding: const EdgeInsets.all(5),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
 //                    Text(
 //                      "OUTSIDE",
