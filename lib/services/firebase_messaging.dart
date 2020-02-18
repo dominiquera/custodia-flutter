@@ -2,11 +2,15 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'dart:io';
 
+import 'api.dart';
+
 
 class FirebaseNotifications {
+  int userId;
   FirebaseMessaging _firebaseMessaging;
 
-  void setUpFirebase() {
+  void setUpFirebase(int userId) {
+    this.userId = userId;
     _firebaseMessaging = FirebaseMessaging();
     firebaseCloudMessagingListeners();
 
@@ -18,6 +22,7 @@ class FirebaseNotifications {
     _firebaseMessaging.getToken().then((token) {
       print(">>>>>>>>>firebase messaging token");
       print(token);
+      APIService.updateUserFirebaseToken(userId, token);
     });
 
     _firebaseMessaging.configure(

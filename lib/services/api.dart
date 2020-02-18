@@ -370,6 +370,16 @@ class APIService {
     }
   }
 
+  static Future<Response> updateUserFirebaseToken(int userId, String token) {
+    return post(
+        '$domainURL/users/$userId/firebase_token',
+        body: {
+          "scope": "fcm_token",
+          "token": token
+        }
+    );
+  }
+
   //  Update user's current score
   static Future<Response> updateUserScore(String score) {
     return post(

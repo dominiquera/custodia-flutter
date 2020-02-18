@@ -18,6 +18,7 @@ import 'package:sticky_headers/sticky_headers.dart';
 
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
+import '../../services/firebase_messaging.dart';
 import '../../theme-provider.dart';
 import 'package:intl/intl.dart';
 
@@ -28,6 +29,7 @@ class DashboardScreen extends StatefulWidget {
 
 class _DashboardScreenState extends State<DashboardScreen> {
 
+  FirebaseNotifications firebaseNotifications = FirebaseNotifications();
   Score score;
 //  List<MaintenanceItem> outsideItems = [];
 //  List<MaintenanceItem> insideItems = [];
@@ -293,6 +295,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       fetchSections();
       fetchScore();
       fetchUserDetails();
+      firebaseNotifications.setUpFirebase(id);
     });
   }
 
