@@ -117,7 +117,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
   List<Widget> mainActions(BuildContext context) {
     return <Widget>[
       IconSlideAction(
-        caption: 'Ignore',
+        caption: 'Close',
         color: ThemeProvider.blue8,
         iconWidget: Container(
           width: 40,
