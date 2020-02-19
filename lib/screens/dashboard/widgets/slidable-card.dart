@@ -208,7 +208,7 @@ class _SlidableCardState extends State<SlidableCard> {
         onTap: markAsDone,
       ),
       IconSlideAction(
-        caption: 'Automate',
+        caption: 'Request',
         color: ThemeProvider.blue8,
         iconWidget: Container(
           width: 40,
@@ -217,7 +217,7 @@ class _SlidableCardState extends State<SlidableCard> {
             color: ThemeProvider.blue7,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.cached, color: Colors.white, size: 30,)
+          child: Icon(Icons.room_service, color: Colors.white, size: 30,)
         ),
         onTap: showAutomateOverlayDialog,
       ),
