@@ -331,6 +331,7 @@ class APIService {
       List<int> managementPlans,
       String phone,
       String address,
+//      String city,
       String zipCode,
       Function onSuccess,
       Function onFail
@@ -348,6 +349,7 @@ class APIService {
       "management_plans" : managementPlans,
       "phone": phone,
       "address": address,
+//      "city": city,
       "zip": zipCode,
       "firebase_registration_token": token,
     });

@@ -20,13 +20,15 @@ class ThemeProvider {
   static const blue7 = Color(0xFF485bdf);
   static const blue4 = Color(0xFF5503e1);
   static const lightViolet = Color(0xFFbca2f5);
+  static const lighterViolet = Color(0xFFFFE5FE);
+  static const violet = Color(0xFF8C3D88);
   static const lightGrey1 = Color(0xFFededed);
   static const lightGrey2 = Color(0xFFf0f0f0);
   static const lightBlue = Color(0xFFf1f6ff);
   static const grey1 = Color(0xFFa6a6a6);
   static const grey2 = Color(0xFF838383);
   static const darkGrey = Color(0xFF3d3d3d);
-
+  
   static double screenPadding = 20.0;
 
   static final blueTransparentGradientDiagonal = LinearGradient(

@@ -30,6 +30,7 @@ class _QuestionnaireStepIntroScreenState extends State<QuestionnaireStepIntroScr
     "outdoor_spaces": null,
     "mobility_issues": null,
     "address": null,
+    "city": null,
     "zip_code": null,
     "token": null,
     "firebase_user": null,

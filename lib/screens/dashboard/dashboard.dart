@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/models/score.dart';
 import 'package:custodia/screens/dashboard/widgets/dashboard-section.dart';
+import 'package:custodia/screens/dashboard/widgets/overlay-request.dart';
 import 'package:custodia/screens/dashboard/widgets/score-bar.dart';
 import 'package:custodia/screens/dashboard/widgets/steps.dart';
 import 'package:custodia/screens/dashboard/widgets/top-3-checkpoints.dart';
@@ -15,7 +16,7 @@ import 'package:custodia/screens/widgets/drawer.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sticky_headers/sticky_headers.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:gradient_app_bar/gradient_app_bar.dart';
 
 import '../../services/firebase_messaging.dart';
@@ -128,8 +129,82 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
         ),
+        SizedBox(height: 20),
+        buildSpotlightSection(),
+        SizedBox(height: 20),
+        buildRequestSection(),
+        SizedBox(height: 20),
       ],
     );
+  }
+
+  Widget buildRequestSection(){
+    return Container(
+      child: FlatButton.icon(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        onPressed: showAutomateOverlayDialog,
+        color: ThemeProvider.blue4,
+        icon: Image.asset("assets/images/request.png", width: 20,),
+        label: Text("Make a Request", style: TextStyle(color: Colors.white),),
+      )
+    );
+  }
+
+  Widget buildSpotlightSection(){
+    return Container(
+      color: ThemeProvider.lighterViolet,
+      padding: EdgeInsets.only(
+        top: 10,
+        bottom: 30,
+        left: 10,
+        right: 10),
+      child: InkWell(
+        onTap: openMag,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("Spotlight",
+              style: TextStyle(
+                fontFamily: "NunitoBlack",
+                fontSize: 24,
+                color: ThemeProvider.violet),),
+            Text(
+              "Suggested content. Tap to open",
+              textAlign: TextAlign.left,
+              style: TextStyle(color: ThemeProvider.grey2),
+            ),
+            SizedBox(height: 10,),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.0),
+              child: Column(
+                children: <Widget>[
+                  Image.asset("assets/images/spotlight.jpg", fit: BoxFit.fitWidth),
+                  Container(
+                    color: ThemeProvider.violet,
+                    padding: EdgeInsets.all(10),
+                    child: Text(
+                      "Protect your seniors at home and don't let them fall prey to fraudsters and defective work. Get our magazine to learn more.",
+                      style: TextStyle(color: Colors.white, fontSize: 22),
+                    )),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  openMag() async {
+    const url = 'https://www.mag.custodia.com';
+    if (await canLaunch(url)) {
+    await launch(url);
+    } else {
+    throw 'Could not launch $url';
+    }
+  }
+
+  void showAutomateOverlayDialog() {
   }
 
   List<Widget> buildSections(){
@@ -156,9 +231,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return Container();
         }
       }).toList();
-
     }
-
   }
 
   onSectionUpdate(){
@@ -274,7 +347,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   void fetchSections() async {
     sectionData.forEach((section) async {
-      APIService.fetchTop3ItemsForSection(section["id"]).then((result) {
+      APIService.fetchMaintenanceItems(section["id"]).then((result) {
         section["items"] = result;
         section["fetched"] = true;
         totalItems = totalItems + section["items"].length;
