@@ -19,6 +19,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
   Map<String, dynamic> requestData;
   TextEditingController addressTextController = TextEditingController();
   TextEditingController zipTextController = TextEditingController();
+  TextEditingController cityTextController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -80,7 +81,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
           TextFormField(
             validator: (value) {
               if (value.trim().isEmpty) {
-                return 'Please enter your city and street';
+                return 'Please enter your address';
               }
               return null;
             },
@@ -89,7 +90,26 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
               fontSize: 20, color: Colors.white,
             ),
             decoration: InputDecoration(
-              labelText: "Your city, street",
+              labelText: "Address",
+              labelStyle: TextStyle(color: Colors.white),
+              enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
+              focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
+              errorStyle: TextStyle(color: Colors.white),
+            ),
+          ),
+          TextFormField(
+            validator: (value) {
+              if (value.trim().isEmpty) {
+                return 'Please enter your city';
+              }
+              return null;
+            },
+            controller: cityTextController,
+            style: TextStyle(
+              fontSize: 20, color: Colors.white,
+            ),
+            decoration: InputDecoration(
+              labelText: "City",
               labelStyle: TextStyle(color: Colors.white),
               enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
@@ -119,7 +139,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
               fontSize: 20, color: Colors.white,
             ),
             decoration: InputDecoration(
-              labelText: "Your zip/postal",
+              labelText: "Zip/postal",
               labelStyle: TextStyle(color: Colors.white),
               enabledBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
               focusedBorder: UnderlineInputBorder(borderSide: BorderSide(color: ThemeProvider.blue1)),
@@ -136,9 +156,9 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
   }
 
   loadNextStep() {
-
     if (_formKey.currentState.validate()) {
       requestData["address"] = addressTextController.text;
+      requestData["city"] = cityTextController.text;
       requestData["zip_code"] = zipTextController.text;
       Navigator.push(
         context,

@@ -68,12 +68,6 @@ class _DashboardSectionState extends State<DashboardSection> {
 //          SlidableCard(),
           SizedBox(height: 20),
           Column(children: items),
-          FooterItem(
-            mainText: "MORE FOR THIS MONTH FOR ",
-            accentText: widget.title,
-            accentColor: widget.accentColor,
-            onTap: openMonthList
-          )
         ],
       ),
     );
@@ -106,15 +100,5 @@ class _DashboardSectionState extends State<DashboardSection> {
       items.removeWhere((item) => item.key == Key("index_$itemId"));
     });
     widget.onUpdate();
-  }
-
-
-
-  openMonthList() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => ItemsMonthListPage(sectionId: widget.id, accentColor: widget.accentColor)),
-    );
-
   }
 }

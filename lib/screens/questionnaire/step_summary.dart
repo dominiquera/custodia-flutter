@@ -96,6 +96,7 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
         widget.requestData["who_needs"],
         widget.requestData["phone"],
         widget.requestData["address"],
+//        widget.requestData["city"],
         widget.requestData["zip_code"],
         onRegistrationSuccess, onRegistrationFailure);
   }
