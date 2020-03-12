@@ -10,111 +10,87 @@ import '../../learn-more-about.dart';
 import 'overlay-request.dart';
 import 'overlay-ignore.dart';
 
-class SlidableCard extends StatefulWidget {
+class Slidable3ItemCard extends StatefulWidget {
 
-  SlidableCard({this.item, this.color, this.userId, this.onActionDone, this.key,this.backgroundColor,this.backgroundCardColor,this.textCardColor});
+  Slidable3ItemCard({this.item, this.userId, this.onActionDone, this.key,this.index});
 
   final MaintenanceItem item;
-  final Color color;
   final int userId;
   final Function onActionDone;
   final Key key;
-  final Color backgroundColor;
-  final Color backgroundCardColor;
-  final Color textCardColor;
+  final int index;
 
   @override
-  _SlidableCardState createState() => _SlidableCardState();
+  _Slidable3ItemCardState createState() => _Slidable3ItemCardState();
 }
 
-class _SlidableCardState extends State<SlidableCard> {
+class _Slidable3ItemCardState extends State<Slidable3ItemCard> {
   @override
   Widget build(BuildContext context) {
     return Slidable(
+      key: widget.key,
       actionPane: SlidableScrollActionPane(),
-      actions: mainActions(context),
+      actions: mainActions(),
       secondaryActions: headerCardSlideActions(),
-      child: Container(
-        margin: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-          color: widget.backgroundCardColor,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-//          boxShadow: [
-//            const BoxShadow(
-//              color: ThemeProvider.grey1,
-//              offset: const Offset(0, 5.0),
-//              blurRadius: 3
-//            )
-//          ]
-        ),
-        child: InkWell(
-          onTap: openLearnMoreScreen,
-          child: Column(
+      child: InkWell(
+        onTap: () => openLearnMoreScreen(),
+        child: Container(
+          child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Stack(children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: buildImage(),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    child: Container(
-                      padding: EdgeInsets.fromLTRB(3, 3, 20, 3),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(20.0)),
-                        color: Colors.red,
-                      ),
-                      child: Text("${widget.item.points} POINTS",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-//                              shadows: <Shadow>[
-//                                Shadow(
-//                                  offset: Offset(1.0, 1.0),
-//                                  blurRadius: 1.0,
-//                                  color: ThemeProvider.darkGrey,
-//                                ),
-//                              ]
-                          )
-                      ),
-                    ),
-                    
-                  ),
-                ]
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 5, 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                Column(
                     children: <Widget>[
-//                    Text(
-//                      "OUTSIDE",
-//                      style: TextStyle(
-//                        color: ThemeProvider.green1,
-//                        fontSize: 20,
-//                        fontFamily: "NunitoMedium"
-//                      )
-//                    ),
-                      Text(
-                          widget.item.title,
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              fontSize: 20,
-                              fontFamily: "NunitoMedium",
-                              color: widget.textCardColor
-                          )
+                      Container(
+                        width: 45,
+                        height: 45,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: ThemeProvider.orange,
+                              width: 1.5
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                            child: Text(
+                                widget.index.toString(),
+                                style: TextStyle(
+                                    fontFamily: "NunitoMedium",
+                                    color: ThemeProvider.orange,
+                                    fontSize: 22
+                                )
+                            )
+                        ),
                       ),
-                      SizedBox(height: 10),
+                      SizedBox(height: 5),
                       Text(
-                          widget.item.description,
-                          textAlign: TextAlign.left,
+                          "${widget.item.points} POINTS",
                           style: TextStyle(
-                              fontSize: 13,
-                              color: widget.textCardColor
+                              color: ThemeProvider.orange,
+                              fontFamily: "NunitoMedium",
+                              fontSize: 12
                           )
                       )
+                    ]
+                ),
+                SizedBox(width: 15),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(widget.item.title,
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: ThemeProvider.darkGrey,
+                              fontFamily: "NunitoMedium"
+                          )
+                      ),
+                      SizedBox(height: 5),
+                      Text(widget.item.description,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: ThemeProvider.darkGrey,
+                          )
+                      ),
                     ],
                   ),
                 ),
@@ -122,7 +98,6 @@ class _SlidableCardState extends State<SlidableCard> {
           ),
         ),
       ),
-
     );
   }
 
@@ -137,11 +112,12 @@ class _SlidableCardState extends State<SlidableCard> {
     }
   }
 
-  List<Widget> mainActions(BuildContext context) {
+  List<Widget> mainActions() {
     return <Widget>[
       IconSlideAction(
+
         caption: 'Close',
-        color: ThemeProvider.blue8,
+        color: ThemeProvider.lightBlue,
         iconWidget: Container(
             width: 60,
             height: 60,
@@ -196,15 +172,17 @@ class _SlidableCardState extends State<SlidableCard> {
   List<Widget> headerCardSlideActions() {
     return <Widget>[
       IconSlideAction(
+
         caption: 'Done',
-        color: ThemeProvider.blue8,
+        color: ThemeProvider.lightBlue,
+        
         iconWidget: Container(
           width: 60,
           height: 60,
           decoration: BoxDecoration(
             color: ThemeProvider.green3,
             shape: BoxShape.circle,
-
+            
           ),
           child: Icon(Icons.check, color: Colors.white, size: 35,)
         ),
@@ -212,7 +190,7 @@ class _SlidableCardState extends State<SlidableCard> {
       ),
       IconSlideAction(
         caption: 'Request',
-        color: ThemeProvider.blue8,
+        color: ThemeProvider.lightBlue,
         iconWidget: Container(
           width: 60,
           height: 60,
@@ -226,7 +204,7 @@ class _SlidableCardState extends State<SlidableCard> {
       ),
       IconSlideAction(
         caption: 'Learn',
-        color: ThemeProvider.blue8,
+        color: ThemeProvider.lightBlue,
         iconWidget: Container(
           width: 60,
           height: 60,

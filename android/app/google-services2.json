@@ -15,30 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "760123565598-a87fl4sgc6iloae9c5sgaq7fmlpbss3i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.custodia.custodia",
-            "certificate_hash": "1e69e272d9dfebcead2ea3bbb57ae8acaf47e83b"
-          }
-        },
-        {
-          "client_id": "760123565598-d2q4joojec4rh62n07ms2abhsffqqr92.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.custodia.custodia",
-            "certificate_hash": "203c7d2af496e9155d5f0e2dd329a707e6fe666f"
-          }
-        },
-        {
-          "client_id": "760123565598-29abvu9qc2qfthuhb8lp4k6cngut5ub6.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.custodia.custodia",
-            "certificate_hash": "1949402659a4a047eb392f518dbf8df4fff4e627"
-          }
-        },
-        {
           "client_id": "760123565598-6oesir6obajeaj9a999980rel582fvti.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -56,10 +32,10 @@
               "client_type": 3
             },
             {
-              "client_id": "760123565598-morhujc5ppid99r3fvpgm9dnamkgcvjp.apps.googleusercontent.com",
+              "client_id": "760123565598-560kp13qrqgpnadc971tn7ernmss34dl.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "1.test.test"
+                "bundle_id": "com.custodia.custodia"
               }
             }
           ]

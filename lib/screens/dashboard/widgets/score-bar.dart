@@ -25,8 +25,8 @@ class _ScoreBarState extends State<ScoreBar> {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      scoreBarTopLabels(),
-      SizedBox(height: 5),
+//      scoreBarTopLabels(),
+//      SizedBox(height: 5),
       scoreBar(),
       SizedBox(height: 5),
       scoreBarBottomLabels()

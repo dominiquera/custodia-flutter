@@ -66,7 +66,6 @@ class _DashboardSectionState extends State<DashboardSection> {
             colorAccent: widget.accentColor
           ),
 //          SlidableCard(),
-          SizedBox(height: 20),
           Column(children: items),
         ],
       ),

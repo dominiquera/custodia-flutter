@@ -52,7 +52,7 @@ class _QuestionnaireStepMobilityIssuesScreenState extends State<QuestionnaireSte
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("Does your "+APIService.translateManagementPlan(requestData["who_needs"])+" have any mobility issues?",
+          Text(APIService.translateManagementPlanMobilityIssues(requestData["who_needs"]),
             style: TextStyle(
               fontSize: 35,
               fontFamily: "NunitoLight",

@@ -21,26 +21,83 @@ import 'package:custodia/utils/globals.dart' as globals;
 class APIService {
 
 
-  static String translateManagementPlan(List<int> l) {
+//  static String translateManagementPlan(List<int> l) {
+//    if(l.length == 1) {
+//      if(l.contains(1)) return "Mom";
+//      else if(l.contains(2)) return "Dad";
+//      return "Family";
+//
+//    } else if(l.length == 2) {
+//      if(l.contains(1) && l.contains(2)) return "Parents";
+//      if(l.contains(1) || l.contains(2)) return "Family";
+//      return "Family";
+//    }
+//    else if(l.length == 3) {
+//      return "Family";
+//    }
+//    else if(l.length == 4) {
+//      return "Family";
+//    }
+//  }
+
+  static String translateManagementPlanAddress(List<int> l) {
     if(l.length == 1) {
-      if(l.contains(1)) return "Mom";
-      else if(l.contains(2)) return "Dad";
-      return "Family";
+      if(l.contains(1)) return "What's your Mom's address";
+      else if(l.contains(2)) return "What's your Dad's address";
+      return "What's your Family's address";
 
     } else if(l.length == 2) {
-      if(l.contains(1) && l.contains(2)) return "Parents";
-      if(l.contains(1) || l.contains(2)) return "Family";
-      return "Family";
+      if(l.contains(1) && l.contains(2)) return "What's your Parent's address";
+      if(l.contains(1) || l.contains(2)) return "What's your Family's address";
+      return "What's your Family's address";
     }
     else if(l.length == 3) {
-      return "Family";
+      return "What's your Family's address";
     }
     else if(l.length == 4) {
-      return "Family";
+      return "What's your Family's address";
     }
   }
 
-  static String domainURL = "http://35.183.234.234/api/v1";
+  static String translateManagementPlanMobilityIssues(List<int> l) {
+    if(l.length == 1) {
+      if(l.contains(1)) return "Does your Mom have any mobility issues?";
+      else if(l.contains(2)) return "Does your Dad have any mobility issues?";
+      return "Does your Family have any mobility issues?";
+
+    } else if(l.length == 2) {
+      if(l.contains(1) && l.contains(2)) return "Do your parents have any mobility issues?";
+      if(l.contains(1) || l.contains(2)) return "Does your Family have any mobility issues?";
+      return "Does your Family have any mobility issues?";
+    }
+    else if(l.length == 3) {
+      return "Does your Family have any mobility issues?";
+    }
+    else if(l.length == 4) {
+      return "Does your Family have any mobility issues?";
+    }
+  }
+
+  static String translateManagementPlanSummary(List<int> l) {
+    if(l.length == 1) {
+      if(l.contains(1)) return "Let's review your Mom's aging in place plan.";
+      else if(l.contains(2)) return "Let's review your Dad's aging in place plan.";
+      return "Let's review your Family's aging in place plan.";
+
+    } else if(l.length == 2) {
+      if(l.contains(1) && l.contains(2)) return "DLet's review your parent's aging in place plan.";
+      if(l.contains(1) || l.contains(2)) return "Let's review your Family's aging in place plan.";
+      return "Let's review your Family's aging in place plan.";
+    }
+    else if(l.length == 3) {
+      return "Let's review your Family's aging in place plan.";
+    }
+    else if(l.length == 4) {
+      return "Let's review your Family's aging in place plan.";
+    }
+  }
+
+  static String domainURL = "http://app.custodia.com/api/v1";
 
   // Return a list of all user roles available in the system
   static fetchRoles() async {
@@ -189,6 +246,8 @@ class APIService {
     if (response.statusCode == 200) {
       return Score.fromJson(json.decode(response.body));
     } else {
+      print(response.body);
+      print(response.statusCode);
       throw Exception('Failed to load score');
     }
   }
@@ -244,6 +303,8 @@ class APIService {
       }
       return maintenanceItems;
     } else {
+      print(response.body);
+      print(response.statusCode);
       throw Exception('Failed to load top 3 maintenance items');
     }
   }
@@ -260,6 +321,8 @@ class APIService {
       }
       return maintenanceItems;
     } else {
+      print(response.body);
+      print(response.statusCode);
       throw Exception('Failed to load top 3 maintenance items for section');
     }
   }
@@ -276,6 +339,9 @@ class APIService {
       }
       return maintenanceItems;
     } else {
+      print(response.body);
+      print(response.statusCode);
+      print('$domainURL/users/${globals.userId}/section/$sectionId/all_maintenance_items');
       throw Exception('Failed to load maintenance items for section');
     }
   }
@@ -431,8 +497,11 @@ class APIService {
     Response response = await get('$domainURL/learning/$itemId');
 
     if (response.statusCode == 200) {
+      print(json.decode(response.body)["data"][0]);
       return LearnItem.fromJson(json.decode(response.body)["data"][0]);
     } else {
+      print(response.body);
+      print(response.statusCode);
       throw Exception('Failed to load learn maintenance items');
     }
   }

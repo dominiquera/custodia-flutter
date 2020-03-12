@@ -67,7 +67,7 @@ class _QuestionnaireStepSummaryScreenState extends State<QuestionnaireStepSummar
                 ),
                 TextSpan(
                   //text: "let's review your ${owner.name} home managment plan",
-                  text: "Let's review your "+APIService.translateManagementPlan(widget.requestData["who_needs"])+"'s aging in place plan.",
+                  text: APIService.translateManagementPlanSummary(widget.requestData["who_needs"]),
                   style: TextStyle(
                     fontFamily: "NunitoLight"
                   )

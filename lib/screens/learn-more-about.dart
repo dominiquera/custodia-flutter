@@ -13,7 +13,7 @@ import '../theme-provider.dart';
 
 import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
-
+import 'package:youtube_parser/youtube_parser.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import 'dashboard/widgets/overlay-request.dart';
@@ -68,12 +68,18 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
       child: ListView(
         children: <Widget>[
           HeaderItem(
-            title: "Learn More About ${learnItem.title}",
-            description: learnItem.summary,
+            title: learnItem.title,
+            description: learnItem.description,
             colorAccent: accentColor2
           ),
           SizedBox(height: 20),
-          buildImage(),
+          Container(
+            height: 220,
+            decoration: BoxDecoration(
+
+              image: DecorationImage(image: new NetworkImage(buildImage()),fit: BoxFit.cover)
+            ),
+          ),
           SizedBox(height: 20),
           buildButtonsRow(),
 //          ListItem(
@@ -88,28 +94,21 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
     );
   }
 
-  buildImage(){
+  String buildImage(){
     Image image;
     if (widget.item.imageUrl != null && widget.item.imageUrl != "") {
-      image = Image.network(
-        "http://35.183.234.234" + widget.item.imageUrl,
-      );
+      return custodiaURL + widget.item.imageUrl;
     } else {
-      image = Image.asset("assets/images/grass.png", fit: BoxFit.fitWidth);
+      return "";
     }
-
-    return Padding(
-      padding: EdgeInsets.only(
-        left: ThemeProvider.screenPadding,
-        right: ThemeProvider.screenPadding,
-      ),
-      child: image,
-    );
   }
 
   video(){
+
+    String ID = getIdFromUrl(learnItem.videoUrl);
+    print(ID);
     YoutubePlayerController _controller = YoutubePlayerController(
-      initialVideoId: learnItem.videoUrl,
+      initialVideoId: ID,
       flags: YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
@@ -181,8 +180,8 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
             ),
           ),
           HeaderItem(
-              title: "The Details",
-              description: "Here are few key details you can use to do it on your own",
+              title: "Learn More",
+              description: learnItem.summary,
               colorAccent: accentColor2
           ),
           SizedBox(height: 20),

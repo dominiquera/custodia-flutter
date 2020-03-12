@@ -51,7 +51,7 @@ class _QuestionnaireStepAddressScreenState extends State<QuestionnaireStepAddres
       child: ListView(
         shrinkWrap: true,
         children: <Widget>[
-          Text("What's your "+APIService.translateManagementPlan(requestData["who_needs"])+"'s address",
+          Text(APIService.translateManagementPlanAddress(requestData["who_needs"]),
             style: TextStyle(
               fontSize: 35,
               fontFamily: "NunitoLight",

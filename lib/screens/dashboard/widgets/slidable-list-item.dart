@@ -1,6 +1,7 @@
 import 'package:custodia/models/maintenance_item.dart';
 import 'package:custodia/services/api.dart';
 import 'package:custodia/screens/dashboard/widgets/overlay-done.dart';
+import 'package:custodia/utils/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -38,25 +39,34 @@ class _SlidableListItemState extends State<SlidableListItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.all(5),
+                padding: EdgeInsets.all(0),
                 decoration: BoxDecoration(
-                    image: DecorationImage(image: NetworkImage("http://35.183.234.234" + widget.item.imageUrl),fit: BoxFit.cover),
+                    image: DecorationImage(image: NetworkImage(custodiaURL + widget.item.imageUrl),fit: BoxFit.cover),
                     borderRadius: BorderRadius.circular(3)
                 ),
+                alignment: Alignment(-1.0, 1.0),
                 width: 90,
                 height: 90,
-                child: Text(
-                    "${widget.item.points} points",
-                    style: TextStyle(
-                      color: Colors.white,
-                      shadows: <Shadow>[
-                        Shadow(
-                          offset: Offset(1.0, 1.0),
-                          blurRadius: 1.0,
-                          color: ThemeProvider.grey1,
-                        ),
-                      ],
-                    )
+                child: Container(
+                  padding: EdgeInsets.fromLTRB(3, 3, 20, 3),
+                  margin: EdgeInsets.all(0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(topRight: Radius.circular(20.0)),
+                    color: Colors.red,
+                  ),
+                  child: Text(
+                      "${widget.item.points} points",
+                      style: TextStyle(
+                        color: Colors.white,
+                        shadows: <Shadow>[
+                          Shadow(
+                            offset: Offset(1.0, 1.0),
+                            blurRadius: 1.0,
+                            color: ThemeProvider.grey1,
+                          ),
+                        ],
+                      )
+                  ),
                 ),
               ),
               SizedBox(width: 25),
@@ -120,8 +130,8 @@ class _SlidableListItemState extends State<SlidableListItem> {
         caption: 'Close',
         color: ThemeProvider.blue8,
         iconWidget: Container(
-          width: 40,
-          height: 40,
+          width: 60,
+          height: 60,
           decoration: BoxDecoration(
             color: Colors.red,
             shape: BoxShape.circle,
@@ -139,8 +149,8 @@ class _SlidableListItemState extends State<SlidableListItem> {
         caption: 'Done',
         color: ThemeProvider.blue8,
         iconWidget: Container(
-            width: 40,
-            height: 40,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: ThemeProvider.green3,
               shape: BoxShape.circle,
@@ -153,8 +163,8 @@ class _SlidableListItemState extends State<SlidableListItem> {
         caption: 'Request',
         color: ThemeProvider.blue8,
         iconWidget: Container(
-            width: 40,
-            height: 40,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: ThemeProvider.blue7,
               shape: BoxShape.circle,
@@ -167,8 +177,8 @@ class _SlidableListItemState extends State<SlidableListItem> {
         caption: 'Learn',
         color: ThemeProvider.blue8,
         iconWidget: Container(
-            width: 40,
-            height: 40,
+            width: 60,
+            height: 60,
             decoration: BoxDecoration(
               color: ThemeProvider.lightBrown,
               shape: BoxShape.circle,
