@@ -61,15 +61,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
     getCurrentUserId();
 
     sectionData = [
-      {"id": 1, "title": "Outside This Month", "subtitle": "", "accentColor": Color.fromARGB(255, 99, 163, 15), "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(255, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
-      {"id": 2, "title": "Inside This Month", "subtitle": "", "accentColor": Color.fromARGB(255, 246, 145, 121), "backgroundCardColor": Color.fromARGB(255, 246, 145, 121), "backgroundColor": Color.fromARGB(1, 250, 250, 250), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
-      {"id": 3, "title": "Clean This Month", "subtitle": "Suggested Cleaning For This Week", "accentColor": Color.fromARGB(255, 54, 166, 146), "items":  [], "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "fetched": false},
-      {"id": 4, "title": "Focus on Stories", "subtitle": "A few stories suggested for you. Slide the card to customize", "accentColor": ThemeProvider.blue4, "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
-      {"id": 1, "title": "Spotlight"},
-      {"id": 5, "title": "A Focus on Care", "subtitle": "Ideas for activities, health, and wellness", "accentColor": Color.fromARGB(255, 219, 62, 78), "backgroundCardColor": Color.fromARGB(255, 250, 250, 250), "backgroundColor": Color.fromARGB(1, 250, 250, 250), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
-      {"id": 6, "title": "Meaningful Producs", "subtitle": "Suggested products that make the home more enjoyable. Slide the card to customize", "accentColor": ThemeProvider.blue7, "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
-      {"id": 7, "title": "Related Services", "subtitle": "", "accentColor": Colors.red, "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false},
-      {"id": 8, "title": "Prevent This Month", "subtitle": "Prevent future issues with simple maintenance", "accentColor": Color.fromARGB(255, 0, 80, 197), "backgroundCardColor": Color.fromARGB(255, 0, 80, 197), "textCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 250, 250, 250), "items": [], "fetched": false},
+      {"id": 1, "title": "Outside This Month", "subtitle": "", "accentColor": Color.fromARGB(255, 99, 163, 15), "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(255, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false,"indent":true},
+      {"id": 2, "title": "Inside This Month", "subtitle": "", "accentColor": Color.fromARGB(255, 246, 145, 121), "backgroundCardColor": Color.fromARGB(255, 246, 145, 121), "backgroundColor": Color.fromARGB(1, 250, 250, 250), "textCardColor": Color.fromARGB(255, 255, 255, 255), "items": [], "fetched": false,"indent":true},
+      {"id": 5, "title": "A Focus on Care", "subtitle": "Ideas for activities, health, and wellness", "accentColor": Color.fromARGB(255, 219, 62, 78), "backgroundCardColor": Color.fromARGB(0, 250, 250, 250), "backgroundColor": Color.fromARGB(255, 240, 245, 254), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false,"indent":false},
+      {"id": 3, "title": "Clean This Week", "subtitle": "Suggested Cleaning For This Week", "accentColor": Color.fromARGB(255, 54, 166, 146), "items":  [], "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "fetched": false,"indent":false},
+      {"id": 4, "title": "Focus on Stories", "subtitle": "A few stories suggested for you. Slide the card to customize", "accentColor": ThemeProvider.blue4, "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false,"indent":true},
+      {"id": 1, "title": "Spotlight","indent":true},
+
+      {"id": 6, "title": "Meaningful Producs", "subtitle": "Suggested products that make the home more enjoyable. Slide the card to customize", "accentColor": ThemeProvider.blue7, "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false,"indent":true},
+      {"id": 7, "title": "Related Services", "subtitle": "", "accentColor": Colors.red, "backgroundCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 255, 255, 255), "textCardColor": Color.fromARGB(255, 0, 0, 0), "items": [], "fetched": false,"indent":true},
+      {"id": 8, "title": "Prevent This Month", "subtitle": "Prevent future issues with simple maintenance", "accentColor": Color.fromARGB(255, 0, 80, 197), "backgroundCardColor": Color.fromARGB(255, 0, 80, 197), "textCardColor": Color.fromARGB(255, 255, 255, 255), "backgroundColor": Color.fromARGB(1, 250, 250, 250), "items": [], "fetched": false,"indent":true},
     ];
 
     super.initState();
@@ -82,6 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       endDrawer: Drawer(
         child: DrawerContent(homeController: _homeController)
       ),
+
       appBar: GradientAppBar(
         title: Row(children: <Widget>[
           new Image.asset(
@@ -156,11 +158,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget buildRequestSection(){
     return Container(
       child: FlatButton.icon(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+        padding: EdgeInsets.all(20),
         onPressed: showAutomateOverlayDialog,
         color: ThemeProvider.blue4,
-        icon: Image.asset("assets/images/request.png", width: 20,),
-        label: Text("Make a Request", style: TextStyle(color: Colors.white),),
+        icon: Image.asset("assets/images/request.png", width: 30,),
+        label: Text("Make a Request", style: TextStyle(color: Colors.white,fontSize: 20),),
       )
     );
   }
@@ -235,13 +238,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           return DashboardSection(
             title: section["title"],
             subtitle: section["subtitle"],
-        accentColor: section["accentColor"],
-        backgroundColor: section["backgroundColor"],
-        backgroundCardColor: section["backgroundCardColor"],
-        textCardColor: section["textCardColor"],
-        items: section["items"],
-        onUpdate: onSectionUpdate,
-        id: section["id"]
+            accentColor: section["accentColor"],
+            indent: section["indent"],
+            backgroundColor: section["backgroundColor"],
+            backgroundCardColor: section["backgroundCardColor"],
+            textCardColor: section["textCardColor"],
+            items: section["items"],
+            onUpdate: onSectionUpdate,
+            id: section["id"]
         );
       } else if (section["items"].isEmpty && section["fetched"] == false) {
           return ProgressIndicatorWithPadding();
@@ -440,18 +444,19 @@ class _DashboardScreenState extends State<DashboardScreen> {
               "Check back later to have more ways to help your seniors live a more enjoyable life at home",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                FlatButton.icon(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                  onPressed: (){},
-                  color: ThemeProvider.blue4,
-                  icon: Image.asset("assets/images/request.png", width: 20,),
-                  label: Text("Make a Request", style: TextStyle(color: Colors.white),),
-                ),
-              ],
-            ),
+//            Row(
+//              mainAxisAlignment: MainAxisAlignment.center,
+//              children: <Widget>[
+//                FlatButton.icon(
+//                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+//                  padding: EdgeInsets.all(20),
+//                  onPressed: showAutomateOverlayDialog,
+//                  color: ThemeProvider.blue4,
+//                  icon: Image.asset("assets/images/request.png", width: 30,),
+//                  label: Text("Make a Request", style: TextStyle(color: Colors.white,fontSize: 20),),
+//                ),
+//              ],
+//            ),
           ],
         ),
       )

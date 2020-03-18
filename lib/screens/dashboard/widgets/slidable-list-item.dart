@@ -48,7 +48,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
                 width: 90,
                 height: 90,
                 child: Container(
-                  padding: EdgeInsets.fromLTRB(3, 3, 20, 3),
+                  padding: EdgeInsets.fromLTRB(2, 2, 10, 2),
                   margin: EdgeInsets.all(0),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(topRight: Radius.circular(20.0)),
@@ -58,6 +58,7 @@ class _SlidableListItemState extends State<SlidableListItem> {
                       "${widget.item.points} points",
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 10,
                         shadows: <Shadow>[
                           Shadow(
                             offset: Offset(1.0, 1.0),

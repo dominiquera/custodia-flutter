@@ -38,7 +38,7 @@ class _Top3CheckpointsState extends State<Top3Checkpoints> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(ThemeProvider.screenPadding),
+      padding: EdgeInsets.fromLTRB(ThemeProvider.screenPadding, ThemeProvider.screenPadding, ThemeProvider.screenPadding, 0),
       decoration: BoxDecoration(
         boxShadow: [
           const BoxShadow(

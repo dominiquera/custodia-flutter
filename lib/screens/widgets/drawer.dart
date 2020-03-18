@@ -27,9 +27,13 @@ class _DrawerContentState extends State<DrawerContent> {
 //        menuItem("Subscribe", (){}),
         menuItem("Your HMP", (){widget.homeController.animateTo(0, curve: Curves.easeOut, duration: const Duration(milliseconds: 300));}),
 //        menuItem("Categories", (){}),
+
+
         menuItem("Make a request", (){showAutomateOverlayDialog();}),
 //        menuItem("Profile", (){}),
         menuItemSecondary(Icons.help, "Contact Support", (){_launchURL();}),
+        menuItemSecondary(Icons.people, "Help Seniors In Your Area", (){_launchURL();}),
+//        menuItem("", (){_launchURL();}),
 //        menuItemSecondary(Icons.settings, "Account Settings", (){}),
         menuItem("Log out", logOut),
       ],
@@ -60,7 +64,7 @@ class _DrawerContentState extends State<DrawerContent> {
       title: Text(
         title,
         style: TextStyle(
-          fontSize: 24,
+          fontSize: 20,
         )
       ),
     );

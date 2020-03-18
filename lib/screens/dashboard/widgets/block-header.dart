@@ -30,7 +30,7 @@ class HeaderItem extends StatelessWidget {
           Text(
             description,
             textAlign: TextAlign.left,
-            style: TextStyle(color: ThemeProvider.grey2),
+            style: TextStyle(color: Colors.black),
           ),
         ],
       ),

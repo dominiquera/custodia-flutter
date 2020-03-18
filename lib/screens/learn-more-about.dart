@@ -11,6 +11,7 @@ import 'package:intl/intl.dart';
 
 import '../theme-provider.dart';
 
+import 'dashboard/dashboard.dart';
 import 'dashboard/widgets/block-footer.dart';
 import 'dashboard/widgets/block-header.dart';
 import 'package:youtube_parser/youtube_parser.dart';
@@ -23,7 +24,8 @@ import 'dashboard/widgets/overlay-ignore.dart';
 class LearnMoreAboutPage extends StatefulWidget  {
 
   final MaintenanceItem item;
-  LearnMoreAboutPage({this.item});
+  final Function onUpdate;
+  LearnMoreAboutPage({this.item,this.onUpdate});
 
   @override
   _LearnMoreAboutPageState createState() => _LearnMoreAboutPageState();
@@ -36,7 +38,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
   LearnItem learnItem;
 
   DateTime now = DateTime.now();
-  var formatter = DateFormat('dd MMMM');
+  var formatter = DateFormat('MMMM dd');
 
   @override
   void initState() {
@@ -74,10 +76,33 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
           ),
           SizedBox(height: 20),
           Container(
-            height: 220,
+            height: 300,
             decoration: BoxDecoration(
 
               image: DecorationImage(image: new NetworkImage(buildImage()),fit: BoxFit.cover)
+            ),
+            alignment: Alignment(-1.0, 1.0),
+            child: Container(
+              padding: EdgeInsets.fromLTRB(3, 3, 20, 3),
+              margin: EdgeInsets.all(0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(topRight: Radius.circular(20.0)),
+                color: Colors.red,
+              ),
+              child: Text(
+                  "${widget.item.points} Points",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+//                    shadows: <Shadow>[
+//                      Shadow(
+//                        offset: Offset(1.0, 1.0),
+//                        blurRadius: 1.0,
+//                        color: ThemeProvider.grey1,
+//                      ),
+//                    ],
+                  )
+              ),
             ),
           ),
           SizedBox(height: 20),
@@ -170,7 +195,7 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
 
   Widget details() {
     return Container(
-      color: ThemeProvider.lightGrey1,
+      color: Colors.white,
       child: Column(
         children: <Widget>[
           Container(
@@ -183,6 +208,21 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
               title: "Learn More",
               description: learnItem.summary,
               colorAccent: accentColor2
+          ),
+          SizedBox(height: 20),
+          Padding(
+            padding: EdgeInsets.only(top: 10, left: ThemeProvider.screenPadding, right: ThemeProvider.screenPadding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  learnItem.cautions,
+                  textAlign: TextAlign.left,
+                  style: TextStyle(color: Colors.black),
+                ),
+              ],
+            ),
           ),
           SizedBox(height: 20),
           learnItem != null && learnItem.videoUrl != null ? video() : Container(),
@@ -249,11 +289,24 @@ class _LearnMoreAboutPageState extends State<LearnMoreAboutPage>  {
         opaque: false,
         pageBuilder: (BuildContext context, _, __) => OverlayIgnore(
           item: widget.item,
-          onIgnore: (int id){}
+          onIgnore: (int id){markAsIgnore();}
         )
       )
     );
   }
+
+  markAsIgnore(){
+    APIService.ignoreMaintenanceItem(widget.item.id, (){
+      Navigator.of(context).push(
+          PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, _, __) => DashboardScreen()
+          )
+      );
+    }, onMarkDoneFailure);
+  }
+
+
 
   markAsDone(){
     APIService.markDoneMaintenanceItem(widget.item.id, onMarkDoneSuccess, onMarkDoneFailure);

@@ -18,12 +18,12 @@ class DashboardSection extends StatefulWidget {
   final Color backgroundColor;
   final Color backgroundCardColor;
   final Color textCardColor;
-
+  final bool indent;
   final List<MaintenanceItem> items;
   final Function onUpdate;
   final int id;
 
-  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.onUpdate, this.id,this.backgroundColor,this.textCardColor,this.backgroundCardColor});
+  DashboardSection({this.title, this.subtitle, this.accentColor, this.items, this.onUpdate, this.id,this.backgroundColor,this.textCardColor,this.backgroundCardColor,this.indent});
 
   @override
   _DashboardSectionState createState() => _DashboardSectionState();
@@ -78,6 +78,7 @@ class _DashboardSectionState extends State<DashboardSection> {
       userId: globals.userId,
       item: item,
       onActionDone: hideItem,
+      indent:widget.indent,
       color: widget.accentColor,
       backgroundColor: widget.backgroundColor,
       backgroundCardColor: widget.backgroundCardColor,

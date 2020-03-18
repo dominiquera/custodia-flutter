@@ -12,7 +12,7 @@ import 'overlay-ignore.dart';
 
 class SlidableCard extends StatefulWidget {
 
-  SlidableCard({this.item, this.color, this.userId, this.onActionDone, this.key,this.backgroundColor,this.backgroundCardColor,this.textCardColor});
+  SlidableCard({this.item, this.color, this.userId, this.onActionDone, this.key,this.backgroundColor,this.backgroundCardColor,this.textCardColor,this.indent});
 
   final MaintenanceItem item;
   final Color color;
@@ -22,6 +22,7 @@ class SlidableCard extends StatefulWidget {
   final Color backgroundColor;
   final Color backgroundCardColor;
   final Color textCardColor;
+  final bool indent;
 
   @override
   _SlidableCardState createState() => _SlidableCardState();
@@ -65,7 +66,7 @@ class _SlidableCardState extends State<SlidableCard> {
                         borderRadius: BorderRadius.only(topRight: Radius.circular(20.0)),
                         color: Colors.red,
                       ),
-                      child: Text("${widget.item.points} POINTS",
+                      child: Text("${widget.item.points} Points",
                           style: TextStyle(
                               fontSize: 16,
                               color: Colors.white,
@@ -84,7 +85,8 @@ class _SlidableCardState extends State<SlidableCard> {
                 ]
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 10, 5, 10),
+
+                  padding: widget.indent ? const EdgeInsets.fromLTRB(15, 10, 5, 10) : const EdgeInsets.fromLTRB(5, 10, 5, 10),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,

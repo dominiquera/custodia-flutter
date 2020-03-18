@@ -8,6 +8,7 @@ class LearnItem {
   final List<LearnItemSection> tools;
   final List<LearnItemSection> materials;
   final String summary;
+  final String cautions;
   final String description;
   final String imageUrl;
   final String videoUrl;
@@ -22,12 +23,14 @@ class LearnItem {
     this.videoUrl,
     this.tools,
     this.materials,
+    this.cautions
     //this.interval
   });
 
   LearnItem.fromJson(Map<String, dynamic> json)
         : id = json["id"],
         summary = json["summary"],
+        cautions = json["cautions"],
         title = json["title"],
         description = json["description"],
         imageUrl = json["descriptionImage"],
